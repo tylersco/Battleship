@@ -1,4 +1,4 @@
-package com.csci4448.MediaManagementSystem;
+package com.csci4448.MediaManagementSystem.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
