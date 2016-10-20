@@ -1,8 +1,9 @@
 package com.csci4448.MediaManagementSystem.ui;
 
 import javax.swing.*;
-import javax.xml.soap.Text;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -50,12 +51,10 @@ public class TextButton extends JTextField {
                 if (!isSelected) setForeground(enteredColor);
             }
             @Override
-            public void mouseExited(MouseEvent e) {
-                if (!isSelected) setForeground(defaultColor);
-            }
+            public void mouseExited(MouseEvent e) { if (!isSelected) setForeground(defaultColor); }
             @Override
             public void mousePressed(MouseEvent e) {
-                container.buttonClicked(TextButton.this);
+                container.actionPerformed(new ActionEvent(TextButton.this, 1, "MousePressed"));
             }
         });
     }

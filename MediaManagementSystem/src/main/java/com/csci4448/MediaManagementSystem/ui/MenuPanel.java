@@ -2,8 +2,10 @@ package com.csci4448.MediaManagementSystem.ui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class MenuPanel extends JPanel implements ActionListener{
+public class MenuPanel extends JPanel implements ActionListener {
 
     private Display display;
 
@@ -84,7 +86,8 @@ public class MenuPanel extends JPanel implements ActionListener{
         //ToDo: resize/location of fundsButton
     }
 
-    public void buttonClicked(JComponent component) {
+    public void actionPerformed(ActionEvent event) {
+        Object component = event.getSource();
         if (component.equals(storeButton)) {
             storeButton.setIsSelected(true);
             libraryButton.setIsSelected(false);

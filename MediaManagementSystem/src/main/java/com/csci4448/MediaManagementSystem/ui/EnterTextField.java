@@ -5,6 +5,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class EnterTextField extends JLayeredPane {
 
@@ -51,16 +52,21 @@ public class EnterTextField extends JLayeredPane {
         return userInput.getText();
     }
 
-    public void removeBackground() {
-        remove(background);
+    public void setBackground(Color color) {
+        if (color == null) {
+            remove(background);
+        } else {
+            background.setBackground(color);
+        }
     }
 
     private void addListeners() {
         userInput.addActionListener(new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
-                container.buttonClicked(EnterTextField.this);
+                container.actionPerformed(new ActionEvent(EnterTextField.this, 2, "ActionPerformed"));
             }
         });
+
 
         userInput.getDocument().addDocumentListener(new DocumentListener() {
             public void insertUpdate(DocumentEvent e) {
@@ -94,7 +100,7 @@ public class EnterTextField extends JLayeredPane {
     public void setSize(int width, int height) {
         super.setSize(width, height);
         background.setSize(width, height);
-        underlaidText.setSize(width-3, height);
-        userInput.setSize(width-3, height);
+        underlaidText.setSize(width-6, height);
+        userInput.setSize(width-6, height);
     }
 }

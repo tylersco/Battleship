@@ -3,8 +3,7 @@ package com.csci4448.MediaManagementSystem.ui;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.ActionListener;
 
 public class SearchBar extends JPanel {
 
@@ -21,7 +20,7 @@ public class SearchBar extends JPanel {
 
         input = new EnterTextField(container, "search", new Font("Helvetice Neue", Font.PLAIN, 12), new Color(100, 100, 100, 180), new Color(100, 100, 100));
         input.setSize(115, 20);
-        input.removeBackground();
+        input.setBackground(null);
 
         //addListeners();
         add(input);

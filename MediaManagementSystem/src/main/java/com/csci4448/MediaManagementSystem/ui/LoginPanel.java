@@ -2,6 +2,8 @@ package com.csci4448.MediaManagementSystem.ui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class LoginPanel extends JPanel implements ActionListener {
 
@@ -47,7 +49,8 @@ public class LoginPanel extends JPanel implements ActionListener {
 
     }
 
-    public void buttonClicked(JComponent component) {
+    public void actionPerformed(ActionEvent event) {
+        Object component = event.getSource();
         if (component.equals(username) | component.equals(password) | component.equals(submit)) {
             checkUserInput();
         } else if (component.equals(createAccount)) {
