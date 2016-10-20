@@ -10,7 +10,11 @@ import javax.persistence.Table;
 @Table(name = "USER")
 public class User {
 
-    private long id;
+    @Id
+    @GeneratedValue
+    @Column(name = "id")
+    private int id;
+
     private String username;
     private String password;
     private String email;
@@ -18,15 +22,20 @@ public class User {
     private String lastName;
     private Boolean isAdmin;
 
-    @Id
-    @GeneratedValue
-    @Column(name = "USER_ID")
-    public long getId() {
+    public int getId() {
         return id;
+    }
+
+    public void setID(int _id) {
+        id = _id;
     }
 
     public String getUsername() {
         return username;
+    }
+
+    public void setUsername(String _username) {
+        username = _username;
     }
 
     public String getEmail() {
@@ -59,6 +68,11 @@ public class User {
 
     public void setIsAdmin(boolean _isAdmin) {
         isAdmin = _isAdmin;
+    }
+
+    @Override
+    public String toString() {
+        return "First Name: " + firstName + "\nLast Name: " + lastName + "\n Username: " + username + "\nEmail: " + email + "\n";
     }
 
 }
