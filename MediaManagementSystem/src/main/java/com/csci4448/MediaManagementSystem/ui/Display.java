@@ -37,15 +37,15 @@ public class Display extends JFrame {
                 Dimension newDim = e.getComponent().getBounds().getSize();
                 int width = (int) newDim.getWidth();
                 int height = (int) newDim.getHeight();
-                System.out.println("No");
 
                 scrollView.setSize(width, height-55);
                 menuPanel.setSize(width, 55);
+                menuPanel.resizeMenu(width, 55);
                 scrollLayout.setPreferredSize(new Dimension(width-15, 2000));
             }
         });
 
-        menuPanel = new MenuPanel();
+        menuPanel = new MenuPanel(this);
         menuPanel.setLocation(0, 0);
         mainLayout.add(menuPanel, new Integer(2));
 
@@ -62,6 +62,14 @@ public class Display extends JFrame {
         scrollView.getVerticalScrollBar().setPreferredSize(new Dimension(15, 0));
         //scrollView.getHorizontalScrollBar().setPreferredSize(new Dimension(0, 0));
         mainLayout.add(scrollView, new Integer(1));
+
+    }
+
+    public void handleMenuButtonEvent() {
+
+    }
+
+    public void handleMenuSearch() {
 
     }
 
