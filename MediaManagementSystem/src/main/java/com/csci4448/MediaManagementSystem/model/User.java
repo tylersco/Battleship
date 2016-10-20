@@ -22,6 +22,8 @@ public class User {
     private String lastName;
     private Boolean isAdmin;
 
+    public User() {}
+
     public int getId() {
         return id;
     }
@@ -36,6 +38,14 @@ public class User {
 
     public void setUsername(String _username) {
         username = _username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String _password) {
+        password = _password;
     }
 
     public String getEmail() {
