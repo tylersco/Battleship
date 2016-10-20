@@ -1,6 +1,7 @@
 package com.csci4448.MediaManagementSystem.ui;
 
 import javax.swing.*;
+import javax.xml.soap.Text;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -31,6 +32,10 @@ public class TextButton extends JTextField {
         setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
         addMouseListener();
 
+    }
+
+    public TextButton(ActionListener container, String text, Font defaultFont, Color defaultColor, Color enteredColor) {
+        this(container, text, defaultFont, defaultColor, enteredColor, defaultColor);
     }
 
     public void setIsSelected(boolean isSelected) {

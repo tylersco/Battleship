@@ -22,28 +22,12 @@ public class MenuPanel extends JPanel implements ActionListener{
     public MenuPanel(Display display) {
         this.display = display;
         setLayout(null);
-        addButtons();
+        initializeMenuComponents();
         setBackground(new Color(250, 250, 250));
         setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(200, 200, 200)));
     }
 
-    public void resizeMenu(int width, int height) {
-        //storeButton.setLocation();
-        //libraryButton.setLocation();
-        searchBar.setLocation(width-185, 10);
-        fundsButton.setLocation(width-110, 35);
-        accountButton.setLocation(width-175, 35);
-    }
-
-    public void removeSearchBar() {
-        remove(searchBar);
-    }
-
-    public void addSearchBar() {
-        add(searchBar);
-    }
-
-    private void addButtons() {
+    private void initializeMenuComponents() {
         Dimension size;
         storeButton = new TextButton(this, "Store", mainButtonFont, defaultColor, enteredColor, selectedColor);
         size = storeButton.getPreferredSize();
@@ -76,11 +60,34 @@ public class MenuPanel extends JPanel implements ActionListener{
         add(searchBar);
     }
 
-    public boolean buttonClicked(JComponent component) {
+    public void resizeMenu(int width, int height) {
+        //storeButton.setLocation();
+        //libraryButton.setLocation();
+        searchBar.setLocation(width-185, 10);
+        //ToDo: shift funds to end of searchBar
+        fundsButton.setLocation(width-110, 35);
+        accountButton.setLocation(width-175, 35);
+    }
+
+    public void removeSearchBar() {
+        remove(searchBar);
+        //ToDo: account/funds buttons locations
+    }
+
+    public void addSearchBar() {
+        add(searchBar);
+        //ToDo: account/funds buttons locations
+    }
+
+    public void setFunds(int amount) {
+        fundsButton.setText(Integer.toString(amount));
+        //ToDo: resize/location of fundsButton
+    }
+
+    public void buttonClicked(JComponent component) {
         if (component.equals(storeButton)) {
             storeButton.setIsSelected(true);
             libraryButton.setIsSelected(false);
-            //display
         } else if (component.equals(libraryButton)) {
             storeButton.setIsSelected(false);
             libraryButton.setIsSelected(true);
@@ -90,8 +97,7 @@ public class MenuPanel extends JPanel implements ActionListener{
         } else if (component.equals(accountButton)) {
 
         } else if (component.equals(searchBar)) {
-            System.out.println(searchBar.getSearchText());
+            //System.out.println(searchBar.getSearchText());
         }
-        return true;
     }
 }

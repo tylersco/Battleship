@@ -4,5 +4,5 @@ import javax.swing.*;
 
 interface ActionListener {
 
-    boolean buttonClicked(JComponent component);
+    void buttonClicked(JComponent component);
 }

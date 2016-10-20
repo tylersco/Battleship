@@ -1,6 +1,5 @@
 package com.csci4448.MediaManagementSystem.ui;
 
-import com.csci4448.MediaManagementSystem.controller.*;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -8,7 +7,7 @@ import javax.swing.*;
 
 public class Display extends JFrame {
 
-    private MainController controller;
+    //private MainController controller;
 
     private JLayeredPane mainLayout;
     private JScrollPane scrollView;
@@ -16,20 +15,35 @@ public class Display extends JFrame {
     private MenuPanel menuPanel;
     private boolean adminEditMode;
 
+    private LoginPanel loginPanel;
+
     public Display() {
         super("Media");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(950, 650);
-        setMinimumSize(new Dimension(950, 425));
+        setSize(350, 300);
+        setResizable(false);
 
-        initializeMainLayout();
-        add(mainLayout);
+        loginPanel = new LoginPanel(this);
+        add(loginPanel);
+
+        //initializeMainLayout();
+        //
 
         setLocationRelativeTo(null);
         setVisible(true);
     }
 
+    public void loginAttempt(String username, String password) {
+        //ToDo: call controller
+        remove(loginPanel);
+        initializeMainLayout();
+    }
+
     private void initializeMainLayout() {
+        setSize(950, 650);
+        setMinimumSize(new Dimension(950, 425));
+        setLocationRelativeTo(null);
+
         mainLayout = new JLayeredPane();
         mainLayout.setLayout(null);
         mainLayout.addComponentListener(new ComponentAdapter() {
@@ -63,10 +77,11 @@ public class Display extends JFrame {
         //scrollView.getHorizontalScrollBar().setPreferredSize(new Dimension(0, 0));
         mainLayout.add(scrollView, new Integer(1));
 
+        add(mainLayout);
     }
 
     public void handleMenuButtonEvent() {
-
+        setSize(100, 100);
     }
 
     public void handleMenuSearch() {
