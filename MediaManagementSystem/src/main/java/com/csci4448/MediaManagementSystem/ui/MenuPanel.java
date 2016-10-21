@@ -1,5 +1,7 @@
 package com.csci4448.MediaManagementSystem.ui;
 
+import com.csci4448.MediaManagementSystem.controller.MainController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -7,7 +9,7 @@ import java.awt.event.ActionListener;
 
 public class MenuPanel extends JPanel implements ActionListener {
 
-    private Display display;
+    private MainController controller;
 
     private TextButton storeButton;
     private TextButton libraryButton;
@@ -21,8 +23,8 @@ public class MenuPanel extends JPanel implements ActionListener {
     private Color enteredColor = new Color(75, 75, 75);
     private Color selectedColor = new Color(121, 179, 188);
 
-    public MenuPanel(Display display) {
-        this.display = display;
+    public MenuPanel(MainController controller) {
+        this.controller = controller;
         setLayout(null);
         initializeMenuComponents();
         setBackground(new Color(250, 250, 250));

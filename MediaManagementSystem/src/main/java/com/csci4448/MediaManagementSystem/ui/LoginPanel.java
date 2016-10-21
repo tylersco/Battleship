@@ -1,5 +1,7 @@
 package com.csci4448.MediaManagementSystem.ui;
 
+import com.csci4448.MediaManagementSystem.controller.MainController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -7,7 +9,7 @@ import java.awt.event.ActionListener;
 
 public class LoginPanel extends JPanel implements ActionListener {
 
-    private Display display;
+    private MainController controller;
 
     private EnterTextField username;
     private EnterTextField password;
@@ -18,8 +20,8 @@ public class LoginPanel extends JPanel implements ActionListener {
     private Color darkColor = new Color(75, 75, 75);
     private Color lightColor = new Color(75, 75, 75, 140);
 
-    public LoginPanel(Display display) {
-        this.display = display;
+    public LoginPanel(MainController controller) {
+        this.controller = controller;
         setLayout(null);
         setSize(350, 300);
         setPreferredSize(new Dimension(350, 300));
@@ -54,7 +56,7 @@ public class LoginPanel extends JPanel implements ActionListener {
         if (component.equals(username) | component.equals(password) | component.equals(submit)) {
             checkUserInput();
         } else if (component.equals(createAccount)) {
-
+            controller.createAccountRequest();
         }
 
     }
@@ -73,7 +75,7 @@ public class LoginPanel extends JPanel implements ActionListener {
             validInput = false;
         }
         if (validInput) {
-            display.loginAttempt(usernameText, passwordText);
+            controller.loginSubmitRequest(usernameText, passwordText);
         }
     }
 }

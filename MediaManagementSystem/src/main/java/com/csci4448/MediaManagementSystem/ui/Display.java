@@ -1,13 +1,17 @@
 package com.csci4448.MediaManagementSystem.ui;
 
+import com.csci4448.MediaManagementSystem.controller.*;
+import com.csci4448.MediaManagementSystem.model.*;
+
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.util.ArrayList;
 import javax.swing.*;
 
 public class Display extends JFrame {
 
-    //private MainController controller;
+    private MainController controller;
 
     private JLayeredPane mainLayout;
     private JScrollPane scrollView;
@@ -16,30 +20,15 @@ public class Display extends JFrame {
     private boolean adminEditMode;
 
     private LoginPanel loginPanel;
+    private CreateAccountPanel createAccountPanel;
 
-    public Display() {
+    public Display(MainController controller) {
         super("Media");
+        this.controller = controller;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(350, 300);
-        setResizable(false);
-
-        loginPanel = new LoginPanel(this);
-        add(loginPanel);
-
-        //initializeMainLayout();
-        //
-
-        setLocationRelativeTo(null);
-        setVisible(true);
     }
 
-    public void loginAttempt(String username, String password) {
-        //ToDo: call controller
-        remove(loginPanel);
-        initializeMainLayout();
-    }
-
-    private void initializeMainLayout() {
+    public void initializeMainLayout(User user) {
         setSize(950, 650);
         setMinimumSize(new Dimension(950, 425));
         setLocationRelativeTo(null);
@@ -59,7 +48,8 @@ public class Display extends JFrame {
             }
         });
 
-        menuPanel = new MenuPanel(this);
+        //ToDo: apply user info to menu components
+        menuPanel = new MenuPanel(controller);
         menuPanel.setLocation(0, 0);
         mainLayout.add(menuPanel, new Integer(2));
 
@@ -78,18 +68,45 @@ public class Display extends JFrame {
         mainLayout.add(scrollView, new Integer(1));
 
         add(mainLayout);
+        setVisible(true);
     }
 
-    public void handleMenuButtonEvent() {
-        setSize(100, 100);
+    public void displayLogin() {
+        setSize(350, 300);
+        setResizable(false);
+        setLocationRelativeTo(null);
+
+        loginPanel = new LoginPanel(controller);
+        add(loginPanel);
+
+        setVisible(true);
     }
 
-    public void handleMenuSearch() {
+    public void removeLogin() {
+        remove(loginPanel);
+    }
+
+    public void displayCreateAccount() {
+        setSize(350, 500);
+        setResizable(false);
+        setLocationRelativeTo(null);
+
+        createAccountPanel = new CreateAccountPanel(controller);
+        add(createAccountPanel);
+
+        setVisible(true);
+    }
+
+    public void removeCreateAccount() {
+        remove(createAccountPanel);
+    }
+
+    public void displayStore(/*ArrayList<Media>*/) {
 
     }
 
-    public static void main(String[] args) {
-        Display d = new Display();
+    public void displayLibrary(/*ArrayList<Media>*/) {
 
     }
+
 }

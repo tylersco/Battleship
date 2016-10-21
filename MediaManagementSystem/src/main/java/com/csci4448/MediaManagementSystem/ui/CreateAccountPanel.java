@@ -1,5 +1,7 @@
 package com.csci4448.MediaManagementSystem.ui;
 
+import com.csci4448.MediaManagementSystem.controller.MainController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -7,7 +9,7 @@ import java.awt.event.ActionListener;
 
 public class CreateAccountPanel extends JPanel implements ActionListener{
 
-    private Display display;
+    private MainController controller;
 
     private EnterTextField firstName;
     private EnterTextField lastName;
@@ -23,8 +25,8 @@ public class CreateAccountPanel extends JPanel implements ActionListener{
     private Color darkColor = new Color(75, 75, 75);
     private Color lightColor = new Color(75, 75, 75, 140);
 
-    public CreateAccountPanel(Display display) {
-        this.display = display;
+    public CreateAccountPanel(MainController controller) {
+        this.controller = controller;
         setLayout(null);
         setSize(350, 500);
         setPreferredSize(new Dimension(350, 500));
@@ -74,6 +76,17 @@ public class CreateAccountPanel extends JPanel implements ActionListener{
 
     }
 
-    public void actionPerformed(ActionEvent e) {}
+    public void actionPerformed(ActionEvent event) {
+        Object component = event.getSource();
+        if (component.equals(firstName) | component.equals(lastName) | component.equals(username) | component.equals(email) | component.equals(password1) | component.equals(password2) | component.equals(submit)) {
+            checkUserInput();
+        } else if(component.equals(cancel)) {
+            controller.createAccountCancelRequest();
+        }
+    }
+
+    private void checkUserInput() {
+
+    }
 
 }
