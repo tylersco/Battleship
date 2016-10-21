@@ -17,7 +17,7 @@ public class EnterTextField extends JLayeredPane {
 
     private boolean underlaidTextAdded = true;
 
-    public EnterTextField(ActionListener container, String text, Font defaultFont, Color underlaidColor, Color inputColor) {
+    public EnterTextField(ActionListener container, String text, Font defaultFont, Color underlaidColor, Color inputColor, boolean hideInput) {
         this.container = container;
 
         setLayout(null);
@@ -38,7 +38,11 @@ public class EnterTextField extends JLayeredPane {
         underlaidText.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
         add(underlaidText, new Integer(2));
 
-        userInput = new JTextField("");
+        if (hideInput) {
+            userInput = new JPasswordField();
+        } else {
+            userInput = new JTextField("");
+        }
         userInput.setFont(defaultFont);
         userInput.setLocation(3, 0);
         userInput.setForeground(inputColor);
@@ -89,6 +93,7 @@ public class EnterTextField extends JLayeredPane {
                 remove(underlaidText);
                 underlaidTextAdded = false;
             }
+
         } else {
             if (!underlaidTextAdded) {
                 add(underlaidText);
