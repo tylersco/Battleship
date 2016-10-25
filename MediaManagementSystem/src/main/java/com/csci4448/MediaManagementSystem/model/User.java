@@ -22,7 +22,14 @@ public class User {
     private String lastName;
     private Boolean isAdmin;
 
-    public User() {}
+    public User() {
+        username = "";
+        password = "";
+        email = "";
+        firstName = "";
+        lastName = "";
+        isAdmin = new Boolean(true); // TODO: For now, all users are admins until we get the database up, for testing
+    }
 
     public int getId() {
         return id;

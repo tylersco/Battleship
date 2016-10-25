@@ -6,6 +6,7 @@ import com.csci4448.MediaManagementSystem.ui.*;
 public class MainController {
 
     private Display display;
+    private User activeUser;
 
     public MainController() {
         display = new Display(this);
@@ -25,7 +26,8 @@ public class MainController {
         //ToDo: check if valid input, if not inform display
         display.removeLogin();
         //ToDo: add user from login, not a new user
-        display.initializeMainLayout(new User());
+        activeUser = new User();
+        display.initializeMainLayout();
         display.displayStore();
     }
 
@@ -42,7 +44,8 @@ public class MainController {
     public void createAccountSubmitRequest(String firstName, String lastName, String username, String email, String password) {
         //ToDo: check if valid input, if not inform display
         display.removeCreateAccount();
-        display.initializeMainLayout(new User());
+        activeUser = new User();
+        display.initializeMainLayout();
     }
 
     public void storeRequest() {
@@ -56,4 +59,8 @@ public class MainController {
     public void addFundsRequest() {
 
     }
+
+    public User getUser() { return activeUser; }
+    public void setUser(User user) { activeUser = user; }
+    public boolean hasUser() { return activeUser != null; }
 }

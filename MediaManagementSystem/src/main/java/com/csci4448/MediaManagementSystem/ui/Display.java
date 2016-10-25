@@ -28,7 +28,7 @@ public class Display extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    public void initializeMainLayout(User user) {
+    public void initializeMainLayout() {
         setSize(950, 650);
         setMinimumSize(new Dimension(950, 425));
         setResizable(true);
