@@ -101,11 +101,18 @@ public class MenuPanel extends JPanel implements ActionListener {
         if (component.equals(storeButton)) {
             storeButton.setIsSelected(true);
             libraryButton.setIsSelected(false);
+            adminButton.setIsSelected(false);
             controller.storeRequest();
         } else if (component.equals(libraryButton)) {
             storeButton.setIsSelected(false);
             libraryButton.setIsSelected(true);
+            adminButton.setIsSelected(false);
             controller.libraryRequest();
+        } else if (component.equals(adminButton)) {
+            storeButton.setIsSelected(false);
+            libraryButton.setIsSelected(false);
+            adminButton.setIsSelected(true);
+            controller.adminRequest();
         } else if (component.equals(fundsButton)) {
             controller.addFundsRequest();
         } else if (component.equals(accountButton)) {

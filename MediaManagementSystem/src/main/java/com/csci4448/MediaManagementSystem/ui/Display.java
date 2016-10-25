@@ -2,6 +2,7 @@ package com.csci4448.MediaManagementSystem.ui;
 
 import com.csci4448.MediaManagementSystem.controller.*;
 import com.csci4448.MediaManagementSystem.model.*;
+import com.csci4448.MediaManagementSystem.state.*;
 
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
@@ -17,15 +18,24 @@ public class Display extends JFrame {
     private JScrollPane scrollView;
     private JPanel scrollLayout;
     private MenuPanel menuPanel;
-    private boolean adminEditMode;
 
-    private LoginPanel loginPanel;
-    private CreateAccountPanel createAccountPanel;
+    private DisplayState activeState;
 
     public Display(MainController controller) {
         super("Media");
         this.controller = controller;
+        this.activeState = null;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    public void setState(DisplayState state)
+    {
+        if (activeState != null)
+            activeState.onDeactivate(controller, this);
+
+        activeState = state;
+        if (activeState != null)
+            activeState.onActivate(controller, this);
     }
 
     public void initializeMainLayout() {
@@ -69,36 +79,6 @@ public class Display extends JFrame {
 
         add(mainLayout);
         setVisible(true);
-    }
-
-    public void displayLogin() {
-        setSize(350, 300);
-        setResizable(false);
-        setLocationRelativeTo(null);
-
-        loginPanel = new LoginPanel(controller);
-        add(loginPanel);
-
-        setVisible(true);
-    }
-
-    public void removeLogin() {
-        remove(loginPanel);
-    }
-
-    public void displayCreateAccount() {
-        setSize(350, 500);
-        setResizable(false);
-        setLocationRelativeTo(null);
-
-        createAccountPanel = new CreateAccountPanel(controller);
-        add(createAccountPanel);
-
-        setVisible(true);
-    }
-
-    public void removeCreateAccount() {
-        remove(createAccountPanel);
     }
 
     public void displayStore(/*ArrayList<Media>*/) {
