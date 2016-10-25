@@ -32,7 +32,8 @@ public class EnterTextField extends JLayeredPane {
         underlaidText.setFont(defaultFont);
         underlaidText.setLocation(3, 0);
         underlaidText.setForeground(underlaidColor);
-        underlaidText.setBackground(new Color(0, 0, 0, 0));
+        underlaidText.setOpaque(false);
+        underlaidText.setBackground(null);
         underlaidText.setEditable(false);
         underlaidText.setHighlighter(null);
         underlaidText.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
@@ -46,7 +47,8 @@ public class EnterTextField extends JLayeredPane {
         userInput.setFont(defaultFont);
         userInput.setLocation(3, 0);
         userInput.setForeground(inputColor);
-        userInput.setBackground(new Color(0, 0, 0, 0));
+        userInput.setOpaque(false);
+        userInput.setBackground(null);
         userInput.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
         addListeners();
         add(userInput, new Integer(3));

@@ -29,7 +29,8 @@ public class TextButton extends JTextField {
         setForeground(defaultColor);
         setEditable(false);
         setHighlighter(null);
-        setBackground(new Color(0, 0, 0, 0));
+        setOpaque(false);
+        setBackground(null);
         setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
         addMouseListener();
 
