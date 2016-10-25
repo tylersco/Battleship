@@ -27,25 +27,25 @@ public class LoginPanel extends JPanel implements ActionListener {
         setPreferredSize(new Dimension(350, 300));
         setBackground(new Color(237, 237, 237));
 
-        username = new EnterTextField(this, "Username", defaultFont, lightColor, darkColor);
+        username = new EnterTextField(this, "Username", defaultFont, lightColor, darkColor, false);
         username.setSize(200, 30);
         username.setLocation(75, 75);
         add(username);
 
-        password = new EnterTextField(this, "Password", defaultFont, lightColor, darkColor);
+        password = new EnterTextField(this, "Password", defaultFont, lightColor, darkColor, true);
         password.setSize(200, 30);
         password.setLocation(75, 125);
         add(password);
 
         submit = new TextButton(this, "Submit", defaultFont, lightColor, darkColor);
         Dimension size = submit.getPreferredSize();
-        submit.setSize(size);
+        submit.setSize(size.width+1, size.height);
         submit.setLocation((350-(int)size.getWidth())/2, 185);
         add(submit);
 
         createAccount = new TextButton(this, "Create Account", new Font("Helvetice Neue", Font.PLAIN, 10), new Color(55, 137, 199), new Color(70, 177, 249));
         size = createAccount.getPreferredSize();
-        createAccount.setSize(size);
+        createAccount.setSize(size.width+1, size.height);
         createAccount.setLocation((350-(int)size.getWidth())/2, 215);
         add(createAccount);
 

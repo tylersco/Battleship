@@ -47,13 +47,13 @@ public class MenuPanel extends JPanel implements ActionListener {
 
         accountButton = new TextButton(this, "Account", subButtonFont, defaultColor, enteredColor, selectedColor);
         size = accountButton.getPreferredSize();
-        accountButton.setSize(size);
+        accountButton.setSize(size.width+1, size.height);
         accountButton.setLocation(775, 5);
         add(accountButton);
 
         fundsButton = new TextButton(this, "$0.00", subButtonFont, defaultColor, enteredColor, selectedColor);
         size = fundsButton.getPreferredSize();
-        fundsButton.setSize(size);
+        fundsButton.setSize(size.width+1, size.height);
         fundsButton.setLocation(840, 5);
         add(fundsButton);
 
@@ -93,14 +93,15 @@ public class MenuPanel extends JPanel implements ActionListener {
         if (component.equals(storeButton)) {
             storeButton.setIsSelected(true);
             libraryButton.setIsSelected(false);
+            controller.storeRequest();
         } else if (component.equals(libraryButton)) {
             storeButton.setIsSelected(false);
             libraryButton.setIsSelected(true);
-            //display
+            controller.libraryRequest();
         } else if (component.equals(fundsButton)) {
-            //display
+            controller.addFundsRequest();
         } else if (component.equals(accountButton)) {
-
+            //controller.accountAccessRequest();
         } else if (component.equals(searchBar)) {
             //System.out.println(searchBar.getSearchText());
         }

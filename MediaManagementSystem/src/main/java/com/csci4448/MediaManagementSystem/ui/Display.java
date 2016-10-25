@@ -31,6 +31,7 @@ public class Display extends JFrame {
     public void initializeMainLayout(User user) {
         setSize(950, 650);
         setMinimumSize(new Dimension(950, 425));
+        setResizable(true);
         setLocationRelativeTo(null);
 
         mainLayout = new JLayeredPane();
@@ -44,7 +45,6 @@ public class Display extends JFrame {
                 scrollView.setSize(width, height-55);
                 menuPanel.setSize(width, 55);
                 menuPanel.resizeMenu(width, 55);
-                scrollLayout.setPreferredSize(new Dimension(width-15, 2000));
             }
         });
 
@@ -55,9 +55,9 @@ public class Display extends JFrame {
 
         scrollLayout = new JPanel();
         scrollLayout.setLayout(null);
-        scrollLayout.setPreferredSize(new Dimension(950-15, 2000));
         scrollLayout.setBackground(new Color(237, 237, 237));
 
+        System.out.println(Integer.toString((int)scrollLayout.getPreferredSize().getHeight()));
         scrollView = new JScrollPane(scrollLayout);
         scrollView.setLocation(0, 55);
         scrollView.setSize(950, 700);
@@ -102,6 +102,15 @@ public class Display extends JFrame {
     }
 
     public void displayStore(/*ArrayList<Media>*/) {
+        GridMediaPanel g = new GridMediaPanel(controller, 215, 250, 15, 35);
+        scrollLayout.add(g);
+        g.setLocation(15, 10);
+        for(int i = 0; i < 100; i++) {
+            g.addMediaListing(new MediaListing());
+        }
+        scrollLayout.setPreferredSize(new Dimension(935, g.getHeight()));
+        //scrollLayout.invalidate();
+        //scrollView.repaint();
 
     }
 

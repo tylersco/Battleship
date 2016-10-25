@@ -18,7 +18,7 @@ public class SearchBar extends JPanel {
         setPreferredSize(new Dimension(145, 20));
         setLayout(null);
 
-        input = new EnterTextField(container, "search", new Font("Helvetice Neue", Font.PLAIN, 12), new Color(100, 100, 100, 180), new Color(100, 100, 100));
+        input = new EnterTextField(container, "search", new Font("Helvetice Neue", Font.PLAIN, 12), new Color(100, 100, 100, 180), new Color(100, 100, 100), false);
         input.setSize(115, 20);
         input.setBackground(null);
 

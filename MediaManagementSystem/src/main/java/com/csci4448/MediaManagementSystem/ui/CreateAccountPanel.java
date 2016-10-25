@@ -32,45 +32,45 @@ public class CreateAccountPanel extends JPanel implements ActionListener{
         setPreferredSize(new Dimension(350, 500));
         setBackground(new Color(237, 237, 237));
 
-        firstName = new EnterTextField(this, "First", defaultFont, lightColor, darkColor);
+        firstName = new EnterTextField(this, "First", defaultFont, lightColor, darkColor, false);
         firstName.setSize(145, 30);
         firstName.setLocation(25, 35);
         add(firstName);
 
-        lastName = new EnterTextField(this, "Last", defaultFont, lightColor, darkColor);
+        lastName = new EnterTextField(this, "Last", defaultFont, lightColor, darkColor, false);
         lastName.setSize(145, 30);
         lastName.setLocation(180, 35);
         add(lastName);
 
-        username = new EnterTextField(this, "username", defaultFont, lightColor, darkColor);
+        username = new EnterTextField(this, "username", defaultFont, lightColor, darkColor, false);
         username.setSize(215, 30);
         username.setLocation(25, 95);
         add(username);
 
-        email = new EnterTextField(this, "email", defaultFont, lightColor, darkColor);
+        email = new EnterTextField(this, "email", defaultFont, lightColor, darkColor, false);
         email.setSize(215, 30);
         email.setLocation(25, 155);
         add(email);
 
-        password1 = new EnterTextField(this, "password", defaultFont, lightColor, darkColor);
+        password1 = new EnterTextField(this, "password", defaultFont, lightColor, darkColor, true);
         password1.setSize(215, 30);
         password1.setLocation(25, 215);
         add(password1);
 
-        password2 = new EnterTextField(this, "confirm password", defaultFont, lightColor, darkColor);
+        password2 = new EnterTextField(this, "confirm password", defaultFont, lightColor, darkColor, true);
         password2.setSize(215, 30);
         password2.setLocation(25, 275);
         add(password2);
 
         submit = new TextButton(this, "Create Account", new Font("Helvetice Neue", Font.PLAIN, 16), lightColor, darkColor);
         Dimension size = submit.getPreferredSize();
-        submit.setSize(size);
+        submit.setSize(size.width+1, size.height);
         submit.setLocation((350-(int)size.getWidth())/2, 355);
         add(submit);
 
         cancel = new TextButton(this, "cancel", new Font("Helvetice Neue", Font.PLAIN, 11), lightColor, new Color(249, 72, 67));
         size = cancel.getPreferredSize();
-        cancel.setSize(size);
+        cancel.setSize(size.width+1, size.height);
         cancel.setLocation((350-(int)size.getWidth())/2, 395);
         add(cancel);
 
