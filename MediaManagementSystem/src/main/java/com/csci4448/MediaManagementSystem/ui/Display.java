@@ -39,17 +39,12 @@ public class Display extends JFrame {
             activeState.onActivate(controller, this);
     }
 
-    // Adds a Component to the scrollLayout, assuming that it is currently the main layout
-    // If it is not currently in the main layout, it will add the component, but will not show the change.
-    public void addMainWindowContent(Component component) {
-        scrollLayout.add(component);
-    }
+    public DisplayState getActiveState() { return activeState; }
 
-    // Removes a Component from the scrollLayout, assuming that it is currently the main layout
-    // If it is not currently in the main layout, it will remove the component, but will not show the change.
-    public void removeMainWindowContent(Component component) {
-        scrollLayout.remove(component);
-    }
+    // Gets the scrollLayout that represents the main content when the window is in the main layout.
+    // DisplayStates that only change the content of the main window, and not the overall window itself (like LoginState
+    // and CreateAccountState do), should use this function to change the main window contents.
+    public JPanel getMainWindowContent() { return scrollLayout; }
 
     // Called by the states when they change the overall layout of the window from what is considered the "main layout".
     // This relies on the states to call this when needed, which opens it up to bugs, but should work for now.
@@ -106,21 +101,4 @@ public class Display extends JFrame {
         setVisible(true);
         isMainLayoutValid = true;
     }
-
-    //public void displayStore(/*ArrayList<Media>*/) {
-    //    GridMediaPanel g = new GridMediaPanel(controller, 215, 250, 15, 35);
-    //    scrollLayout.add(g);
-    //    g.setLocation(15, 10);
-    //    for(int i = 0; i < 100; i++) {
-    //        g.addMediaListing(new MediaListing());
-    //    }
-    //    scrollLayout.setPreferredSize(new Dimension(935, g.getHeight()));
-    //    //scrollLayout.invalidate();
-    //    //scrollView.repaint();
-    //
-    //}
-
-    //public void displayLibrary(/*ArrayList<Media>*/) {
-    //
-    //}
 }
