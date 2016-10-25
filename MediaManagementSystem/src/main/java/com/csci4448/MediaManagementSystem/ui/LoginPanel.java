@@ -65,7 +65,6 @@ public class LoginPanel extends JPanel implements ActionListener {
         boolean validInput = true;
         String usernameText = username.getText();
         String passwordText = password.getText();
-        System.out.println(passwordText);
 
         if (usernameText.length() <= 0) {
             //ToDo: inform needed username
