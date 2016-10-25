@@ -8,13 +8,12 @@ public class LoginState implements DisplayState {
 
     private LoginPanel loginPanel;
 
-    public LoginState()
-    {
+    public LoginState() {
         this.loginPanel = null;
     }
 
-    public void onActivate(MainController controller, Display display)
-    {
+    public void onActivate(MainController controller, Display display) {
+        display.invalidateMainLayout();
         display.setSize(350, 300);
         display.setResizable(false);
         display.setLocationRelativeTo(null);
@@ -25,8 +24,7 @@ public class LoginState implements DisplayState {
         display.setVisible(true);
     }
 
-    public void onDeactivate(MainController controller, Display display)
-    {
+    public void onDeactivate(MainController controller, Display display) {
         display.remove(loginPanel);
     }
 

@@ -25,6 +25,11 @@ public class MainController {
         //activeUser = new User();
         //display.initializeMainLayout();
         //storeRequest();
+
+        // TODO: Properly set the user and whatnot, for now this generic user will work
+        activeUser = new User();
+
+        storeRequest();
     }
 
     public void createAccountRequest() {
@@ -40,10 +45,15 @@ public class MainController {
         //display.removeCreateAccount();
         //activeUser = new User();
         //display.initializeMainLayout();
+
+        // TODO: Properly set the user and whatnot, for now this generic user will work
+        activeUser = new User();
+
+        storeRequest();
     }
 
     public void storeRequest() {
-        //display.displayStore();
+        display.setState(new StoreState());
     }
 
     public void libraryRequest() {
