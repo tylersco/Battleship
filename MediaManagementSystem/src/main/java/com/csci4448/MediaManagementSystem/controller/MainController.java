@@ -1,7 +1,6 @@
 package com.csci4448.MediaManagementSystem.controller;
 
 import com.csci4448.MediaManagementSystem.model.*;
-import com.csci4448.MediaManagementSystem.state.*;
 import com.csci4448.MediaManagementSystem.ui.*;
 
 public class MainController {
@@ -11,7 +10,7 @@ public class MainController {
 
     public MainController() {
         display = new Display(this);
-        display.setState(new LoginState());
+        display.setState(new LoginPanel(this));
     }
 
     public static void main(String[] args) {
@@ -20,20 +19,17 @@ public class MainController {
 
     public void loginSubmitRequest(String username, String password) {
         // TODO: Properly set the user and whatnot, for now this generic user will work
-        //if () {
-        //    display.getActiveState().update(Update.INVALIDINPUT);
-        //}
         activeUser = new User();
 
-        display.setState(new MainContentState());
+        storeRequest();
     }
 
     public void createAccountRequest() {
-        display.setState(new CreateAccountState());
+        display.setState(new CreateAccountPanel(this));
     }
 
     public void createAccountCancelRequest() {
-        display.setState(new LoginState());
+        display.setState(new LoginPanel(this));
     }
 
     public void createAccountSubmitRequest(String firstName, String lastName, String username, String email, String password) {
@@ -44,40 +40,19 @@ public class MainController {
     }
 
     public void storeRequest() {
-        DisplayState state = display.getActiveState();
-        if (state instanceof MainContentState) {
-            state.update(Update.DISPLAYSTORE);
-        } else {
-            //error as MainContentPanel is not currently displayed
-        }
+        display.setState(new GridMediaPanel(this, 10, 10, 10, 10));
     }
 
     public void libraryRequest() {
-        DisplayState state = display.getActiveState();
-        if (state instanceof MainContentState) {
-            state.update(Update.DISPLAYLIBRARY);
-        } else {
-            //error as MainContentPanel is not currently displayed
-        }
+
     }
 
     public void adminRequest() {
-        DisplayState state = display.getActiveState();
-        if (state instanceof MainContentState) {
-            state.update(Update.DISPLAYADMIN);
-
-        } else {
-            //error as MainContentPanel is not currently displayed
-        }
+        display.setState(new AdminEditPanel(this));
     }
 
     public void addFundsRequest() {
-        DisplayState state = display.getActiveState();
-        if (state instanceof MainContentState) {
-            state.update(Update.DISPLAYADDFUNDS);
-        } else {
-            //error as MainContentPanel is not currently displayed
-        }
+
     }
 
     public User getUser() { return activeUser; }

@@ -1,7 +1,6 @@
-package com.csci4448.MediaManagementSystem.state;
+package com.csci4448.MediaManagementSystem.ui;
 
 import com.csci4448.MediaManagementSystem.controller.MainController;
-import com.csci4448.MediaManagementSystem.ui.Display;
 
 public interface DisplayState {
     // Called when the state is set as the active state

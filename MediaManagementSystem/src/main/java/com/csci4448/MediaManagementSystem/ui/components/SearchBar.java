@@ -1,8 +1,7 @@
-package com.csci4448.MediaManagementSystem.ui;
+package com.csci4448.MediaManagementSystem.ui.components;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class SearchBar extends JPanel {

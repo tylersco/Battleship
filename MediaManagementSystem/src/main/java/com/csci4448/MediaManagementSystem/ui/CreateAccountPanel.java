@@ -1,13 +1,15 @@
 package com.csci4448.MediaManagementSystem.ui;
 
 import com.csci4448.MediaManagementSystem.controller.MainController;
+import com.csci4448.MediaManagementSystem.ui.components.EnterTextField;
+import com.csci4448.MediaManagementSystem.ui.components.TextButton;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class CreateAccountPanel extends JPanel implements ActionListener{
+public class CreateAccountPanel extends JPanel implements ActionListener, DisplayState{
 
     private MainController controller;
 
@@ -87,6 +89,24 @@ public class CreateAccountPanel extends JPanel implements ActionListener{
 
     private void checkUserInput() {
 
+    }
+
+    public void onActivate(MainController controller, Display display) {
+        display.setSize(350, 500);
+        display.setResizable(false);
+        display.setLocationRelativeTo(null);
+
+        display.add(this);
+
+        display.setVisible(true);
+    }
+
+    public void update(Update update) {
+
+    }
+
+    public void onDeactivate(MainController controller, Display display) {
+        display.remove(this);
     }
 
 }

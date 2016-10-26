@@ -1,4 +1,4 @@
-package com.csci4448.MediaManagementSystem.ui;
+package com.csci4448.MediaManagementSystem.ui.components;
 
 import com.csci4448.MediaManagementSystem.controller.MainController;
 
@@ -96,6 +96,7 @@ public class MenuPanel extends JPanel implements ActionListener {
         //ToDo: resize/location of fundsButton
     }
 
+    //ToDo: needs to be reworked for new state format
     public void actionPerformed(ActionEvent event) {
         Object component = event.getSource();
         if (component.equals(storeButton)) {

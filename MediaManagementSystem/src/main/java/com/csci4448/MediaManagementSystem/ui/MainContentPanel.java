@@ -1,18 +1,19 @@
 package com.csci4448.MediaManagementSystem.ui;
 
-
 import com.csci4448.MediaManagementSystem.controller.MainController;
+import com.csci4448.MediaManagementSystem.ui.components.MenuPanel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
-public class MainContentPanel extends JLayeredPane {
+public abstract class MainContentPanel extends JLayeredPane implements DisplayState {
 
     private JScrollPane scrollView;
     private JPanel scrollLayout;
     private MenuPanel menuPanel;
+    private JPanel content;
 
     public MainContentPanel(MainController controller) {
         setLayout(null);
@@ -46,5 +47,34 @@ public class MainContentPanel extends JLayeredPane {
         scrollView.getVerticalScrollBar().setPreferredSize(new Dimension(15, 0));
         //scrollView.getHorizontalScrollBar().setPreferredSize(new Dimension(0, 0));
         add(scrollView, new Integer(1));
+
     }
+
+    public void setContent(JPanel content) {
+        this.content = content;
+        int height = content.getHeight();
+        scrollLayout.setPreferredSize(new Dimension(935,height));
+        scrollLayout.add(content);
+    }
+
+    public void onActivate(MainController controller, Display display) {
+        display.setSize(950, 650);
+        display.setMinimumSize(new Dimension(950, 425));
+        display.setResizable(true);
+        display.setLocationRelativeTo(null);
+
+        display.add(this);
+        display.setVisible(true);
+    }
+
+    public void update(Update update) {
+
+    }
+
+    public void onDeactivate(MainController controller, Display display) {
+        display.remove(this);
+    }
+
+
+
 }
