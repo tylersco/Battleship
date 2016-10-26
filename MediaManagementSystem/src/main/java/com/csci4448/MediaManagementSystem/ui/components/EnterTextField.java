@@ -17,7 +17,7 @@ public class EnterTextField extends JLayeredPane {
 
     private boolean underlaidTextAdded = true;
 
-    public EnterTextField(ActionListener container, String text, Font defaultFont, Color underlaidColor, Color inputColor, boolean hideInput) {
+    public EnterTextField(ActionListener container, String text, Font defaultFont, Color underlaidColor, Color inputColor, boolean hideInput, boolean edit) {
         this.container = container;
 
         setLayout(null);
@@ -50,8 +50,13 @@ public class EnterTextField extends JLayeredPane {
         userInput.setOpaque(false);
         userInput.setBackground(null);
         userInput.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        userInput.setEditable(edit);
         addListeners();
         add(userInput, new Integer(3));
+    }
+
+    public EnterTextField(ActionListener container, String text, Font defaultFont, Color underlaidColor, Color inputColor, boolean hideInput) {
+        this(container, text, defaultFont, underlaidColor, inputColor, hideInput, true);
     }
 
     public String getText() {
@@ -110,4 +115,7 @@ public class EnterTextField extends JLayeredPane {
         underlaidText.setSize(width-6, height);
         userInput.setSize(width-6, height);
     }
+
+    public boolean isEditable() { return userInput.isEditable(); }
+    public void setEditable(boolean edit) { userInput.setEditable(edit); }
 }

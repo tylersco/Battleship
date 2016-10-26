@@ -46,7 +46,7 @@ public class MenuPanel extends JPanel implements ActionListener {
         libraryButton.setLocation(180, (55-(int)size.getHeight())/2);
         add(libraryButton);
 
-        adminButton = new TextButton(this, "Admin", mainButtonFont, defaultColor, enteredColor, selectedColor);
+        adminButton = new TextButton(this, "Individual (Temp)", mainButtonFont, defaultColor, enteredColor, selectedColor);
         size = adminButton.getPreferredSize();
         adminButton.setSize(size);
         adminButton.setLocation(290, (55-(int)size.getHeight())/2);

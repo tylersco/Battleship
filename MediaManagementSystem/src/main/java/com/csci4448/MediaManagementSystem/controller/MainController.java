@@ -54,7 +54,7 @@ public class MainController {
     }
 
     public void adminRequest() {
-        display.setState(new AdminEditPanel(this));
+        display.setState(new IndividualMediaPanel(this, null));
     }
 
     public void addFundsRequest() {
