@@ -9,7 +9,7 @@ public interface DisplayState {
 
     // Called inorder to update the current state
     //ToDo: change string parameter to some input/update class that can hold values and info for updating
-    void update(String update);
+    void update(Update update);
 
     // Called when the state is no longer the active state
     void onDeactivate(MainController controller, Display display);

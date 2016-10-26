@@ -20,9 +20,17 @@ public class MainContentState implements DisplayState {
         display.setVisible(true);
     }
 
-    public void update(String update) {
-        if (update.equals("store")) {
+    public void update(Update update) {
+        //ToDo: add basic methods in MainContentPanel to handle changing panels, or add setState to MainContentPanel and have it set a StoreState, LibraryState, etc. just like the display does
+        switch (update) {
+            case DISPLAYSTORE:
 
+            case DISPLAYLIBRARY:
+
+            case DISPLAYADMIN:
+
+            default:
+                break;
         }
     }
 

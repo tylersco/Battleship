@@ -23,7 +23,7 @@ public class CreateAccountState implements DisplayState {
         display.setVisible(true);
     }
 
-    public void onUpdate(String update) {
+    public void update(Update update) {
 
     }
 

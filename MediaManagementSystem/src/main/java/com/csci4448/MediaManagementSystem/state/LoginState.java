@@ -23,8 +23,13 @@ public class LoginState implements DisplayState {
         display.setVisible(true);
     }
 
-    public void onUpdate(String update) {
-
+    public void update(Update update) {
+        switch (update) {
+            case INVALIDINPUT:
+                //ToDo: notify of invalid input
+            default:
+                break;
+        }
     }
 
     public void onDeactivate(MainController controller, Display display) {

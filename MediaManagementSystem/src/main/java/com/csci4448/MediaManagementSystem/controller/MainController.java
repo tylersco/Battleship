@@ -20,6 +20,9 @@ public class MainController {
 
     public void loginSubmitRequest(String username, String password) {
         // TODO: Properly set the user and whatnot, for now this generic user will work
+        //if () {
+        //    display.getActiveState().update(Update.INVALIDINPUT);
+        //}
         activeUser = new User();
 
         display.setState(new MainContentState());
@@ -34,11 +37,6 @@ public class MainController {
     }
 
     public void createAccountSubmitRequest(String firstName, String lastName, String username, String email, String password) {
-        //ToDo: check if valid input, if not inform display
-        //display.removeCreateAccount();
-        //activeUser = new User();
-        //display.initializeMainLayout();
-
         // TODO: Properly set the user and whatnot, for now this generic user will work
         activeUser = new User();
 
@@ -48,7 +46,7 @@ public class MainController {
     public void storeRequest() {
         DisplayState state = display.getActiveState();
         if (state instanceof MainContentState) {
-            state.update("store");
+            state.update(Update.DISPLAYSTORE);
         } else {
             //error as MainContentPanel is not currently displayed
         }
@@ -57,7 +55,7 @@ public class MainController {
     public void libraryRequest() {
         DisplayState state = display.getActiveState();
         if (state instanceof MainContentState) {
-            state.update("library");
+            state.update(Update.DISPLAYLIBRARY);
         } else {
             //error as MainContentPanel is not currently displayed
         }
@@ -66,7 +64,8 @@ public class MainController {
     public void adminRequest() {
         DisplayState state = display.getActiveState();
         if (state instanceof MainContentState) {
-            state.update("admin");
+            state.update(Update.DISPLAYADMIN);
+
         } else {
             //error as MainContentPanel is not currently displayed
         }
@@ -75,7 +74,7 @@ public class MainController {
     public void addFundsRequest() {
         DisplayState state = display.getActiveState();
         if (state instanceof MainContentState) {
-            state.update("addFunds");
+            state.update(Update.DISPLAYADDFUNDS);
         } else {
             //error as MainContentPanel is not currently displayed
         }
