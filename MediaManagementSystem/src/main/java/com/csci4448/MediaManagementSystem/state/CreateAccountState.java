@@ -13,7 +13,6 @@ public class CreateAccountState implements DisplayState {
     }
 
     public void onActivate(MainController controller, Display display) {
-        display.invalidateMainLayout();
         display.setSize(350, 500);
         display.setResizable(false);
         display.setLocationRelativeTo(null);
@@ -22,6 +21,10 @@ public class CreateAccountState implements DisplayState {
         display.add(createAccountPanel);
 
         display.setVisible(true);
+    }
+
+    public void onUpdate(String update) {
+
     }
 
     public void onDeactivate(MainController controller, Display display) {

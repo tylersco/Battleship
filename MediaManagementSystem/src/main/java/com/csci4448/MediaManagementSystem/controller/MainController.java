@@ -19,17 +19,10 @@ public class MainController {
     }
 
     public void loginSubmitRequest(String username, String password) {
-        //ToDo: check if valid input, if not inform display
-        //display.removeLogin();
-        //ToDo: add user from login, not a new user
-        //activeUser = new User();
-        //display.initializeMainLayout();
-        //storeRequest();
-
         // TODO: Properly set the user and whatnot, for now this generic user will work
         activeUser = new User();
 
-        storeRequest();
+        display.setState(new MainContentState());
     }
 
     public void createAccountRequest() {
@@ -53,19 +46,39 @@ public class MainController {
     }
 
     public void storeRequest() {
-        display.setState(new StoreState());
+        DisplayState state = display.getActiveState();
+        if (state instanceof MainContentState) {
+            state.update("store");
+        } else {
+            //error as MainContentPanel is not currently displayed
+        }
     }
 
     public void libraryRequest() {
-
+        DisplayState state = display.getActiveState();
+        if (state instanceof MainContentState) {
+            state.update("library");
+        } else {
+            //error as MainContentPanel is not currently displayed
+        }
     }
 
     public void adminRequest() {
-
+        DisplayState state = display.getActiveState();
+        if (state instanceof MainContentState) {
+            state.update("admin");
+        } else {
+            //error as MainContentPanel is not currently displayed
+        }
     }
 
     public void addFundsRequest() {
-
+        DisplayState state = display.getActiveState();
+        if (state instanceof MainContentState) {
+            state.update("addFunds");
+        } else {
+            //error as MainContentPanel is not currently displayed
+        }
     }
 
     public User getUser() { return activeUser; }
