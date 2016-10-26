@@ -2,6 +2,7 @@ package com.csci4448.MediaManagementSystem.controller;
 
 import com.csci4448.MediaManagementSystem.model.*;
 import com.csci4448.MediaManagementSystem.ui.*;
+import com.csci4448.MediaManagementSystem.ui.components.MediaListing;
 
 public class MainController {
 
@@ -40,7 +41,12 @@ public class MainController {
     }
 
     public void storeRequest() {
-        display.setState(new GridMediaPanel(this, 10, 10, 10, 10));
+        GridMediaPanel store = new GridMediaPanel(this, 215, 250, 15, 35);
+        //ToDo: populate store with media in db
+        for (int i = 0; i < 100; i++) {
+            store.addMediaListing(new MediaListing());
+        }
+        display.setState(store);
     }
 
     public void libraryRequest() {

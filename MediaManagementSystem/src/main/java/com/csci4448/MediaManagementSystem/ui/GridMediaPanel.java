@@ -19,22 +19,17 @@ public class GridMediaPanel extends MainContentPanel {
     private int marginHeight;
     private int count = 0;
 
-    public GridMediaPanel(MainController controller, int cellWidth, int cellHeight, int maginWidth, int marginHeight) {
+    public GridMediaPanel(MainController controller, int cellWidth, int cellHeight, int marginWidth, int marginHeight) {
         super(controller);
         this.controller = controller;
         this.cellWidth = cellWidth;
         this.cellHeight = cellHeight;
-        this.marginWidth = maginWidth;
+        this.marginWidth = marginWidth;
         this.marginHeight = marginHeight;
-        view = new JPanel();
-        view.setLayout(null);
-        view.setSize(935, 0);
-        view.setLocation(10, 10);
-
-        setContent(view);
+        view = getContent();
     }
 
-    public int addMediaListing(MediaListing media) {
+    public void addMediaListing(MediaListing media) {
         int col = count % columns;
         int row = count / columns;
         media.setSize(cellWidth, cellHeight);
@@ -42,10 +37,10 @@ public class GridMediaPanel extends MainContentPanel {
         view.add(media);
         count++;
         if (col == 0) {
-            //System.out.println(Integer.toString(getHeight()));
-            setSize(935, getHeight() + cellHeight + marginHeight);
+            view.setSize(935, view.getHeight() + cellHeight + marginHeight);
         }
-        return 0;
+        updateContentSize();
+
     }
 
 

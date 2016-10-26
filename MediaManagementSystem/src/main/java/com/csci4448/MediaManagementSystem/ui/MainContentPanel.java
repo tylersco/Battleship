@@ -24,6 +24,10 @@ public abstract class MainContentPanel extends JLayeredPane implements DisplaySt
                 int height = (int) newDim.getHeight();
 
                 scrollView.setSize(width, height-55);
+                scrollLayout.setPreferredSize(new Dimension(width - 15, (int)scrollLayout.getPreferredSize().getHeight()));
+                if (content != null) {
+                    content.setLocation(((width - 15) - content.getWidth())/2, 0);
+                }
                 menuPanel.setSize(width, 55);
                 menuPanel.resizeMenu(width, 55);
             }
@@ -38,7 +42,6 @@ public abstract class MainContentPanel extends JLayeredPane implements DisplaySt
         scrollLayout.setLayout(null);
         scrollLayout.setBackground(new Color(237, 237, 237));
 
-        System.out.println(Integer.toString((int)scrollLayout.getPreferredSize().getHeight()));
         scrollView = new JScrollPane(scrollLayout);
         scrollView.setLocation(0, 55);
         scrollView.setSize(950, 700);
@@ -48,6 +51,16 @@ public abstract class MainContentPanel extends JLayeredPane implements DisplaySt
         //scrollView.getHorizontalScrollBar().setPreferredSize(new Dimension(0, 0));
         add(scrollView, new Integer(1));
 
+        content = new JPanel();
+        content.setLayout(null);
+        content.setSize(935, 0);
+        content.setLocation(10, 10);
+        scrollLayout.add(content);
+
+    }
+
+    public JPanel getContent() {
+        return content;
     }
 
     public void setContent(JPanel content) {
@@ -55,6 +68,11 @@ public abstract class MainContentPanel extends JLayeredPane implements DisplaySt
         int height = content.getHeight();
         scrollLayout.setPreferredSize(new Dimension(935,height));
         scrollLayout.add(content);
+    }
+
+    public void updateContentSize() {
+        int height = content.getHeight();
+        scrollLayout.setPreferredSize(new Dimension(935,height));
     }
 
     public void onActivate(MainController controller, Display display) {
