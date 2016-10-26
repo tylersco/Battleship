@@ -2,6 +2,7 @@ package com.csci4448.MediaManagementSystem.ui;
 
 import com.csci4448.MediaManagementSystem.controller.*;
 import com.csci4448.MediaManagementSystem.model.*;
+import com.csci4448.MediaManagementSystem.state.*;
 
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
@@ -17,18 +18,47 @@ public class Display extends JFrame {
     private JScrollPane scrollView;
     private JPanel scrollLayout;
     private MenuPanel menuPanel;
-    private boolean adminEditMode;
 
-    private LoginPanel loginPanel;
-    private CreateAccountPanel createAccountPanel;
+    private DisplayState activeState;
+    private boolean isMainLayoutValid;
 
     public Display(MainController controller) {
         super("Media");
         this.controller = controller;
+        this.activeState = null;
+        this.isMainLayoutValid = false;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    public void initializeMainLayout(User user) {
+    public void setState(DisplayState state) {
+        if (activeState != null)
+            activeState.onDeactivate(controller, this);
+
+        activeState = state;
+        if (activeState != null)
+            activeState.onActivate(controller, this);
+    }
+
+    public DisplayState getActiveState() { return activeState; }
+
+    // Gets the scrollLayout that represents the main content when the window is in the main layout.
+    // DisplayStates that only change the content of the main window, and not the overall window itself (like LoginState
+    // and CreateAccountState do), should use this function to change the main window contents.
+    public JPanel getMainWindowContent() { return scrollLayout; }
+
+    // Called by the states when they change the overall layout of the window from what is considered the "main layout".
+    // This relies on the states to call this when needed, which opens it up to bugs, but should work for now.
+    public void invalidateMainLayout() {
+        if (isMainLayoutValid)
+            remove(mainLayout);
+
+        isMainLayoutValid = false;
+    }
+
+    public void ensureMainLayout() {
+        if (isMainLayoutValid)
+            return;
+
         setSize(950, 650);
         setMinimumSize(new Dimension(950, 425));
         setResizable(true);
@@ -69,53 +99,6 @@ public class Display extends JFrame {
 
         add(mainLayout);
         setVisible(true);
+        isMainLayoutValid = true;
     }
-
-    public void displayLogin() {
-        setSize(350, 300);
-        setResizable(false);
-        setLocationRelativeTo(null);
-
-        loginPanel = new LoginPanel(controller);
-        add(loginPanel);
-
-        setVisible(true);
-    }
-
-    public void removeLogin() {
-        remove(loginPanel);
-    }
-
-    public void displayCreateAccount() {
-        setSize(350, 500);
-        setResizable(false);
-        setLocationRelativeTo(null);
-
-        createAccountPanel = new CreateAccountPanel(controller);
-        add(createAccountPanel);
-
-        setVisible(true);
-    }
-
-    public void removeCreateAccount() {
-        remove(createAccountPanel);
-    }
-
-    public void displayStore(/*ArrayList<Media>*/) {
-        GridMediaPanel g = new GridMediaPanel(controller, 215, 250, 15, 35);
-        scrollLayout.add(g);
-        g.setLocation(15, 10);
-        for(int i = 0; i < 100; i++) {
-            g.addMediaListing(new MediaListing());
-        }
-        scrollLayout.setPreferredSize(new Dimension(935, g.getHeight()));
-        //scrollLayout.invalidate();
-        //scrollView.repaint();
-
-    }
-
-    public void displayLibrary(/*ArrayList<Media>*/) {
-
-    }
-
 }
