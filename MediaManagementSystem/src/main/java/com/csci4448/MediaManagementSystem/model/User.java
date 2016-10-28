@@ -12,12 +12,16 @@ public class User {
 
     @Id
     @GeneratedValue
-    @Column(name = "id")
     private int id;
 
+    @Column(unique = true)
     private String username;
+
     private String password;
+
+    @Column(unique = true)
     private String email;
+
     private String firstName;
     private String lastName;
     private Boolean isAdmin;
@@ -28,7 +32,7 @@ public class User {
         email = "";
         firstName = "";
         lastName = "";
-        isAdmin = new Boolean(true); // TODO: For now, all users are admins until we get the database up, for testing
+        isAdmin = true; // TODO: For now, all users are admins until we get the database up, for testing
     }
 
     public int getId() {

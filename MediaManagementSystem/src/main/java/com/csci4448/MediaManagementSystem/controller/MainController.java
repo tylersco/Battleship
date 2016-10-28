@@ -1,5 +1,6 @@
 package com.csci4448.MediaManagementSystem.controller;
 
+import com.csci4448.MediaManagementSystem.services.*;
 import com.csci4448.MediaManagementSystem.model.*;
 import com.csci4448.MediaManagementSystem.ui.*;
 import com.csci4448.MediaManagementSystem.ui.components.MediaListing;
