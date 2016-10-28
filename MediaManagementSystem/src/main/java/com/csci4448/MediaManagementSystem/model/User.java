@@ -1,10 +1,6 @@
 package com.csci4448.MediaManagementSystem.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "USER")
@@ -12,12 +8,16 @@ public class User {
 
     @Id
     @GeneratedValue
-    @Column(name = "id")
     private int id;
 
+    @Column(unique = true)
     private String username;
+
     private String password;
+
+    @Column(unique = true)
     private String email;
+
     private String firstName;
     private String lastName;
     private Boolean isAdmin;

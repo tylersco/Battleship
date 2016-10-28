@@ -1,9 +1,6 @@
 package com.csci4448.MediaManagementSystem.services;
 
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.SessionFactory;
+import org.hibernate.*;
 import org.hibernate.cfg.Configuration;
 
 import java.util.Iterator;
@@ -27,8 +24,10 @@ public class UserServiceImpl implements UserService {
         int userID = -1;
 
         try {
-            // Begin a DB transaction (SQL operation essentially)
+            // Begin a transaction
             transaction = session.beginTransaction();
+
+            //Todo: Need to maintain unique constraint and check if a user has same username or email
 
             // Create new user and all
             User user = new User();
@@ -60,12 +59,14 @@ public class UserServiceImpl implements UserService {
 
     public void deleteUser(int userID) {
 
+        //Todo: Think about returning a value or throwing an exception if the delete doesn't complete
+
         // Open a DB session
         Session session = sessionFactory.openSession();
         Transaction transaction = null;
 
         try {
-            // Begin a transaction (SQL operation essentially)
+            // Begin a transaction
             transaction = session.beginTransaction();
 
             // Get user object, delete it, commit transaction
@@ -90,7 +91,7 @@ public class UserServiceImpl implements UserService {
         Iterator userIterator = null;
 
         try {
-            // Begin a transaction (SQL operation essentially)
+            // Begin a transaction
             transaction = session.beginTransaction();
 
             // Get a list of all users as an iterator
@@ -107,6 +108,31 @@ public class UserServiceImpl implements UserService {
         }
 
         return userIterator;
+
+    }
+
+    public User getUser(String username, String password) {
+
+        // Open a DB session
+        Session session = sessionFactory.openSession();
+        Transaction transaction = null;
+
+        User user = null;
+
+        try {
+            // Begin a transaction
+            transaction = session.beginTransaction();
+
+            user = (User) session.createQuery("from User where username = :username and password = :password").setParameter("username", username).setParameter("password", password).uniqueResult();
+            transaction.commit();
+        } catch (HibernateException ex) {
+            if (transaction != null)
+                transaction.rollback();
+        } finally {
+            session.close();
+        }
+
+        return user;
 
     }
 
