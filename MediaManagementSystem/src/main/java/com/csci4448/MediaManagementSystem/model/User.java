@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class User {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(unique = true, nullable = false)
@@ -31,12 +31,8 @@ public class User {
     //Todo: Implement personalInventory hash table. Not sure the best way to do this
 
     public User() {
-        username = "";
-        password = "";
-        email = "";
-        firstName = "";
-        lastName = "";
-        isAdmin = true; // TODO: For now, all users are admins until we get the database up, for testing
+        firstName = null;
+        lastName = null;
     }
 
     public int getId() {
@@ -49,10 +45,6 @@ public class User {
 
     public void setUsername(String _username) {
         username = _username;
-    }
-
-    public String getPassword() {
-        return password;
     }
 
     public void setPassword(String _password) {
@@ -96,7 +88,8 @@ public class User {
     }
 
     public void setAccountBalance(int _accountBalance) {
-        accountBalance = _accountBalance;
+        if (_accountBalance >= 0)
+            accountBalance = _accountBalance;
     }
 
     @Override

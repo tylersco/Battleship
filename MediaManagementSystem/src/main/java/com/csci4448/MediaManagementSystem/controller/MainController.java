@@ -20,10 +20,18 @@ public class MainController {
     }
 
     public void loginSubmitRequest(String username, String password) {
-        // TODO: Properly set the user and whatnot, for now this generic user will work
-        activeUser = new User();
 
-        storeRequest();
+        UserService userService = new UserServiceImpl();
+        User user = userService.getUser(username, password);
+
+        if (user != null) {
+            activeUser = user;
+            storeRequest();
+        }
+        else {
+            //Todo: Pass error message to UI saying that either username or password was incorrect
+        }
+
     }
 
     public void createAccountRequest() {
@@ -35,10 +43,24 @@ public class MainController {
     }
 
     public void createAccountSubmitRequest(String firstName, String lastName, String username, String email, String password) {
-        // TODO: Properly set the user and whatnot, for now this generic user will work
-        activeUser = new User();
 
-        storeRequest();
+        UserService userService = new UserServiceImpl();
+        User existingUser = userService.getUser(username, password);
+
+        if (existingUser != null) {
+            //ToDo: Send error message in UI that user already exists with that username
+        }
+        else {
+            int res = userService.addUser(username, password, email, firstName, lastName, false);
+            if (res == -1) {
+                //ToDo: Error creating user, send error message to UI
+            }
+            else {
+                activeUser = userService.getUser(username, password);
+                storeRequest();
+            }
+        }
+
     }
 
     public void storeRequest() {

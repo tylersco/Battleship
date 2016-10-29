@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class Review {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(nullable = false)
@@ -20,11 +20,6 @@ public class Review {
     @JoinColumn(name = "userID")
     private User user;
 
-    //Todo: Implement personalInventory hash table. Not sure the best way to do this
-
-    public Review() {
-    }
-
     public int getID() {
         return id;
     }
@@ -34,7 +29,8 @@ public class Review {
     }
 
     public void setRatingValue(int _ratingValue) {
-        ratingValue = _ratingValue;
+        if (_ratingValue >= 1 && _ratingValue <= 5)
+            ratingValue = _ratingValue;
     }
 
     public String getReviewText() {
@@ -47,6 +43,11 @@ public class Review {
 
     public User getUser() {
         return user;
+    }
+
+    @Override
+    public String toString() {
+        return "User: " + user.getUsername() + "\nReview: " + reviewText + "\nRating: " + ratingValue + "\n";
     }
 
 }

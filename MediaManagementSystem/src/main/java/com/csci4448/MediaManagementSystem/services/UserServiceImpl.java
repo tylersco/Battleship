@@ -30,18 +30,16 @@ public class UserServiceImpl implements UserService {
             // Begin a transaction
             transaction = session.beginTransaction();
 
-            //Todo: Need to maintain unique constraint and check if a user has same username or email
-
             // Create new user and all
             User user = new User();
             user.setUsername(username);
             user.setPassword(password);
             user.setEmail(email);
 
-            if (firstName != null)
+            if (firstName != null && !firstName.equals(""))
                 user.setFirstName(firstName);
 
-            if (lastName != null)
+            if (lastName != null && !lastName.equals(""))
                 user.setLastName(lastName);
 
             user.setIsAdmin(isAdmin);
