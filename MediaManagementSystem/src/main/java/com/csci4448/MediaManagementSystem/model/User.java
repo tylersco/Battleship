@@ -1,10 +1,6 @@
 package com.csci4448.MediaManagementSystem.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "USER")
@@ -14,17 +10,25 @@ public class User {
     @GeneratedValue
     private int id;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String username;
 
+    @Column(nullable = false)
     private String password;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String email;
 
     private String firstName;
     private String lastName;
+
+    @Column(nullable = false)
     private Boolean isAdmin;
+
+    @Column(nullable = false)
+    private int accountBalance = 0;
+
+    //Todo: Implement personalInventory hash table. Not sure the best way to do this
 
     public User() {
         username = "";
@@ -37,10 +41,6 @@ public class User {
 
     public int getId() {
         return id;
-    }
-
-    public void setID(int _id) {
-        id = _id;
     }
 
     public String getUsername() {
@@ -89,6 +89,14 @@ public class User {
 
     public void setIsAdmin(boolean _isAdmin) {
         isAdmin = _isAdmin;
+    }
+
+    public int getAccountBalance() {
+        return accountBalance;
+    }
+
+    public void setAccountBalance(int _accountBalance) {
+        accountBalance = _accountBalance;
     }
 
     @Override
