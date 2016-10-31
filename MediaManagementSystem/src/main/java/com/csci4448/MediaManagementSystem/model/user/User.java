@@ -1,4 +1,4 @@
-package com.csci4448.MediaManagementSystem.model;
+package com.csci4448.MediaManagementSystem.model.user;
 
 import javax.persistence.*;
 
@@ -35,59 +35,59 @@ public class User {
         lastName = null;
     }
 
-    public int getId() {
+    protected int getId() {
         return id;
     }
 
-    public String getUsername() {
+    protected String getUsername() {
         return username;
     }
 
-    public void setUsername(String _username) {
+    protected void setUsername(String _username) {
         username = _username;
     }
 
-    public void setPassword(String _password) {
+    protected void setPassword(String _password) {
         password = _password;
     }
 
-    public String getEmail() {
+    protected String getEmail() {
         return email;
     }
 
-    public void setEmail(String _email) {
+    protected void setEmail(String _email) {
         email = _email;
     }
 
-    public String getFirstName() {
+    protected String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(String _firstName) {
+    protected void setFirstName(String _firstName) {
         firstName = _firstName;
     }
 
-    public String getLastName() {
+    protected String getLastName() {
         return lastName;
     }
 
-    public void setLastName(String _lastName) {
+    protected void setLastName(String _lastName) {
         lastName = _lastName;
     }
 
-    public boolean getIsAdmin() {
+    protected boolean getIsAdmin() {
         return isAdmin;
     }
 
-    public void setIsAdmin(boolean _isAdmin) {
+    protected void setIsAdmin(boolean _isAdmin) {
         isAdmin = _isAdmin;
     }
 
-    public int getAccountBalance() {
+    protected int getAccountBalance() {
         return accountBalance;
     }
 
-    public void setAccountBalance(int _accountBalance) {
+    protected void setAccountBalance(int _accountBalance) {
         if (_accountBalance >= 0)
             accountBalance = _accountBalance;
     }

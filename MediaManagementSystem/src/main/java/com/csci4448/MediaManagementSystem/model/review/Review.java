@@ -1,4 +1,6 @@
-package com.csci4448.MediaManagementSystem.model;
+package com.csci4448.MediaManagementSystem.model.review;
+
+import com.csci4448.MediaManagementSystem.model.user.User;
 
 import javax.persistence.*;
 
