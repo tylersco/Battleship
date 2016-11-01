@@ -39,7 +39,7 @@ public class User {
         return id;
     }
 
-    protected String getUsername() {
+    public String getUsername() {
         return username;
     }
 
@@ -51,7 +51,7 @@ public class User {
         password = _password;
     }
 
-    protected String getEmail() {
+    public String getEmail() {
         return email;
     }
 
@@ -59,7 +59,7 @@ public class User {
         email = _email;
     }
 
-    protected String getFirstName() {
+    public String getFirstName() {
         return firstName;
     }
 
@@ -67,7 +67,7 @@ public class User {
         firstName = _firstName;
     }
 
-    protected String getLastName() {
+    public String getLastName() {
         return lastName;
     }
 
