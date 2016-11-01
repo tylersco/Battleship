@@ -22,7 +22,7 @@ public class Review {
     @JoinColumn(name = "userID")
     private User user;
 
-    public int getID() {
+    protected int getID() {
         return id;
     }
 
@@ -30,7 +30,7 @@ public class Review {
         return ratingValue;
     }
 
-    public void setRatingValue(int _ratingValue) {
+    protected void setRatingValue(int _ratingValue) {
         if (_ratingValue >= 1 && _ratingValue <= 5)
             ratingValue = _ratingValue;
     }
@@ -39,11 +39,11 @@ public class Review {
         return reviewText;
     }
 
-    public void setReviewText(String _reviewText) {
+    protected void setReviewText(String _reviewText) {
         reviewText = _reviewText;
     }
 
-    public User getUser() {
+    protected User getUser() {
         return user;
     }
 
