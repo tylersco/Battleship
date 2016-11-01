@@ -1,18 +1,18 @@
 package com.csci4448.MediaManagementSystem.controller;
 
-import com.csci4448.MediaManagementSystem.services.*;
-import com.csci4448.MediaManagementSystem.model.*;
+import com.csci4448.MediaManagementSystem.model.user.*;
 import com.csci4448.MediaManagementSystem.ui.*;
 import com.csci4448.MediaManagementSystem.ui.components.MediaListing;
 
 public class MainController {
 
     private Display display;
-    private User activeUser;
+    private UserDAO userDAO;
 
     public MainController() {
         display = new Display(this);
         display.setState(new LoginPanel(this));
+        userDAO = new UserDAO();
     }
 
     public static void main(String[] args) {
@@ -21,11 +21,8 @@ public class MainController {
 
     public void loginSubmitRequest(String username, String password) {
 
-        UserService userService = new UserServiceImpl();
-        User user = userService.getUser(username, password);
-
-        if (user != null) {
-            activeUser = user;
+        if (userDAO.userExists(username, password)) {
+            userDAO.setActiveUser(username, password);
             storeRequest();
         }
         else {
@@ -44,19 +41,16 @@ public class MainController {
 
     public void createAccountSubmitRequest(String firstName, String lastName, String username, String email, String password) {
 
-        UserService userService = new UserServiceImpl();
-        User existingUser = userService.getUser(username, password);
-
-        if (existingUser != null) {
+        if (userDAO.userExists(username, password)) {
             //ToDo: Send error message in UI that user already exists with that username
         }
         else {
-            int res = userService.addUser(username, password, email, firstName, lastName, false);
+            int res = userDAO.addUser(username, password, email, firstName, lastName, false);
             if (res == -1) {
                 //ToDo: Error creating user, send error message to UI
             }
             else {
-                activeUser = userService.getUser(username, password);
+                userDAO.setActiveUser(username, password);
                 storeRequest();
             }
         }
@@ -84,7 +78,8 @@ public class MainController {
 
     }
 
-    public User getUser() { return activeUser; }
-    public void setUser(User user) { activeUser = user; }
-    public boolean hasUser() { return activeUser != null; }
+    public UserDAO getUserDAO() {
+        return userDAO;
+    }
+    public boolean hasActiveUser() { return userDAO.activeUserSet(); }
 }

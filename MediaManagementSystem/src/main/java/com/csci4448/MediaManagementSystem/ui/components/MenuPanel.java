@@ -50,7 +50,7 @@ public class MenuPanel extends JPanel implements ActionListener {
         size = adminButton.getPreferredSize();
         adminButton.setSize(size);
         adminButton.setLocation(290, (55-(int)size.getHeight())/2);
-        if (controller.getUser().getIsAdmin())
+        if (controller.getUserDAO().isAdmin())
             add(adminButton);
 
         accountButton = new TextButton(this, "Account", subButtonFont, defaultColor, enteredColor, selectedColor);

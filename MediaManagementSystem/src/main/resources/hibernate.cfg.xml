@@ -26,8 +26,8 @@
             true
         </property>
 
-        <mapping class="com.csci4448.MediaManagementSystem.model.User" />
-        <mapping class="com.csci4448.MediaManagementSystem.model.Review" />
+        <mapping class="com.csci4448.MediaManagementSystem.model.user.User" />
+        <mapping class="com.csci4448.MediaManagementSystem.model.review.Review" />
 
     </session-factory>
 </hibernate-configuration>
