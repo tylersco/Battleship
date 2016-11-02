@@ -1,5 +1,7 @@
 package com.csci4448.MediaManagementSystem.ui.components;
 
+import com.csci4448.MediaManagementSystem.controller.MainController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -7,58 +9,64 @@ import java.awt.event.ActionListener;
 
 public class MediaListing extends JPanel implements ActionListener {
 
-    private int leftMargin = 0;
-    private int rightMargin = 0;
-    private int topMargin = 0;
-    private int bottomMargin = 0;
+    private MainController controller;
+
+    private int leftMargin = 6;
+    private int rightMargin = 6;
+    private int topMargin = 6;
+    private int bottomMargin = 2;
 
     private double imageWidthRatio = 1;
-    private double imageHeightRatio = 1;
+    private double imageHeightRatio = .75;
 
+    private int mediaId;
     private MediaImage image;
-    private TextButton actionButton;
-    private TextButton title;
+    private TextButton priceButton;
+    private TextButton titleButton;
 
-    public MediaListing() {
+    private Color defaultColor = new Color(75, 75, 75, 180);
+    private Color enteredColor = new Color(75, 75, 75);
+
+    public MediaListing(MainController controller, int mediaId, String imagePath, String title, double price) {
+        this.controller = controller;
+        this.mediaId = mediaId;
+
         setLayout(null);
         setBackground(new Color(250, 250, 250));
-    }
+        setBorder(BorderFactory.createMatteBorder(0, 1, 1, 1, new Color(228, 228, 228)));
 
-    public void setActionButton(TextButton actionButton) {
-        if (this.actionButton != null) {
-            remove(this.actionButton);
-        }
-        this.actionButton = actionButton;
-        add(actionButton);
-        actionButton.setLocation(leftMargin, topMargin);
-    }
-
-    public void setTitle(TextButton title) {
-        if (this.title != null) {
-            remove(this.title);
-        }
-        this.title = title;
-        add(title);
-        title.setLocation(0, 0);
-    }
-
-    public void setImage(MediaImage image) {
-        if (this.image != null) {
-            remove(this.image);
-        }
-        this.image = image;
+        image = new MediaImage(imagePath);
         add(image);
         image.setLocation(leftMargin, topMargin);
+
+        titleButton = new TextButton(this, title, new Font("Helvetice Neue", Font.PLAIN, 20), defaultColor, enteredColor);
+        add(titleButton);
+        priceButton = new TextButton(this, "$" + price, new Font("Helvetice Neue", Font.PLAIN, 14), defaultColor, enteredColor);
+        add(priceButton);
     }
 
     public void setSize(int width, int height) {
         super.setSize(width, height);
+        int contentsWidth = width - leftMargin - rightMargin;
+        int contentsHeight = height - topMargin - bottomMargin;
         if (image != null) {
-            image.loadMediaImage((int)((width - leftMargin - rightMargin) * imageWidthRatio), (int)((height - leftMargin - rightMargin) * imageHeightRatio));
+            image.loadMediaImage((int)(contentsWidth * imageWidthRatio), (int)(contentsHeight * imageHeightRatio));
         }
+
+        Dimension size;
+        size = titleButton.getPreferredSize();
+        titleButton.setSize(size);
+        titleButton.setLocation(leftMargin + 5, (int)(contentsHeight * imageHeightRatio) + 8);
+
+        size = priceButton.getPreferredSize();
+        priceButton.setSize(size);
+        priceButton.setLocation(contentsWidth - (int)size.getWidth(), contentsHeight - (int)size.getHeight());
     }
 
     public void actionPerformed(ActionEvent event) {
-
+        Object component = event.getSource();
+        if (component.equals(priceButton) | component.equals(titleButton)) {
+            controller.individualMediaRequest(mediaId);
+        }
     }
 }

@@ -8,8 +8,6 @@ import java.awt.*;
 
 public class GridMediaPanel extends MainContentPanel {
 
-    private MainController controller;
-
     private int columns = 4;
     private int cellWidth;
     private int cellHeight;
@@ -19,7 +17,6 @@ public class GridMediaPanel extends MainContentPanel {
 
     public GridMediaPanel(MainController controller, int cellWidth, int cellHeight, int marginWidth, int marginHeight) {
         super(controller);
-        this.controller = controller;
         this.cellWidth = cellWidth;
         this.cellHeight = cellHeight;
         this.marginWidth = marginWidth;

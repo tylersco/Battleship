@@ -61,8 +61,7 @@ public class MainController {
         GridMediaPanel store = new GridMediaPanel(this, 215, 250, 15, 35);
         //ToDo: populate store with media in db
         for (int i = 0; i < 20; i++) {
-            MediaListing listing = new MediaListing();
-            listing.setImage(new MediaImage("src/main/resources/test.png"));
+            MediaListing listing = new MediaListing(this, 1234, "src/main/resources/test.png", "Title", 3.99);
             store.add(listing);
         }
         display.setState(store);
@@ -78,6 +77,12 @@ public class MainController {
 
     public void addFundsRequest() {
 
+    }
+
+    public void individualMediaRequest(int mediaId) {
+        //ToDo: get info for particular media, mediaId, and add info to panel
+        IndividualMediaPanel indMedia = new IndividualMediaPanel(this);
+        display.setState(indMedia);
     }
 
     public UserDAO getUserDAO() {
