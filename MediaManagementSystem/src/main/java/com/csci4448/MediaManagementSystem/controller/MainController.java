@@ -59,6 +59,7 @@ public class MainController {
 
     public void storeRequest() {
         GridMediaPanel store = new GridMediaPanel(this, 215, 250, 15, 35);
+        store.getMenuPanel().getStoreButton().setIsSelected(true);
         //ToDo: populate store with media in db
         for (int i = 0; i < 20; i++) {
             MediaListing listing = new MediaListing(this, 1234, "src/main/resources/test.png", "Title", 3.99);

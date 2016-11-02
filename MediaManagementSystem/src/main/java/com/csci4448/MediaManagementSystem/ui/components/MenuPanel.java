@@ -36,8 +36,8 @@ public class MenuPanel extends JPanel implements ActionListener {
         Dimension size;
         storeButton = new TextButton(this, "Store", mainButtonFont, defaultColor, enteredColor, selectedColor);
         size = storeButton.getPreferredSize();
-        storeButton.setSize(size);
-        storeButton.setLocation(80, (55-(int)size.getHeight())/2);
+        storeButton.setSize((int)size.getWidth(), 55);
+        storeButton.setLocation(80, 0);
         add(storeButton);
 
         libraryButton = new TextButton(this, "Library", mainButtonFont, defaultColor, enteredColor, selectedColor);
@@ -82,6 +82,14 @@ public class MenuPanel extends JPanel implements ActionListener {
         accountButton.setLocation(width-175, 35);
     }
 
+    public TextButton getStoreButton() {
+        return storeButton;
+    }
+
+    public TextButton getLibraryButton() {
+        return libraryButton;
+    }
+
     public void removeSearchBar() {
         remove(searchBar);
         //ToDo: account/funds buttons locations
@@ -101,19 +109,10 @@ public class MenuPanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent event) {
         Object component = event.getSource();
         if (component.equals(storeButton)) {
-            storeButton.setIsSelected(true);
-            libraryButton.setIsSelected(false);
-            adminButton.setIsSelected(false);
             controller.storeRequest();
         } else if (component.equals(libraryButton)) {
-            storeButton.setIsSelected(false);
-            libraryButton.setIsSelected(true);
-            adminButton.setIsSelected(false);
             controller.libraryRequest();
         } else if (component.equals(adminButton)) {
-            storeButton.setIsSelected(false);
-            libraryButton.setIsSelected(false);
-            adminButton.setIsSelected(true);
             controller.adminRequest();
         } else if (component.equals(fundsButton)) {
             controller.addFundsRequest();
