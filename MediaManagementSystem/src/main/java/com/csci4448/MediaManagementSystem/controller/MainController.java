@@ -11,12 +11,16 @@ public class MainController {
 
     public MainController() {
         display = new Display(this);
-        display.setState(new LoginPanel(this));
+        loginRequest();
         userDAO = new UserDAO();
     }
 
     public static void main(String[] args) {
         MainController c = new MainController();
+    }
+
+    public void loginRequest() {
+        display.setState(new LoginPanel(this));
     }
 
     public void loginSubmitRequest(String username, String password) {
@@ -33,10 +37,6 @@ public class MainController {
 
     public void createAccountRequest() {
         display.setState(new CreateAccountPanel(this));
-    }
-
-    public void createAccountCancelRequest() {
-        display.setState(new LoginPanel(this));
     }
 
     public void createAccountSubmitRequest(String firstName, String lastName, String username, String email, String password) {
@@ -58,7 +58,7 @@ public class MainController {
     }
 
     public void storeRequest() {
-        GridMediaPanel store = new GridMediaPanel(this, 215, 250, 15, 35);
+        GridMediaPanel store = new GridMediaPanel(this, 215, 327, 15, 35);
         store.getMenuPanel().getStoreButton().setIsSelected(true);
         //ToDo: populate store with media in db
         for (int i = 0; i < 20; i++) {
@@ -69,7 +69,15 @@ public class MainController {
     }
 
     public void libraryRequest() {
-
+        GridMediaPanel library = new GridMediaPanel(this, 215, 327, 15, 35);
+        library.getMenuPanel().getLibraryButton().setIsSelected(true);
+        //ToDo: populate library with media in users inventory
+        for (int i = 0; i < 3; i++) {
+            //ToDo: modify MediaListing so it displays owned/rented instead of price
+            MediaListing listing = new MediaListing(this, 1234, "src/main/resources/test.png", "Title", 3.99);
+            library.add(listing);
+        }
+        display.setState(library);
     }
 
     public void adminRequest() {

@@ -83,7 +83,7 @@ public class CreateAccountPanel extends JPanel implements ActionListener, Displa
         if (component.equals(firstName) | component.equals(lastName) | component.equals(username) | component.equals(email) | component.equals(password1) | component.equals(password2) | component.equals(submit)) {
             checkUserInput();
         } else if(component.equals(cancel)) {
-            controller.createAccountCancelRequest();
+            controller.loginRequest();
         }
     }
 

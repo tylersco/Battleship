@@ -6,6 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class MediaListing extends JPanel implements ActionListener {
 
@@ -17,7 +19,7 @@ public class MediaListing extends JPanel implements ActionListener {
     private int bottomMargin = 2;
 
     private double imageWidthRatio = 1;
-    private double imageHeightRatio = .75;
+    private double imageHeightRatio = .8;
 
     private int mediaId;
     private MediaImage image;
@@ -27,7 +29,7 @@ public class MediaListing extends JPanel implements ActionListener {
     private Color defaultColor = new Color(75, 75, 75, 180);
     private Color enteredColor = new Color(75, 75, 75);
 
-    public MediaListing(MainController controller, int mediaId, String imagePath, String title, double price) {
+    public MediaListing(final MainController controller, int mediaId, String imagePath, String title, double price) {
         this.controller = controller;
         this.mediaId = mediaId;
 
@@ -43,6 +45,13 @@ public class MediaListing extends JPanel implements ActionListener {
         add(titleButton);
         priceButton = new TextButton(this, "$" + price, new Font("Helvetice Neue", Font.PLAIN, 14), defaultColor, enteredColor);
         add(priceButton);
+
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                actionPerformed(new ActionEvent(MediaListing.this, 1, "MediaListingClicked"));
+            }
+        });
     }
 
     public void setSize(int width, int height) {
@@ -65,7 +74,7 @@ public class MediaListing extends JPanel implements ActionListener {
 
     public void actionPerformed(ActionEvent event) {
         Object component = event.getSource();
-        if (component.equals(priceButton) | component.equals(titleButton)) {
+        if (component.equals(priceButton) | component.equals(titleButton) | component.equals(this)) {
             controller.individualMediaRequest(mediaId);
         }
     }

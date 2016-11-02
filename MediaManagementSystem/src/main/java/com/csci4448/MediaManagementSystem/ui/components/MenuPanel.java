@@ -22,7 +22,7 @@ public class MenuPanel extends JPanel implements ActionListener {
     private Font subButtonFont = new Font("Helvetice Neue", Font.PLAIN, 12);
     private Color defaultColor = new Color(75, 75, 75, 180);
     private Color enteredColor = new Color(75, 75, 75);
-    private Color selectedColor = new Color(121, 179, 188);
+    private Color selectedColor = new Color(75, 75, 75);
 
     public MenuPanel(MainController controller) {
         this.controller = controller;
@@ -42,8 +42,8 @@ public class MenuPanel extends JPanel implements ActionListener {
 
         libraryButton = new TextButton(this, "Library", mainButtonFont, defaultColor, enteredColor, selectedColor);
         size = libraryButton.getPreferredSize();
-        libraryButton.setSize(size);
-        libraryButton.setLocation(180, (55-(int)size.getHeight())/2);
+        libraryButton.setSize((int)size.getWidth(), 55);
+        libraryButton.setLocation(180, 0);
         add(libraryButton);
 
         adminButton = new TextButton(this, "Admin", mainButtonFont, defaultColor, enteredColor, selectedColor);
