@@ -6,11 +6,9 @@ import javax.swing.*;
 
 public class AdminEditPanel extends MainContentPanel {
 
-    private JPanel view;
-
     public AdminEditPanel(MainController controller) {
         super(controller);
-        view = getContent();
+        getContent();
         //Todo: add all needed components to JPanel view
 
         //This adds the panel that should contain all your components for the admin panel

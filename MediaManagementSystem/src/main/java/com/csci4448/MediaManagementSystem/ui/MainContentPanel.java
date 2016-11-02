@@ -26,10 +26,9 @@ public abstract class MainContentPanel extends JLayeredPane implements DisplaySt
                 scrollView.setSize(width, height-55);
                 scrollLayout.setPreferredSize(new Dimension(width - 15, (int)scrollLayout.getPreferredSize().getHeight()));
                 if (content != null) {
-                    content.setLocation(((width - 15) - content.getWidth())/2, 0);
+                    content.setLocation(((width - 15) - content.getWidth())/2 + 15, 10);
                 }
                 menuPanel.setSize(width, 55);
-                menuPanel.resizeMenu(width, 55);
             }
         });
 
@@ -54,20 +53,13 @@ public abstract class MainContentPanel extends JLayeredPane implements DisplaySt
         content = new JPanel();
         content.setLayout(null);
         content.setSize(935, 0);
-        content.setLocation(10, 10);
+        content.setLocation(15, 10);
         scrollLayout.add(content);
 
     }
 
     public JPanel getContent() {
         return content;
-    }
-
-    public void setContent(JPanel content) {
-        this.content = content;
-        int height = content.getHeight();
-        scrollLayout.setPreferredSize(new Dimension(935,height));
-        scrollLayout.add(content);
     }
 
     public void updateContentSize() {

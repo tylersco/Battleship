@@ -72,7 +72,8 @@ public class MenuPanel extends JPanel implements ActionListener {
         add(searchBar);
     }
 
-    public void resizeMenu(int width, int height) {
+    public void setSize(int width, int height) {
+        super.setSize(width, height);
         //storeButton.setLocation();
         //libraryButton.setLocation();
         searchBar.setLocation(width-185, 10);
