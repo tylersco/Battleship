@@ -29,7 +29,7 @@ public class MediaListing extends JPanel implements ActionListener {
     private Color defaultColor = new Color(75, 75, 75, 180);
     private Color enteredColor = new Color(75, 75, 75);
 
-    public MediaListing(final MainController controller, int mediaId, String imagePath, String title, double price) {
+    public MediaListing(MainController controller, int mediaId, String imagePath, String title, double price) {
         this.controller = controller;
         this.mediaId = mediaId;
 

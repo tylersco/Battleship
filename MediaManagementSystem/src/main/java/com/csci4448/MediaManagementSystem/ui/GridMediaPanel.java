@@ -23,6 +23,7 @@ public class GridMediaPanel extends MainContentPanel {
         this.marginHeight = marginHeight;
     }
 
+    //ToDo: take in a single arraylist of media items in the constructor instead of the controller calling this method
     public void add(MediaListing media) {
         int col = count % columns;
         int row = count / columns;

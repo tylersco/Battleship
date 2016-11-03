@@ -90,7 +90,7 @@ public class MainController {
 
     public void individualMediaRequest(int mediaId) {
         //ToDo: get info for particular media, mediaId, and add info to panel
-        IndividualMediaPanel indMedia = new IndividualMediaPanel(this);
+        IndividualMediaPanel indMedia = new IndividualMediaPanel(this, mediaId, "src/main/resources/test.png", "Title", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque turpis turpis, gravida sed neque nec, ultrices sodales est. Etiam ornare, erat non ullamcorper tempus, ligula sem tincidunt justo, ac rutrum magna felis sit amet nibh. Praesent imperdiet facilisis fermentum. Mauris porta finibus arcu, sit amet venenatis ipsum lacinia sed. Duis feugiat ante eu lobortis mollis.");
         display.setState(indMedia);
     }
 
