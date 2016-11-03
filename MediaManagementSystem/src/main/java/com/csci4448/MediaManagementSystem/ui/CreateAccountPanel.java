@@ -83,12 +83,43 @@ public class CreateAccountPanel extends JPanel implements ActionListener, Displa
         if (component.equals(firstName) | component.equals(lastName) | component.equals(username) | component.equals(email) | component.equals(password1) | component.equals(password2) | component.equals(submit)) {
             checkUserInput();
         } else if(component.equals(cancel)) {
-            controller.createAccountCancelRequest();
+            controller.loginRequest();
         }
     }
 
     private void checkUserInput() {
+        boolean validInput = true;
+        String usernameText = username.getText().trim();
+        String password1Text = password1.getText().trim();
+        String password2Text = password2.getText().trim();
+        String firstNameText = firstName.getText().trim();
+        String lastNameText = lastName.getText().trim();
+        String emailText = email.getText().trim();
 
+        if (usernameText.length() <= 0) {
+            //ToDo: inform needed username
+            validInput = false;
+        }
+        else if (password1Text.length() <= 0) {
+            //ToDo: inform needed password
+            validInput = false;
+        }
+        else if (password2Text.length() <= 0) {
+            //ToDo: inform needed password
+            validInput = false;
+        }
+        else if (emailText.length() <= 0) {
+            //ToDo: inform needed email
+            validInput = false;
+        }
+        else if (!password1Text.equals(password2Text)) {
+            //ToDo: inform that passwords do not match
+            validInput = false;
+        }
+
+        if (validInput) {
+            controller.createAccountSubmitRequest(firstNameText, lastNameText, usernameText, emailText, password1Text);
+        }
     }
 
     public void onActivate(MainController controller, Display display) {

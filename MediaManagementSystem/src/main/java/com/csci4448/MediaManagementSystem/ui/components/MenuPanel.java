@@ -22,7 +22,7 @@ public class MenuPanel extends JPanel implements ActionListener {
     private Font subButtonFont = new Font("Helvetice Neue", Font.PLAIN, 12);
     private Color defaultColor = new Color(75, 75, 75, 180);
     private Color enteredColor = new Color(75, 75, 75);
-    private Color selectedColor = new Color(121, 179, 188);
+    private Color selectedColor = new Color(75, 75, 75);
 
     public MenuPanel(MainController controller) {
         this.controller = controller;
@@ -36,21 +36,21 @@ public class MenuPanel extends JPanel implements ActionListener {
         Dimension size;
         storeButton = new TextButton(this, "Store", mainButtonFont, defaultColor, enteredColor, selectedColor);
         size = storeButton.getPreferredSize();
-        storeButton.setSize(size);
-        storeButton.setLocation(80, (55-(int)size.getHeight())/2);
+        storeButton.setSize((int)size.getWidth(), 55);
+        storeButton.setLocation(80, 0);
         add(storeButton);
 
         libraryButton = new TextButton(this, "Library", mainButtonFont, defaultColor, enteredColor, selectedColor);
         size = libraryButton.getPreferredSize();
-        libraryButton.setSize(size);
-        libraryButton.setLocation(180, (55-(int)size.getHeight())/2);
+        libraryButton.setSize((int)size.getWidth(), 55);
+        libraryButton.setLocation(180, 0);
         add(libraryButton);
 
         adminButton = new TextButton(this, "Individual (Temp)", mainButtonFont, defaultColor, enteredColor, selectedColor);
         size = adminButton.getPreferredSize();
         adminButton.setSize(size);
         adminButton.setLocation(290, (55-(int)size.getHeight())/2);
-        if (controller.getUser().getIsAdmin())
+        if (controller.getUserDAO().isAdmin())
             add(adminButton);
 
         accountButton = new TextButton(this, "Account", subButtonFont, defaultColor, enteredColor, selectedColor);
@@ -72,13 +72,22 @@ public class MenuPanel extends JPanel implements ActionListener {
         add(searchBar);
     }
 
-    public void resizeMenu(int width, int height) {
+    public void setSize(int width, int height) {
+        super.setSize(width, height);
         //storeButton.setLocation();
         //libraryButton.setLocation();
         searchBar.setLocation(width-185, 10);
         //ToDo: shift funds to end of searchBar
         fundsButton.setLocation(width-110, 35);
         accountButton.setLocation(width-175, 35);
+    }
+
+    public TextButton getStoreButton() {
+        return storeButton;
+    }
+
+    public TextButton getLibraryButton() {
+        return libraryButton;
     }
 
     public void removeSearchBar() {
@@ -100,19 +109,10 @@ public class MenuPanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent event) {
         Object component = event.getSource();
         if (component.equals(storeButton)) {
-            storeButton.setIsSelected(true);
-            libraryButton.setIsSelected(false);
-            adminButton.setIsSelected(false);
             controller.storeRequest();
         } else if (component.equals(libraryButton)) {
-            storeButton.setIsSelected(false);
-            libraryButton.setIsSelected(true);
-            adminButton.setIsSelected(false);
             controller.libraryRequest();
         } else if (component.equals(adminButton)) {
-            storeButton.setIsSelected(false);
-            libraryButton.setIsSelected(false);
-            adminButton.setIsSelected(true);
             controller.adminRequest();
         } else if (component.equals(fundsButton)) {
             controller.addFundsRequest();

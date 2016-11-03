@@ -41,8 +41,19 @@ public class TextButton extends JTextField {
     }
 
     public void setIsSelected(boolean isSelected) {
+        if (!this.isSelected && isSelected) {
+            setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, new Color(202, 114, 110)));
+            setLocation(getX(), getY()+2);
+            setSize(getWidth(), getHeight()-2);
+            setForeground(selectedColor);
+        } else if (!isSelected && this.isSelected) {
+            setBorder(BorderFactory.createEmptyBorder());
+            setLocation(getX(), getY()-2);
+            setSize(getWidth(), getHeight()+2);
+            setForeground(defaultColor);
+        }
         this.isSelected = isSelected;
-        if (isSelected) setForeground(selectedColor); else setForeground(defaultColor);
+
     }
 
     public void addMouseListener() {

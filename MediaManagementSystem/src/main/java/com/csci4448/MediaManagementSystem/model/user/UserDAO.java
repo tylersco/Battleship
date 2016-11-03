@@ -1,4 +1,4 @@
-package com.csci4448.MediaManagementSystem.services;
+package com.csci4448.MediaManagementSystem.model.user;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -9,14 +9,14 @@ import org.hibernate.cfg.Configuration;
 import java.util.Iterator;
 import java.util.List;
 
-import com.csci4448.MediaManagementSystem.model.User;
-
-public class UserServiceImpl implements UserService {
+public class UserDAO {
 
     private SessionFactory sessionFactory;
+    private User activeUser;
 
-    public UserServiceImpl() {
+    public UserDAO() {
         sessionFactory = new Configuration().configure().buildSessionFactory();
+        activeUser = null;
     }
 
     public int addUser(String username, String password, String email, String firstName, String lastName, Boolean isAdmin) {
@@ -30,18 +30,16 @@ public class UserServiceImpl implements UserService {
             // Begin a transaction
             transaction = session.beginTransaction();
 
-            //Todo: Need to maintain unique constraint and check if a user has same username or email
-
             // Create new user and all
             User user = new User();
             user.setUsername(username);
             user.setPassword(password);
             user.setEmail(email);
 
-            if (firstName != null)
+            if (firstName != null && !firstName.equals(""))
                 user.setFirstName(firstName);
 
-            if (lastName != null)
+            if (lastName != null && !lastName.equals(""))
                 user.setLastName(lastName);
 
             user.setIsAdmin(isAdmin);
@@ -49,6 +47,7 @@ public class UserServiceImpl implements UserService {
             // Save user and commit transaction
             userID = (Integer) session.save(user);
             transaction.commit();
+            activeUser = user;
         } catch (HibernateException ex) {
             if (transaction != null)
                 transaction.rollback();
@@ -60,9 +59,10 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    public void deleteUser(int userID) {
+    public int deleteUser(int userID) {
 
-        //Todo: Think about returning a value or throwing an exception if the delete doesn't complete
+        if (activeUser == null || !activeUser.getIsAdmin())
+            return -1;
 
         // Open a DB session
         Session session = sessionFactory.openSession();
@@ -79,13 +79,19 @@ public class UserServiceImpl implements UserService {
         } catch (HibernateException ex) {
             if (transaction != null)
                 transaction.rollback();
+            return -2;
         } finally {
             session.close();
         }
 
+        return 0;
+
     }
 
     public Iterator listUsers() {
+
+        if (activeUser == null || !activeUser.getIsAdmin())
+            return null;
 
         // Open a DB session
         Session session = sessionFactory.openSession();
@@ -114,7 +120,7 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    public User getUser(String username, String password) {
+    private User getUser(String username, String password) {
 
         // Open a DB session
         Session session = sessionFactory.openSession();
@@ -138,5 +144,28 @@ public class UserServiceImpl implements UserService {
         return user;
 
     }
+
+    public Boolean userExists(String username, String password) {
+
+        User user = getUser(username, password);
+        return user != null;
+
+    }
+
+    public Boolean activeUserSet() {
+        return activeUser != null;
+    }
+
+    public void setActiveUser(String username, String password) {
+
+        User user = getUser(username, password);
+        activeUser = user;
+
+    }
+
+    public Boolean isAdmin() {
+        return (activeUser != null && activeUser.getIsAdmin());
+    }
+
 
 }

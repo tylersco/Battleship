@@ -65,17 +65,18 @@ public class LoginPanel extends JPanel implements ActionListener, DisplayState{
 
     private void checkUserInput() {
         boolean validInput = true;
-        String usernameText = username.getText();
-        String passwordText = password.getText();
+        String usernameText = username.getText().trim();
+        String passwordText = password.getText().trim();
 
         if (usernameText.length() <= 0) {
             //ToDo: inform needed username
             validInput = false;
         }
-        if (passwordText.length() <= 0) {
+        else if (passwordText.length() <= 0) {
             //ToDo: inform needed password
             validInput = false;
         }
+
         if (validInput) {
             controller.loginSubmitRequest(usernameText, passwordText);
         }
