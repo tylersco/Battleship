@@ -1,5 +1,7 @@
 package com.csci4448.MediaManagementSystem.model.review;
 
+import com.csci4448.MediaManagementSystem.model.user.User;
+import com.csci4448.MediaManagementSystem.model.user.UserDAO;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -21,10 +23,12 @@ public class ReviewDAO {
     // Todo: add param for foreign key, attaching to media object
     public void addReview(String textReview, int rating, String username){
 
+        User user = null;
 
         Session session = sessionFactory.openSession();
         Transaction transaction = null;
 
+        user = (User) session.createQuery("from User where username = :username").setParameter("username", username).uniqueResult();
 
 
         try {
@@ -40,6 +44,8 @@ public class ReviewDAO {
             if(textReview != null && !textReview.equals("")) {
                 review.setReviewText(textReview);
             }
+
+            review.setUser(user);
 
 
             transaction.commit();
@@ -59,6 +65,6 @@ public class ReviewDAO {
     }
 
 
-    }
-
 }
+
+
