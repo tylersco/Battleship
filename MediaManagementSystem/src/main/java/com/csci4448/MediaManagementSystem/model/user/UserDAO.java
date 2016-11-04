@@ -120,7 +120,7 @@ public class UserDAO {
 
     }
 
-    private User getUser(String username, String password) {
+    protected User getUser(String username, String password) {
 
         // Open a DB session
         Session session = sessionFactory.openSession();
@@ -133,6 +133,31 @@ public class UserDAO {
             transaction = session.beginTransaction();
 
             user = (User) session.createQuery("from User where username = :username and password = :password").setParameter("username", username).setParameter("password", password).uniqueResult();
+            transaction.commit();
+        } catch (HibernateException ex) {
+            if (transaction != null)
+                transaction.rollback();
+        } finally {
+            session.close();
+        }
+
+        return user;
+
+    }
+
+    protected User getUser(String username) {
+
+        // Open a DB session
+        Session session = sessionFactory.openSession();
+        Transaction transaction = null;
+
+        User user = null;
+
+        try {
+            // Begin a transaction
+            transaction = session.beginTransaction();
+
+            user = (User) session.createQuery("from User where username = :username").setParameter("username", username).uniqueResult();
             transaction.commit();
         } catch (HibernateException ex) {
             if (transaction != null)
