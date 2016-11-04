@@ -47,6 +47,10 @@ public class Review {
         return user;
     }
 
+    protected void setUser(User _user){
+        user = _user;
+    }
+
     @Override
     public String toString() {
         return "User: " + user.getUsername() + "\nReview: " + reviewText + "\nRating: " + ratingValue + "\n";
