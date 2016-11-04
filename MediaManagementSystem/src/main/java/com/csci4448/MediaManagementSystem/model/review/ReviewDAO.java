@@ -14,15 +14,17 @@ public class ReviewDAO {
     private SessionFactory sessionFactory;
 
     public ReviewDAO(){
-        sessionFactory = new Configuration().configure().buildSessionFactory()
+        sessionFactory = new Configuration().configure().buildSessionFactory();
 
     }
 
     // Todo: add param for foreign key, attaching to media object
     public void addReview(String textReview, int rating, String username){
 
+
         Session session = sessionFactory.openSession();
         Transaction transaction = null;
+
 
 
         try {
@@ -51,7 +53,7 @@ public class ReviewDAO {
             }
         }
         finally {
-            session.close()
+            session.close();
         }
 
     }
