@@ -145,7 +145,7 @@ public class UserDAO {
 
     }
 
-    protected User getUser(String username) {
+    public User getUser(String username) {
 
         // Open a DB session
         Session session = sessionFactory.openSession();
