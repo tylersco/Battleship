@@ -20,6 +20,7 @@ public class Media {
 
     private String image;
 
+    @Column(nullable = false)
     private String genre;
 
     @Column(nullable = false)

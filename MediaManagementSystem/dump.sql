@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.11, for osx10.11 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.16, for osx10.11 (x86_64)
 --
 -- Host: localhost    Database: MediaManagementDB
 -- ------------------------------------------------------
--- Server version	5.7.11
+-- Server version	5.7.16
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -14,6 +14,37 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `MEDIA`
+--
+
+DROP TABLE IF EXISTS `MEDIA`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `MEDIA` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(256) NOT NULL,
+  `description` varchar(1024) DEFAULT NULL,
+  `type` varchar(128) NOT NULL,
+  `image` varchar(512) DEFAULT NULL,
+  `genre` varchar(128) NOT NULL,
+  `price` int(10) unsigned NOT NULL,
+  `sellPrice` int(10) unsigned DEFAULT NULL,
+  `inventoryCount` int(10) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `MEDIA_id_uindex` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `MEDIA`
+--
+
+LOCK TABLES `MEDIA` WRITE;
+/*!40000 ALTER TABLE `MEDIA` DISABLE KEYS */;
+/*!40000 ALTER TABLE `MEDIA` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `REVIEW`
@@ -63,7 +94,7 @@ CREATE TABLE `USER` (
   UNIQUE KEY `USER_username_uindex` (`username`),
   UNIQUE KEY `USER_email_uindex` (`email`),
   UNIQUE KEY `USER_id_uindex` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -85,4 +116,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-10-28 23:46:17
+-- Dump completed on 2016-11-04 11:15:42
