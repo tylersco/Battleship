@@ -21,19 +21,27 @@ public class ReviewDAO {
     }
 
     // Todo: add param for foreign key, attaching to media object
-    public void addReview(String textReview, int rating, String username){
+    public int addReview(String textReview, int rating, String username){
 
         User user = null;
 
         Session session = sessionFactory.openSession();
         Transaction transaction = null;
 
-        user = (User) session.createQuery("from User where username = :username").setParameter("username", username).uniqueResult();
 
 
         try {
 
             transaction = session.beginTransaction();
+
+            try {
+                user = (User) session.createQuery("from User where username = :username").setParameter("username", username).uniqueResult();
+            }
+            catch (HibernateException ex){
+                return -1;
+            }
+
+
 
             Review review = new Review();
 
@@ -60,6 +68,7 @@ public class ReviewDAO {
         }
         finally {
             session.close();
+            return 0;
         }
 
     }
