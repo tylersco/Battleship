@@ -1,8 +1,10 @@
 package com.csci4448.MediaManagementSystem.model.media;
 
 import com.csci4448.MediaManagementSystem.model.review.Review;
+import com.csci4448.MediaManagementSystem.model.user.User;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -31,18 +33,22 @@ public class Media {
 
     private int sellPrice;
 
+    @Column(nullable = false)
     private int inventoryCount;
 
-    @OneToMany(mappedBy = "media")
-    private Set<Review> reviews;
+    @Column(nullable = false)
+    private Boolean isRentable;
 
-    //Todo: Use foreign keys to attach a waitlist of users for the media
+    @OneToMany(mappedBy = "media")
+    private Set<Review> reviews = new HashSet<Review>();
+
+    @ManyToMany(mappedBy = "personalInventory")
+    private Set<User> currentUsers = new HashSet<User>();
 
     public Media() {
         description = null;
         image = null;
         sellPrice = -1;
-        inventoryCount = -1;
     }
 
     protected int getMediaID() {
@@ -111,6 +117,14 @@ public class Media {
 
     protected void setInventoryCount(int _inventoryCount) {
         inventoryCount = _inventoryCount;
+    }
+
+    protected Boolean getIsRentable() {
+        return isRentable;
+    }
+
+    protected void setIsRentable(Boolean _isRentable) {
+        isRentable = _isRentable;
     }
 
     protected Set<Review> getReviews() {

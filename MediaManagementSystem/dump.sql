@@ -23,17 +23,18 @@ DROP TABLE IF EXISTS `MEDIA`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `MEDIA` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `mediaID` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(256) NOT NULL,
   `description` varchar(1024) DEFAULT NULL,
   `type` varchar(128) NOT NULL,
   `image` varchar(512) DEFAULT NULL,
   `genre` varchar(128) NOT NULL,
   `price` int(10) unsigned NOT NULL,
-  `sellPrice` int(10) unsigned DEFAULT NULL,
-  `inventoryCount` int(10) unsigned DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `MEDIA_id_uindex` (`id`)
+  `sellPrice` int(10) DEFAULT NULL,
+  `inventoryCount` int(10) unsigned NOT NULL,
+  `isRentable` tinyint(1) NOT NULL,
+  PRIMARY KEY (`mediaID`),
+  UNIQUE KEY `MEDIA_id_uindex` (`mediaID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -54,14 +55,17 @@ DROP TABLE IF EXISTS `REVIEW`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `REVIEW` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `reviewID` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `ratingValue` tinyint(1) NOT NULL,
   `reviewText` varchar(1024) NOT NULL,
   `userID` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `REVIEW_id_uindex` (`id`),
+  `mediaID` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`reviewID`),
+  UNIQUE KEY `REVIEW_id_uindex` (`reviewID`),
   KEY `REVIEW_userID_fk` (`userID`),
-  CONSTRAINT `REVIEW_userID_fk` FOREIGN KEY (`userID`) REFERENCES `USER` (`id`)
+  KEY `REVIEW_mediaID_fk` (`mediaID`),
+  CONSTRAINT `REVIEW_mediaID_fk` FOREIGN KEY (`mediaID`) REFERENCES `MEDIA` (`mediaID`),
+  CONSTRAINT `REVIEW_userID_fk` FOREIGN KEY (`userID`) REFERENCES `USER` (`userID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -82,7 +86,7 @@ DROP TABLE IF EXISTS `USER`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `USER` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `userID` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `username` varchar(70) NOT NULL,
   `password` varchar(512) NOT NULL,
   `email` varchar(70) NOT NULL,
@@ -90,10 +94,10 @@ CREATE TABLE `USER` (
   `lastName` varchar(30) DEFAULT NULL,
   `isAdmin` tinyint(1) NOT NULL,
   `accountBalance` int(11) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`userID`),
   UNIQUE KEY `USER_username_uindex` (`username`),
   UNIQUE KEY `USER_email_uindex` (`email`),
-  UNIQUE KEY `USER_id_uindex` (`id`)
+  UNIQUE KEY `USER_id_uindex` (`userID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -106,6 +110,35 @@ LOCK TABLES `USER` WRITE;
 INSERT INTO `USER` VALUES (1,'admin','admin','tysc7237@colorado.edu','Admin',NULL,1,0);
 /*!40000 ALTER TABLE `USER` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `USER_MEDIA`
+--
+
+DROP TABLE IF EXISTS `USER_MEDIA`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `USER_MEDIA` (
+  `userMediaID` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `userID` int(10) unsigned NOT NULL,
+  `mediaID` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`userMediaID`),
+  UNIQUE KEY `USER_MEDIA_userMediaID_uindex` (`userMediaID`),
+  KEY `USER_MEDIA_user_fk` (`userID`),
+  KEY `USER_MEDIA_media_fk` (`mediaID`),
+  CONSTRAINT `USER_MEDIA_media_fk` FOREIGN KEY (`mediaID`) REFERENCES `MEDIA` (`mediaID`),
+  CONSTRAINT `USER_MEDIA_user_fk` FOREIGN KEY (`userID`) REFERENCES `USER` (`userID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `USER_MEDIA`
+--
+
+LOCK TABLES `USER_MEDIA` WRITE;
+/*!40000 ALTER TABLE `USER_MEDIA` DISABLE KEYS */;
+/*!40000 ALTER TABLE `USER_MEDIA` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -116,4 +149,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-11-04 11:15:42
+-- Dump completed on 2016-11-05 21:52:35

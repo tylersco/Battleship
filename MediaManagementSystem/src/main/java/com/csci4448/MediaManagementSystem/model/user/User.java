@@ -1,8 +1,10 @@
 package com.csci4448.MediaManagementSystem.model.user;
 
+import com.csci4448.MediaManagementSystem.model.media.Media;
 import com.csci4448.MediaManagementSystem.model.review.Review;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -32,9 +34,13 @@ public class User {
     private int accountBalance = 0;
 
     @OneToMany(mappedBy = "user")
-    private Set<Review> reviews;
+    private Set<Review> reviews = new HashSet<Review>();
 
-    //Todo: Implement personalInventory hash table. Not sure the best way to do this
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "USER_MEDIA",
+                joinColumns = @JoinColumn(name = "userID"),
+                inverseJoinColumns = @JoinColumn(name = "mediaID"))
+    private Set<Media> personalInventory = new HashSet<Media>();
 
     public User() {
         firstName = null;
@@ -99,6 +105,10 @@ public class User {
 
     protected Set<Review> getReviews() {
         return reviews;
+    }
+
+    protected Set<Media> getPersonalInventory() {
+        return personalInventory;
     }
 
     @Override
