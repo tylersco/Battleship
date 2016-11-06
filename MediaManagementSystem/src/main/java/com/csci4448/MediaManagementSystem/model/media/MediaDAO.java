@@ -15,4 +15,6 @@ public class MediaDAO {
         sessionFactory = new Configuration().configure().buildSessionFactory();
     }
 
+    //ToDo: System inventory stuff, basic add/edit/delete of media, and waitlist of rentable media
+
 }
