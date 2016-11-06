@@ -1,6 +1,7 @@
 package com.csci4448.MediaManagementSystem.model.review;
 
 import com.csci4448.MediaManagementSystem.model.user.User;
+import com.csci4448.MediaManagementSystem.model.media.Media;
 
 import javax.persistence.*;
 
@@ -10,7 +11,7 @@ public class Review {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int reviewID;
 
     @Column(nullable = false)
     private int ratingValue;
@@ -18,12 +19,16 @@ public class Review {
     @Column(nullable = false)
     private String reviewText;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "userID")
     private User user;
 
-    protected int getID() {
-        return id;
+    @ManyToOne
+    @JoinColumn(name = "mediaID")
+    private Media media;
+
+    protected int getReviewID() {
+        return reviewID;
     }
 
     public int getRatingValue() {
@@ -31,7 +36,6 @@ public class Review {
     }
 
     protected void setRatingValue(int _ratingValue) {
-        if (_ratingValue >= 1 && _ratingValue <= 5)
             ratingValue = _ratingValue;
     }
 
@@ -49,6 +53,14 @@ public class Review {
 
     protected void setUser(User _user){
         user = _user;
+    }
+
+    protected Media getMedia() {
+        return media;
+    }
+
+    protected void setMedia(Media _media) {
+        media = _media;
     }
 
     @Override

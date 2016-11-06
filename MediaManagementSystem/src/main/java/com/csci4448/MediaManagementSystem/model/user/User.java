@@ -1,6 +1,9 @@
 package com.csci4448.MediaManagementSystem.model.user;
 
+import com.csci4448.MediaManagementSystem.model.review.Review;
+
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "USER")
@@ -8,7 +11,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int userID;
 
     @Column(unique = true, nullable = false)
     private String username;
@@ -28,6 +31,9 @@ public class User {
     @Column(nullable = false)
     private int accountBalance = 0;
 
+    @OneToMany(mappedBy = "user")
+    private Set<Review> reviews;
+
     //Todo: Implement personalInventory hash table. Not sure the best way to do this
 
     public User() {
@@ -35,8 +41,8 @@ public class User {
         lastName = null;
     }
 
-    protected int getId() {
-        return id;
+    protected int getUserID() {
+        return userID;
     }
 
     public String getUsername() {
@@ -88,8 +94,11 @@ public class User {
     }
 
     protected void setAccountBalance(int _accountBalance) {
-        if (_accountBalance >= 0)
-            accountBalance = _accountBalance;
+        accountBalance = _accountBalance;
+    }
+
+    protected Set<Review> getReviews() {
+        return reviews;
     }
 
     @Override

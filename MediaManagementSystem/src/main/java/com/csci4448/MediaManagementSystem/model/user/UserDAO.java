@@ -32,6 +32,16 @@ public class UserDAO {
 
             // Create new user and all
             User user = new User();
+
+            if (username == null || username.equals(""))
+                return userID;
+
+            if (password == null || password.equals(""))
+                return userID;
+
+            if (email == null || email.equals(""))
+                return userID;
+
             user.setUsername(username);
             user.setPassword(password);
             user.setEmail(email);
@@ -41,6 +51,9 @@ public class UserDAO {
 
             if (lastName != null && !lastName.equals(""))
                 user.setLastName(lastName);
+
+            if (isAdmin == null)
+                return userID;
 
             user.setIsAdmin(isAdmin);
 
@@ -56,35 +69,6 @@ public class UserDAO {
         }
 
         return userID;
-
-    }
-
-    public int deleteUser(int userID) {
-
-        if (activeUser == null || !activeUser.getIsAdmin())
-            return -1;
-
-        // Open a DB session
-        Session session = sessionFactory.openSession();
-        Transaction transaction = null;
-
-        try {
-            // Begin a transaction
-            transaction = session.beginTransaction();
-
-            // Get user object, delete it, commit transaction
-            User user = (User) session.get(User.class, userID);
-            session.delete(user);
-            transaction.commit();
-        } catch (HibernateException ex) {
-            if (transaction != null)
-                transaction.rollback();
-            return -2;
-        } finally {
-            session.close();
-        }
-
-        return 0;
 
     }
 
@@ -145,8 +129,6 @@ public class UserDAO {
 
     }
 
-
-
     public Boolean userExists(String username, String password) {
 
         User user = getUser(username, password);
@@ -168,6 +150,5 @@ public class UserDAO {
     public Boolean isAdmin() {
         return (activeUser != null && activeUser.getIsAdmin());
     }
-
 
 }
