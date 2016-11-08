@@ -1,6 +1,11 @@
 package com.csci4448.MediaManagementSystem.model.media;
 
+import com.csci4448.MediaManagementSystem.model.review.Review;
+import com.csci4448.MediaManagementSystem.model.user.User;
+
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "MEDIA")
@@ -8,7 +13,7 @@ public class Media {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int mediaID;
 
     @Column(nullable = false)
     private String title;
@@ -20,6 +25,7 @@ public class Media {
 
     private String image;
 
+    @Column(nullable = false)
     private String genre;
 
     @Column(nullable = false)
@@ -27,14 +33,26 @@ public class Media {
 
     private int sellPrice;
 
+    @Column(nullable = false)
     private int inventoryCount;
 
-    //Todo: Use foreign keys to attach review for the given media
+    @Column(nullable = false)
+    private Boolean isRentable;
 
-    //Todo: Use foreign keys to attach a waitlist of users for the media
+    @OneToMany(mappedBy = "media")
+    private Set<Review> reviews = new HashSet<Review>();
 
-    protected int getId() {
-        return id;
+    @ManyToMany(mappedBy = "personalInventory")
+    private Set<User> currentUsers = new HashSet<User>();
+
+    public Media() {
+        description = null;
+        image = null;
+        sellPrice = -1;
+    }
+
+    protected int getMediaID() {
+        return mediaID;
     }
 
     public String getTitle() {
@@ -99,6 +117,18 @@ public class Media {
 
     protected void setInventoryCount(int _inventoryCount) {
         inventoryCount = _inventoryCount;
+    }
+
+    protected Boolean getIsRentable() {
+        return isRentable;
+    }
+
+    protected void setIsRentable(Boolean _isRentable) {
+        isRentable = _isRentable;
+    }
+
+    protected Set<Review> getReviews() {
+        return reviews;
     }
 
     @Override

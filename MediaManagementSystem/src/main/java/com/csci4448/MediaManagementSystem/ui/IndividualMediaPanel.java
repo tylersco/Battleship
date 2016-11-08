@@ -1,66 +1,49 @@
 package com.csci4448.MediaManagementSystem.ui;
 
 import com.csci4448.MediaManagementSystem.controller.MainController;
-import com.csci4448.MediaManagementSystem.model.Media;
-import com.csci4448.MediaManagementSystem.ui.components.EnterTextField;
-import com.csci4448.MediaManagementSystem.ui.components.MediaListing;
+import com.csci4448.MediaManagementSystem.ui.components.MediaImage;
+import com.csci4448.MediaManagementSystem.ui.components.TextArea;
+import com.csci4448.MediaManagementSystem.ui.components.TextButton;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class IndividualMediaPanel extends MainContentPanel implements ActionListener {
+public class IndividualMediaPanel extends MainContentPanel {
 
-    private static Font sTitleFont = null;
-    private static Font sDefaultFont = null;
-    private static Color sDarkColor = new Color(75, 75, 75);
-    private static Color sLightColor = new Color(75, 75, 75, 140);
+    private MediaImage image;
+    private TextArea titleText;
+    private TextArea descriptionText;
+    private TextButton actionButton;
+    private JPanel reviews;
 
-    private Media media;
-    private JPanel view;
-
-    private MediaListing image;
-    private EnterTextField title;
-    private EnterTextField description;
-
-    public IndividualMediaPanel(MainController controller, Media media) {
+    public IndividualMediaPanel(MainController controller, int mediaId, String imagePath, String title, String description) {
         super(controller);
-        this.media = media;
-        this.view = getContent();
 
-        if (sTitleFont == null)
-            sTitleFont = new Font("Helvetice Neue", Font.PLAIN, 25);
-        if (sDefaultFont == null)
-            sDefaultFont = new Font("Helvetice Neue", Font.PLAIN, 12);
+        JPanel content = getContent();
 
-        populatePanel();
-    }
+        titleText = new TextArea(title, new Font("Helvetice Neue", Font.PLAIN, 35), new Color(75, 75, 75));
+        titleText.setSize(titleText.getPreferredSize());
+        titleText.setLocation(375, 25);
+        content.add(titleText);
 
-    private void populatePanel() {
-        image = new MediaListing();
-        image.setSize(215, 250);
-        image.setLocation(50, 50);
-        view.add(image);
+        image = new MediaImage(imagePath);
+        image.loadMediaImage(325, 456);
+        image.setLocation(15, 15);
+        content.add(image);
 
-        Dimension size;
-        title = new EnterTextField(this, "Title", sTitleFont, sDarkColor, sLightColor, false, false);
-        size = title.getPreferredSize();
-        title.setSize(size);
-        title.setLocation(300, 100);
-        view.add(title);
+        descriptionText = new TextArea(description, new Font("Helvetice Neue", Font.PLAIN, 18), new Color(75, 75, 75, 200));
+        descriptionText.setLineWrap(true);
+        descriptionText.setSize(350, 250);
+        descriptionText.setLocation(400, 85);
+        content.add(descriptionText);
 
-        description = new EnterTextField(this, "Description", sDefaultFont, sDarkColor, sLightColor, false, false);
-        size = description.getPreferredSize();
-        description.setSize(size);
-        description.setLocation(320, 130);
-        view.add(description);
+        //ToDo: add reviews to content (take in arraylist of the reviews)
 
-        view.setSize(500, 500);
+        content.setSize(935, 550);
         updateContentSize();
     }
 
-    public void actionPerformed(ActionEvent event) {
+    private void addReview() {
 
     }
 }

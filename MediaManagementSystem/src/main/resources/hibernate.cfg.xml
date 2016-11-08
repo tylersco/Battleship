@@ -28,6 +28,7 @@
 
         <mapping class="com.csci4448.MediaManagementSystem.model.user.User" />
         <mapping class="com.csci4448.MediaManagementSystem.model.review.Review" />
+        <mapping class="com.csci4448.MediaManagementSystem.model.media.Media" />
 
     </session-factory>
 </hibernate-configuration>

@@ -54,6 +54,7 @@ public abstract class MainContentPanel extends JLayeredPane implements DisplaySt
         content.setLayout(null);
         content.setSize(935, 0);
         content.setLocation(15, 10);
+        content.setBackground(null);
         scrollLayout.add(content);
     }
 
