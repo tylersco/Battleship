@@ -20,6 +20,11 @@ public class UserDAO {
     }
 
     public int addUser(String username, String password, String email, String firstName, String lastName, Boolean isAdmin) {
+        /*
+        Add a user to the User table.
+
+        Returns: -1 if unsuccessful, the ID of the created user if successful
+         */
 
         // Open a DB session
         Session session = sessionFactory.openSession();
@@ -73,6 +78,11 @@ public class UserDAO {
     }
 
     public Iterator listUsers() {
+        /*
+        Return an iterator of all user records. Active user must be an admin.
+
+        Returns: null if unsuccessful, an iterator of User objects if successful
+         */
 
         if (activeUser == null || !activeUser.getIsAdmin())
             return null;
@@ -105,6 +115,11 @@ public class UserDAO {
     }
 
     private User getUser(String username, String password) {
+        /*
+        Query the User table for a specific user.
+
+        Returns: null if unsuccessful, the specifc User object if successful
+         */
 
         // Open a DB session
         Session session = sessionFactory.openSession();
@@ -142,8 +157,7 @@ public class UserDAO {
 
     public void setActiveUser(String username, String password) {
 
-        User user = getUser(username, password);
-        activeUser = user;
+        activeUser = getUser(username, password);
 
     }
 

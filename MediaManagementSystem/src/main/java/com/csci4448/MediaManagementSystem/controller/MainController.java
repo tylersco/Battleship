@@ -1,6 +1,6 @@
 package com.csci4448.MediaManagementSystem.controller;
 
-import com.csci4448.MediaManagementSystem.model.user.*;
+import com.csci4448.MediaManagementSystem.model.user.UserDAO;
 import com.csci4448.MediaManagementSystem.ui.*;
 import com.csci4448.MediaManagementSystem.ui.components.*;
 

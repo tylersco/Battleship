@@ -17,8 +17,13 @@ public class ReviewDAO {
 
     }
 
-    // Todo: add param for foreign key, attaching to media object
+    // ToDo: Add connection to the specific media that is being reviewed
     public int addReview(String textReview, int rating, String username) {
+        /*
+        Add review for a given media, as a specific user.
+
+        Returns: -1 if unsuccessful and the ID of the new review if successful
+         */
 
         Session session = sessionFactory.openSession();
         Transaction transaction = null;
