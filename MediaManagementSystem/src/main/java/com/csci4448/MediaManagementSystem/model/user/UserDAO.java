@@ -30,9 +30,7 @@ public class UserDAO implements UserInterface {
         return activeUser.getUsername();
     }
 
-    public String getEmail() {
-        return activeUser.getEmail();
-    }
+    public String getEmail() { return activeUser.getEmail(); }
 
     public String getFirstName() {
         return activeUser.getFirstName();
