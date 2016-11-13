@@ -46,7 +46,7 @@ public class MainController {
             //ToDo: Send error message in UI that user already exists with that username
         }
         else {
-            int res = userDAO.addUser(username, password, email, firstName, lastName, false);
+            int res = userDAO.addUser(username, password, email, firstName, lastName);
             if (res == -1) {
                 //ToDo: Error creating user, send error message to UI
             }

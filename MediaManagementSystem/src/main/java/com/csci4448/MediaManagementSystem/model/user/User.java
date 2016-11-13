@@ -28,7 +28,7 @@ public class User implements UserInterface {
     private String lastName;
 
     @Column(nullable = false)
-    private Boolean isAdmin;
+    private boolean isAdmin;
 
     @Column(nullable = false)
     private int accountBalance = 0;
@@ -45,6 +45,7 @@ public class User implements UserInterface {
     public User() {
         firstName = null;
         lastName = null;
+        isAdmin = false;
     }
 
     public int getUserID() {
@@ -55,11 +56,11 @@ public class User implements UserInterface {
         return username;
     }
 
-    public void setUsername(String _username) {
+    void setUsername(String _username) {
         username = _username;
     }
 
-    public void setPassword(String _password) {
+    void setPassword(String _password) {
         password = _password;
     }
 
@@ -67,7 +68,7 @@ public class User implements UserInterface {
         return email;
     }
 
-    public void setEmail(String _email) {
+    void setEmail(String _email) {
         email = _email;
     }
 
@@ -75,7 +76,7 @@ public class User implements UserInterface {
         return firstName;
     }
 
-    public void setFirstName(String _firstName) {
+    void setFirstName(String _firstName) {
         firstName = _firstName;
     }
 
@@ -83,7 +84,7 @@ public class User implements UserInterface {
         return lastName;
     }
 
-    public void setLastName(String _lastName) {
+    void setLastName(String _lastName) {
         lastName = _lastName;
     }
 
@@ -91,7 +92,7 @@ public class User implements UserInterface {
         return isAdmin;
     }
 
-    public void setIsAdmin(boolean _isAdmin) {
+    void setIsAdmin(boolean _isAdmin) {
         isAdmin = _isAdmin;
     }
 
@@ -99,15 +100,15 @@ public class User implements UserInterface {
         return accountBalance;
     }
 
-    public void setAccountBalance(int _accountBalance) {
+    void setAccountBalance(int _accountBalance) {
         accountBalance = _accountBalance;
     }
 
-    public Set<Review> getReviews() {
+    Set<Review> getReviews() {
         return reviews;
     }
 
-    public Set<Media> getPersonalInventory() {
+    Set<Media> getPersonalInventory() {
         return personalInventory;
     }
 
