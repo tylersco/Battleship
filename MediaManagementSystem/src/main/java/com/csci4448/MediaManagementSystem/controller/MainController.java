@@ -1,6 +1,6 @@
 package com.csci4448.MediaManagementSystem.controller;
 
-import com.csci4448.MediaManagementSystem.model.user.*;
+import com.csci4448.MediaManagementSystem.model.user.UserDAO;
 import com.csci4448.MediaManagementSystem.ui.*;
 import com.csci4448.MediaManagementSystem.ui.components.*;
 
@@ -12,12 +12,8 @@ public class MainController {
     public MainController() {
         display = new Display(this);
         loginRequest();
-        userDAO = new UserDAO();
     }
 
-    public static void main(String[] args) {
-        MainController c = new MainController();
-    }
 
     public void loginRequest() {
         display.setState(new LoginPanel(this));
@@ -25,12 +21,15 @@ public class MainController {
 
     public void loginSubmitRequest(String username, String password) {
 
+        userDAO = new UserDAO();
+
         if (userDAO.userExists(username, password)) {
             userDAO.setActiveUser(username, password);
             storeRequest();
         }
         else {
             //Todo: Pass error message to UI saying that either username or password was incorrect
+
         }
 
     }
@@ -41,11 +40,13 @@ public class MainController {
 
     public void createAccountSubmitRequest(String firstName, String lastName, String username, String email, String password) {
 
+        userDAO = new UserDAO();
+
         if (userDAO.userExists(username, password)) {
             //ToDo: Send error message in UI that user already exists with that username
         }
         else {
-            int res = userDAO.addUser(username, password, email, firstName, lastName, false);
+            int res = userDAO.addUser(username, password, email, firstName, lastName);
             if (res == -1) {
                 //ToDo: Error creating user, send error message to UI
             }
