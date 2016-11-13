@@ -9,7 +9,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "USER")
-public class User {
+public class User implements UserInterface {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,7 +47,7 @@ public class User {
         lastName = null;
     }
 
-    protected int getUserID() {
+    public int getUserID() {
         return userID;
     }
 
@@ -55,11 +55,11 @@ public class User {
         return username;
     }
 
-    protected void setUsername(String _username) {
+    public void setUsername(String _username) {
         username = _username;
     }
 
-    protected void setPassword(String _password) {
+    public void setPassword(String _password) {
         password = _password;
     }
 
@@ -67,7 +67,7 @@ public class User {
         return email;
     }
 
-    protected void setEmail(String _email) {
+    public void setEmail(String _email) {
         email = _email;
     }
 
@@ -75,7 +75,7 @@ public class User {
         return firstName;
     }
 
-    protected void setFirstName(String _firstName) {
+    public void setFirstName(String _firstName) {
         firstName = _firstName;
     }
 
@@ -83,31 +83,31 @@ public class User {
         return lastName;
     }
 
-    protected void setLastName(String _lastName) {
+    public void setLastName(String _lastName) {
         lastName = _lastName;
     }
 
-    protected boolean getIsAdmin() {
+    public boolean getIsAdmin() {
         return isAdmin;
     }
 
-    protected void setIsAdmin(boolean _isAdmin) {
+    public void setIsAdmin(boolean _isAdmin) {
         isAdmin = _isAdmin;
     }
 
-    protected int getAccountBalance() {
+    public int getAccountBalance() {
         return accountBalance;
     }
 
-    protected void setAccountBalance(int _accountBalance) {
+    public void setAccountBalance(int _accountBalance) {
         accountBalance = _accountBalance;
     }
 
-    protected Set<Review> getReviews() {
+    public Set<Review> getReviews() {
         return reviews;
     }
 
-    protected Set<Media> getPersonalInventory() {
+    public Set<Media> getPersonalInventory() {
         return personalInventory;
     }
 

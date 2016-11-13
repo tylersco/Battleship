@@ -12,7 +12,6 @@ public class MainController {
     public MainController() {
         display = new Display(this);
         loginRequest();
-        userDAO = new UserDAO();
     }
 
 
@@ -21,6 +20,8 @@ public class MainController {
     }
 
     public void loginSubmitRequest(String username, String password) {
+
+        userDAO = new UserDAO();
 
         if (userDAO.userExists(username, password)) {
             userDAO.setActiveUser(username, password);
@@ -38,6 +39,8 @@ public class MainController {
     }
 
     public void createAccountSubmitRequest(String firstName, String lastName, String username, String email, String password) {
+
+        userDAO = new UserDAO();
 
         if (userDAO.userExists(username, password)) {
             //ToDo: Send error message in UI that user already exists with that username
