@@ -1,5 +1,7 @@
 package com.csci4448.MediaManagementSystem.model.user;
 
+import com.csci4448.MediaManagementSystem.model.media.Media;
+import com.csci4448.MediaManagementSystem.model.review.Review;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -8,8 +10,9 @@ import org.hibernate.cfg.Configuration;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
-public class UserDAO {
+public class UserDAO implements UserInterface {
 
     private SessionFactory sessionFactory;
     private User activeUser;
@@ -17,6 +20,74 @@ public class UserDAO {
     public UserDAO() {
         sessionFactory = new Configuration().configure().buildSessionFactory();
         activeUser = null;
+    }
+
+    public int getUserID() {
+        return activeUser.getUserID();
+    }
+
+    public String getUsername() {
+        return activeUser.getUsername();
+    }
+
+    public String getEmail() {
+        return activeUser.getEmail();
+    }
+
+    public String getFirstName() {
+        return activeUser.getFirstName();
+    }
+
+    public String getLastName() {
+        return activeUser.getLastName();
+    }
+
+    public boolean getIsAdmin() {
+        return activeUser.getIsAdmin();
+    }
+
+    public int getAccountBalance() {
+        return activeUser.getAccountBalance();
+    }
+
+    public boolean increaseAccountBalance(int _amount) {
+        /*
+        Increase the active user's account balance by amount.
+
+        Returns false if unsuccessful, true if successful
+         */
+
+        if (_amount <= 0)
+            return false;
+
+        activeUser.setAccountBalance(activeUser.getAccountBalance() + _amount);
+        return true;
+    }
+
+    public boolean decreaseAccountBalance(int _amount) {
+        /*
+        Decrease the active user's account balance by amount.
+
+        Returns false if unsuccessful, true if successful
+         */
+
+        if (_amount <= 0)
+            return false;
+
+        int currentBalance = activeUser.getAccountBalance();
+        if (currentBalance - _amount < 0)
+            return false;
+
+        activeUser.setAccountBalance(currentBalance - _amount);
+        return true;
+    }
+
+    public Set<Review> getReviews() {
+        return activeUser.getReviews();
+    }
+
+    public Set<Media> getPersonalInventory() {
+        return activeUser.getPersonalInventory();
     }
 
     public int addUser(String username, String password, String email, String firstName, String lastName, Boolean isAdmin) {
