@@ -9,7 +9,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "MEDIA")
-public class Media {
+public class Media implements MediaInterface {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,7 +37,7 @@ public class Media {
     private int inventoryCount;
 
     @Column(nullable = false)
-    private Boolean isRentable;
+    private boolean isRentable;
 
     @OneToMany(mappedBy = "media")
     private Set<Review> reviews = new HashSet<Review>();
@@ -51,7 +51,7 @@ public class Media {
         sellPrice = -1;
     }
 
-    protected int getMediaID() {
+    public int getMediaID() {
         return mediaID;
     }
 
@@ -59,7 +59,7 @@ public class Media {
         return title;
     }
 
-    protected void setTitle(String _title) {
+    void setTitle(String _title) {
         title = _title;
     }
 
@@ -67,7 +67,7 @@ public class Media {
         return description;
     }
 
-    protected void setDescription(String _description) {
+    void setDescription(String _description) {
         description = _description;
     }
 
@@ -75,15 +75,15 @@ public class Media {
         return type;
     }
 
-    protected void setType(String _type) {
+    void setType(String _type) {
         type = _type;
     }
 
-    protected String getImage() {
+    public String getImage() {
         return image;
     }
 
-    protected void setImage(String _image) {
+    void setImage(String _image) {
         image = _image;
     }
 
@@ -91,43 +91,43 @@ public class Media {
         return genre;
     }
 
-    protected void setGenre(String _genre) {
+    void setGenre(String _genre) {
         genre = _genre;
     }
 
-    protected int getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    protected void setPrice(int _price) {
+    void setPrice(int _price) {
         price = _price;
     }
 
-    protected int getSellPrice() {
+    public int getSellPrice() {
         return sellPrice;
     }
 
-    protected void setSellPrice(int _sellPrice) {
+    void setSellPrice(int _sellPrice) {
         sellPrice = _sellPrice;
     }
 
-    protected int getInventoryCount() {
+    public int getInventoryCount() {
         return inventoryCount;
     }
 
-    protected void setInventoryCount(int _inventoryCount) {
+    void setInventoryCount(int _inventoryCount) {
         inventoryCount = _inventoryCount;
     }
 
-    protected Boolean getIsRentable() {
+    public boolean getIsRentable() {
         return isRentable;
     }
 
-    protected void setIsRentable(Boolean _isRentable) {
+    void setIsRentable(boolean _isRentable) {
         isRentable = _isRentable;
     }
 
-    protected Set<Review> getReviews() {
+    public Set<Review> getReviews() {
         return reviews;
     }
 

@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "REVIEW")
-public class Review {
+public class Review implements ReviewInterface {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,7 +27,7 @@ public class Review {
     @JoinColumn(name = "mediaID")
     private Media media;
 
-    protected int getReviewID() {
+    public int getReviewID() {
         return reviewID;
     }
 
@@ -47,7 +47,7 @@ public class Review {
         reviewText = _reviewText;
     }
 
-    protected User getUser() {
+    public User getUser() {
         return user;
     }
 
@@ -55,7 +55,7 @@ public class Review {
         user = _user;
     }
 
-    protected Media getMedia() {
+    public Media getMedia() {
         return media;
     }
 

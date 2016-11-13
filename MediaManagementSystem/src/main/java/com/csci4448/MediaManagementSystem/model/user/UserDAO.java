@@ -1,15 +1,15 @@
 package com.csci4448.MediaManagementSystem.model.user;
 
 import com.csci4448.MediaManagementSystem.model.media.Media;
+import com.csci4448.MediaManagementSystem.model.media.MediaDAO;
 import com.csci4448.MediaManagementSystem.model.review.Review;
+import com.csci4448.MediaManagementSystem.model.review.ReviewDAO;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 public class UserDAO implements UserInterface {
@@ -90,7 +90,7 @@ public class UserDAO implements UserInterface {
         return activeUser.getPersonalInventory();
     }
 
-    public int addUser(String username, String password, String email, String firstName, String lastName, Boolean isAdmin) {
+    public int addUser(String username, String password, String email, String firstName, String lastName) {
         /*
         Add a user to the User table.
 
@@ -128,11 +128,6 @@ public class UserDAO implements UserInterface {
             if (lastName != null && !lastName.equals(""))
                 user.setLastName(lastName);
 
-            if (isAdmin == null)
-                return userID;
-
-            user.setIsAdmin(isAdmin);
-
             // Save user and commit transaction
             userID = (Integer) session.save(user);
             transaction.commit();
@@ -145,43 +140,6 @@ public class UserDAO implements UserInterface {
         }
 
         return userID;
-
-    }
-
-    public Iterator listUsers() {
-        /*
-        Return an iterator of all user records. Active user must be an admin.
-
-        Returns: null if unsuccessful, an iterator of User objects if successful
-         */
-
-        if (activeUser == null || !activeUser.getIsAdmin())
-            return null;
-
-        // Open a DB session
-        Session session = sessionFactory.openSession();
-        Transaction transaction = null;
-
-        Iterator userIterator = null;
-
-        try {
-            // Begin a transaction
-            transaction = session.beginTransaction();
-
-            // Get a list of all users as an iterator
-            List users = session.createQuery("from User").list();
-            userIterator = users.iterator();
-
-            transaction.commit();
-
-        } catch (HibernateException ex) {
-            if (transaction != null)
-                transaction.rollback();
-        } finally {
-            session.close();
-        }
-
-        return userIterator;
 
     }
 
@@ -215,14 +173,14 @@ public class UserDAO implements UserInterface {
 
     }
 
-    public Boolean userExists(String username, String password) {
+    public boolean userExists(String username, String password) {
 
         User user = getUser(username, password);
         return user != null;
 
     }
 
-    public Boolean activeUserSet() {
+    public boolean activeUserSet() {
         return activeUser != null;
     }
 
@@ -232,7 +190,7 @@ public class UserDAO implements UserInterface {
 
     }
 
-    public Boolean isAdmin() {
+    public boolean isAdmin() {
         return (activeUser != null && activeUser.getIsAdmin());
     }
 
