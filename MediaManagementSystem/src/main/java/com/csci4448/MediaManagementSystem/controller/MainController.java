@@ -14,9 +14,6 @@ public class MainController {
         loginRequest();
     }
 
-    public static void main(String[] args) {
-        MainController c = new MainController();
-    }
 
     public void loginRequest() {
         display.setState(new LoginPanel(this));
@@ -32,6 +29,7 @@ public class MainController {
         }
         else {
             //Todo: Pass error message to UI saying that either username or password was incorrect
+
         }
 
     }
