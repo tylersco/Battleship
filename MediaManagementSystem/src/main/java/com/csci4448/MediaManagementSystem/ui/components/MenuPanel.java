@@ -13,7 +13,6 @@ public class MenuPanel extends JPanel implements ActionListener {
 
     private TextButton storeButton;
     private TextButton libraryButton;
-    private TextButton adminButton;
     private SearchBar searchBar;
     private TextButton fundsButton;
     private TextButton accountButton;
@@ -45,13 +44,6 @@ public class MenuPanel extends JPanel implements ActionListener {
         libraryButton.setSize((int)size.getWidth(), 55);
         libraryButton.setLocation(180, 0);
         add(libraryButton);
-
-        adminButton = new TextButton(this, "Individual (Temp)", mainButtonFont, defaultColor, enteredColor, selectedColor);
-        size = adminButton.getPreferredSize();
-        adminButton.setSize(size);
-        adminButton.setLocation(290, (55-(int)size.getHeight())/2);
-        if (controller.getUserDAO().isAdmin())
-            add(adminButton);
 
         accountButton = new TextButton(this, "Account", subButtonFont, defaultColor, enteredColor, selectedColor);
         size = accountButton.getPreferredSize();
@@ -112,8 +104,6 @@ public class MenuPanel extends JPanel implements ActionListener {
             controller.storeRequest();
         } else if (component.equals(libraryButton)) {
             controller.libraryRequest();
-        } else if (component.equals(adminButton)) {
-            controller.adminRequest();
         } else if (component.equals(fundsButton)) {
             controller.addFundsRequest();
         } else if (component.equals(accountButton)) {

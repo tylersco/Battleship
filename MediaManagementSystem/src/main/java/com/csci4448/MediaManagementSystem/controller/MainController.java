@@ -82,7 +82,7 @@ public class MainController {
     }
 
     public void adminRequest() {
-        display.setState(new IndividualMediaPanel(this, null));
+        /* display.setState(new IndividualMediaPanel(this, null)); */
     }
 
     public void addFundsRequest() {
