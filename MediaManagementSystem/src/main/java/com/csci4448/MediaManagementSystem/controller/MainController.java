@@ -1,6 +1,8 @@
 package com.csci4448.MediaManagementSystem.controller;
 
 import com.csci4448.MediaManagementSystem.model.user.UserDAO;
+import com.csci4448.MediaManagementSystem.model.media.MediaDAO;
+import com.csci4448.MediaManagementSystem.model.media.Media;
 import com.csci4448.MediaManagementSystem.ui.*;
 import com.csci4448.MediaManagementSystem.ui.components.*;
 
@@ -8,6 +10,7 @@ public class MainController {
 
     private Display display;
     private UserDAO userDAO;
+    private MediaDAO mediaDAO;
 
     public MainController() {
         display = new Display(this);
@@ -91,7 +94,7 @@ public class MainController {
 
     public void individualMediaRequest(int mediaId) {
         //ToDo: get info for particular media, mediaId, and add info to panel
-        IndividualMediaPanel indMedia = new IndividualMediaPanel(this, mediaId, "src/main/resources/test.png", "Title", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque turpis turpis, gravida sed neque nec, ultrices sodales est. Etiam ornare, erat non ullamcorper tempus, ligula sem tincidunt justo, ac rutrum magna felis sit amet nibh. Praesent imperdiet facilisis fermentum. Mauris porta finibus arcu, sit amet venenatis ipsum lacinia sed. Duis feugiat ante eu lobortis mollis.");
+        IndividualMediaPanel indMedia = new IndividualMediaPanel(this, Media.getDefaultMedia());
         display.setState(indMedia);
     }
 
@@ -99,4 +102,10 @@ public class MainController {
         return userDAO;
     }
     public boolean hasActiveUser() { return userDAO.activeUserSet(); }
+
+    public MediaDAO getMediaDAO() {
+        if (mediaDAO == null)
+            mediaDAO = new MediaDAO();
+        return mediaDAO;
+    }
 }

@@ -16,7 +16,13 @@ public class MediaDAO implements MediaInterface {
 
     public MediaDAO() {
         sessionFactory = new Configuration().configure().buildSessionFactory();
+        activeMedia = null;
     }
+
+
+    public Media getActiveMedia() { return activeMedia; }
+    public void setActiveMedia(Media media) { activeMedia = media; }
+
 
     public int getMediaID() {
         return activeMedia.getMediaID();
@@ -59,6 +65,12 @@ public class MediaDAO implements MediaInterface {
 
     public Set<Review> getReviews() {
         return activeMedia.getReviews();
+    }
+
+
+    public void saveMediaChangesToDatabase() {
+        // TODO: Literally the implementation of saving `activeMedia` to the database
+        System.out.println("MEDIADAO: Saved the media '" + getTitle() + "' to the database.");
     }
 
     //ToDo: Basic add/edit/delete of media, and waitlist of rentable media
