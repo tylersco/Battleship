@@ -14,8 +14,10 @@ public abstract class MainContentPanel extends JLayeredPane implements DisplaySt
     private JPanel scrollLayout;
     private MenuPanel menuPanel;
     private JPanel content;
+    private MainController controller;
 
     public MainContentPanel(MainController controller) {
+        this.controller = controller;
         setLayout(null);
         addComponentListener(new ComponentAdapter() {
             public void componentResized(ComponentEvent e) {
@@ -90,5 +92,5 @@ public abstract class MainContentPanel extends JLayeredPane implements DisplaySt
     }
 
 
-
+    protected MainController getController() { return controller; }
 }

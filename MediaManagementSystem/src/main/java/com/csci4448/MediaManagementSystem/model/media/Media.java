@@ -11,6 +11,22 @@ import java.util.Set;
 @Table(name = "MEDIA")
 public class Media implements MediaInterface {
 
+    // This is temporary until media gets pulled from the database.
+    public static Media getDefaultMedia() {
+        Media med = new Media();
+        med.mediaID = 999999;
+        med.title = "Test Media";
+        med.description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do...";
+        med.type = "Book";
+        med.image = "src/main/resources/test.png";
+        med.genre = "Everything";
+        med.price = 1;
+        med.sellPrice = 1;
+        med.inventoryCount = 99;
+        med.isRentable = true;
+        return med;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int mediaID;
@@ -59,7 +75,7 @@ public class Media implements MediaInterface {
         return title;
     }
 
-    void setTitle(String _title) {
+    public void setTitle(String _title) {
         title = _title;
     }
 
@@ -67,7 +83,7 @@ public class Media implements MediaInterface {
         return description;
     }
 
-    void setDescription(String _description) {
+    public void setDescription(String _description) {
         description = _description;
     }
 
@@ -75,7 +91,7 @@ public class Media implements MediaInterface {
         return type;
     }
 
-    void setType(String _type) {
+    public void setType(String _type) {
         type = _type;
     }
 
@@ -83,7 +99,7 @@ public class Media implements MediaInterface {
         return image;
     }
 
-    void setImage(String _image) {
+    public void setImage(String _image) {
         image = _image;
     }
 
@@ -91,7 +107,7 @@ public class Media implements MediaInterface {
         return genre;
     }
 
-    void setGenre(String _genre) {
+    public void setGenre(String _genre) {
         genre = _genre;
     }
 
@@ -99,7 +115,7 @@ public class Media implements MediaInterface {
         return price;
     }
 
-    void setPrice(int _price) {
+    public void setPrice(int _price) {
         price = _price;
     }
 
@@ -107,7 +123,7 @@ public class Media implements MediaInterface {
         return sellPrice;
     }
 
-    void setSellPrice(int _sellPrice) {
+    public void setSellPrice(int _sellPrice) {
         sellPrice = _sellPrice;
     }
 
@@ -115,7 +131,7 @@ public class Media implements MediaInterface {
         return inventoryCount;
     }
 
-    void setInventoryCount(int _inventoryCount) {
+    public void setInventoryCount(int _inventoryCount) {
         inventoryCount = _inventoryCount;
     }
 
@@ -123,7 +139,7 @@ public class Media implements MediaInterface {
         return isRentable;
     }
 
-    void setIsRentable(boolean _isRentable) {
+    public void setIsRentable(boolean _isRentable) {
         isRentable = _isRentable;
     }
 
