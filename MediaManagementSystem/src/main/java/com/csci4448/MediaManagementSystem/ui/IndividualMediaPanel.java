@@ -33,14 +33,14 @@ public class IndividualMediaPanel extends MainContentPanel implements ActionList
         super(controller);
 
         JPanel content = getContent();
-        controller.getMediaDAO().setActiveMedia(media);
+        //controller.getMediaDAO().setActiveMedia(media);
 
-        titleText = new TextArea(media.getTitle(), new Font("Helvetice Neue", Font.PLAIN, 35), new Color(75, 75, 75));
+        //titleText = new TextArea(media.getTitle(), new Font("Helvetice Neue", Font.PLAIN, 35), new Color(75, 75, 75));
         titleText.setSize(500, (int)titleText.getPreferredSize().getHeight());
         titleText.setLocation(375, 25);
         content.add(titleText);
 
-        image = new MediaImage(media.getImage());
+        //image = new MediaImage(media.getImage());
         image.loadMediaImage(325, 456);
         image.setLocation(15, 15);
         content.add(image);
@@ -98,18 +98,19 @@ public class IndividualMediaPanel extends MainContentPanel implements ActionList
         if (save) {
             // TODO: As we add more editable fields, make sure to save the changes to those as well
 
-            Media media = getController().getMediaDAO().getActiveMedia();
-            media.setTitle(titleText.getText());
-            media.setDescription(descriptionText.getText());
+            // ToDo: This is currently commented out. The MediaDAO is in progress and should have a method for editing media
+            //Media media = getController().getMediaDAO().getActiveMedia();
+            //media.setTitle(titleText.getText());
+            //media.setDescription(descriptionText.getText());
 
-            getController().getMediaDAO().saveMediaChangesToDatabase();
+            //getController().getMediaDAO().saveMediaChangesToDatabase();
         }
         else {
             // TODO: As we add more editable fields, make sure to revert the changes to those as well
 
-            Media media = getController().getMediaDAO().getActiveMedia();
-            titleText.setText(media.getTitle());
-            descriptionText.setText(media.getDescription());
+            //Media media = getController().getMediaDAO().getActiveMedia();
+            //titleText.setText(media.getTitle());
+            //descriptionText.setText(media.getDescription());
         }
     }
 

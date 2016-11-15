@@ -75,7 +75,7 @@ public class Media implements MediaInterface {
         return title;
     }
 
-    public void setTitle(String _title) {
+    void setTitle(String _title) {
         title = _title;
     }
 
@@ -83,7 +83,7 @@ public class Media implements MediaInterface {
         return description;
     }
 
-    public void setDescription(String _description) {
+    void setDescription(String _description) {
         description = _description;
     }
 
@@ -91,7 +91,7 @@ public class Media implements MediaInterface {
         return type;
     }
 
-    public void setType(String _type) {
+    void setType(String _type) {
         type = _type;
     }
 
@@ -99,7 +99,7 @@ public class Media implements MediaInterface {
         return image;
     }
 
-    public void setImage(String _image) {
+    void setImage(String _image) {
         image = _image;
     }
 
@@ -107,7 +107,7 @@ public class Media implements MediaInterface {
         return genre;
     }
 
-    public void setGenre(String _genre) {
+    void setGenre(String _genre) {
         genre = _genre;
     }
 
@@ -115,7 +115,7 @@ public class Media implements MediaInterface {
         return price;
     }
 
-    public void setPrice(int _price) {
+    void setPrice(int _price) {
         price = _price;
     }
 
@@ -123,7 +123,7 @@ public class Media implements MediaInterface {
         return sellPrice;
     }
 
-    public void setSellPrice(int _sellPrice) {
+    void setSellPrice(int _sellPrice) {
         sellPrice = _sellPrice;
     }
 
@@ -131,7 +131,7 @@ public class Media implements MediaInterface {
         return inventoryCount;
     }
 
-    public void setInventoryCount(int _inventoryCount) {
+    void setInventoryCount(int _inventoryCount) {
         inventoryCount = _inventoryCount;
     }
 
@@ -139,12 +139,16 @@ public class Media implements MediaInterface {
         return isRentable;
     }
 
-    public void setIsRentable(boolean _isRentable) {
+    void setIsRentable(boolean _isRentable) {
         isRentable = _isRentable;
     }
 
     public Set<Review> getReviews() {
         return reviews;
+    }
+
+    public Set<User> getCurrentUsers() {
+        return currentUsers;
     }
 
     @Override

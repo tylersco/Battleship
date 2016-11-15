@@ -10,7 +10,5 @@ public interface ReviewInterface {
     int getReviewID();
     int getRatingValue();
     String getReviewText();
-    User getUser();
-    Media getMedia();
 
 }

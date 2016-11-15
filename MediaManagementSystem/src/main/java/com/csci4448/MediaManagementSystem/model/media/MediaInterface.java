@@ -16,6 +16,5 @@ public interface MediaInterface {
     int getSellPrice();
     int getInventoryCount();
     boolean getIsRentable();
-    Set<Review> getReviews();
 
 }

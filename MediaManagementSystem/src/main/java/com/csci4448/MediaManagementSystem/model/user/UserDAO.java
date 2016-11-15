@@ -10,6 +10,8 @@ import org.hibernate.Transaction;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 public class UserDAO implements UserInterface {
@@ -48,6 +50,40 @@ public class UserDAO implements UserInterface {
         return activeUser.getAccountBalance();
     }
 
+    public Set<ReviewDAO> getReviews() {
+
+        Set<ReviewDAO> reviewDAOs = new HashSet<ReviewDAO>();
+
+        Set<Review> reviews = activeUser.getReviews();
+        Iterator<Review> itr = reviews.iterator();
+
+        while (itr.hasNext()) {
+            ReviewDAO reviewDAO = new ReviewDAO();
+            reviewDAO.setActiveReview(itr.next().getReviewID());
+            reviewDAOs.add(reviewDAO);
+        }
+
+        return reviewDAOs;
+
+    }
+
+    public Set<MediaDAO> getPersonalInventory() {
+
+        Set<MediaDAO> mediaDAOs = new HashSet<MediaDAO>();
+
+        Set<Media> personalInventory = activeUser.getPersonalInventory();
+        Iterator<Media> itr = personalInventory.iterator();
+
+        while (itr.hasNext()) {
+            MediaDAO mediaDAO = new MediaDAO();
+            //mediaDAO.setActiveMedia(itr.next().getMediaID());
+            mediaDAOs.add(mediaDAO);
+        }
+
+        return mediaDAOs;
+
+    }
+
     public boolean increaseAccountBalance(int _amount) {
         /*
         Increase the active user's account balance by amount.
@@ -80,14 +116,6 @@ public class UserDAO implements UserInterface {
         return true;
     }
 
-    public Set<Review> getReviews() {
-        return activeUser.getReviews();
-    }
-
-    public Set<Media> getPersonalInventory() {
-        return activeUser.getPersonalInventory();
-    }
-
     public int addUser(String username, String password, String email, String firstName, String lastName) {
         /*
         Add a user to the User table.
@@ -104,7 +132,7 @@ public class UserDAO implements UserInterface {
             // Begin a transaction
             transaction = session.beginTransaction();
 
-            // Create new user and all
+            // Create new user
             User user = new User();
 
             if (username == null || username.equals(""))
