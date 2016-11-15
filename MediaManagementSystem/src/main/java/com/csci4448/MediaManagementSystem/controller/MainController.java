@@ -67,7 +67,7 @@ public class MainController {
         store.getMenuPanel().getStoreButton().setIsSelected(true);
         //ToDo: populate store with media in db
         for (int i = 0; i < 20; i++) {
-            MediaListing listing = new MediaListing(this, 1234, "src/main/resources/test.png", "Title", 3.99);
+            MediaListing listing = new MediaListing(this, 1234, "src/main/resources/test.png", "Title", 4);
             store.add(listing);
         }
         display.setState(store);
