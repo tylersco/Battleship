@@ -1,14 +1,15 @@
 package com.csci4448.MediaManagementSystem.model.media;
 
 import com.csci4448.MediaManagementSystem.model.review.Review;
+import com.csci4448.MediaManagementSystem.model.review.ReviewDAO;
+import com.csci4448.MediaManagementSystem.model.user.User;
 import com.csci4448.MediaManagementSystem.model.user.UserDAO;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.SessionFactory;
+import org.hibernate.*;
 import org.hibernate.cfg.Configuration;
 
 import java.io.File;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 public class MediaDAO implements MediaInterface {
@@ -61,6 +62,40 @@ public class MediaDAO implements MediaInterface {
         return activeMedia.getIsRentable();
     }
 
+    public Set<ReviewDAO> getReviews() {
+
+        Set<ReviewDAO> reviewDAOs = new HashSet<ReviewDAO>();
+
+        Set<Review> reviews = activeMedia.getReviews();
+        Iterator<Review> itr = reviews.iterator();
+
+        while (itr.hasNext()) {
+            ReviewDAO reviewDAO = new ReviewDAO();
+            reviewDAO.setActiveReview(itr.next().getReviewID());
+            reviewDAOs.add(reviewDAO);
+        }
+
+        return reviewDAOs;
+
+    }
+
+    public Set<UserDAO> getCurrentUsers() {
+
+        Set<UserDAO> userDAOs = new HashSet<UserDAO>();
+
+        Set<User> currentUsers = activeMedia.getCurrentUsers();
+        Iterator<User> itr = currentUsers.iterator();
+
+        while (itr.hasNext()) {
+            UserDAO userDAO = new UserDAO();
+            userDAO.setActiveUser(itr.next().getUserID());
+            userDAOs.add(userDAO);
+        }
+
+        return userDAOs;
+
+    }
+
     public boolean incrementInventoryCount() {
         activeMedia.setInventoryCount(activeMedia.getInventoryCount() + 1);
         return true;
@@ -106,12 +141,15 @@ public class MediaDAO implements MediaInterface {
 
     }
 
-    public int addMedia(String title, String description, String type, String genre, int price, int sellPrice, int inventoryCount, boolean isRentable) {
+    public int addMedia(UserDAO user, String title, String description, String type, String genre, int price, int sellPrice, int inventoryCount, boolean isRentable) {
         /*
         Add a media record to the Media table.
 
-        Returns: -1 if unsuccessful, the ID of the created media if successful
+        Returns: -2 if user is not an admin, -1 if unsuccessful, the ID of the created media if successful
          */
+
+        if (!user.isAdmin())
+            return -2;
 
         // Open a DB session
         Session session = sessionFactory.openSession();
@@ -142,7 +180,7 @@ public class MediaDAO implements MediaInterface {
             if (inventoryCount < 0)
                 return mediaID;
 
-            String imgPath = "../../../../../resources/" + type + "/" + title + ".jpg";
+            String imgPath = "../../../../../resources/" + type.toLowerCase() + "/" + title.toLowerCase().replaceAll("\\s","") + ".jpg";
 
             File img = new File(imgPath);
             if (!img.exists()) {
@@ -217,9 +255,72 @@ public class MediaDAO implements MediaInterface {
 
     }
 
-    public int editMedia(String title, String description, String type, String genre, int price, int sellPrice, int inventoryCount, boolean isRentable) {
-        // ToDo: Implement editMedia
+    public int editMedia(UserDAO user, int mediaID, String title, String description, String type, String genre, int price, int sellPrice, int inventoryCount, boolean isRentable) {
+        /*
+        Edit a media record in the Media table.
+
+        Returns -2 if user is not an admin, -1 if unsuccessful, 0 if successful
+         */
+
+        if (!user.isAdmin())
+            return -2;
+
+        Session session = sessionFactory.openSession();
+        Transaction transaction = null;
+
+        try {
+            transaction = session.beginTransaction();
+            Media media = (Media) session.get(Media.class, mediaID);
+
+            if (title == null || title.equals(""))
+                return -1;
+
+            // ToDo: Ensure that type and genre are valid
+
+            if (type == null || type.equals(""))
+                return -1;
+
+            if (genre == null || genre.equals(""))
+                return -1;
+
+            if (price < 0)
+                return -1;
+
+            if (inventoryCount < 0)
+                return -1;
+
+            String imgPath = "../../../../../resources/" + type.toLowerCase() + "/" + title.toLowerCase().replaceAll("\\s","") + ".jpg";
+
+            File img = new File(imgPath);
+            if (!img.exists()) {
+                imgPath = "../../../../../resources/test.png";
+            }
+
+            media.setTitle(title);
+            media.setDescription(description);
+            media.setType(type);
+            media.setImage(imgPath);
+            media.setGenre(genre);
+            media.setPrice(price);
+            media.setIsRentable(isRentable);
+
+            if (!isRentable)
+                media.setSellPrice(sellPrice);
+            else
+                media.setSellPrice(-1);
+
+            media.setInventoryCount(inventoryCount);
+
+        } catch (HibernateException ex) {
+            if (transaction != null)
+                transaction.rollback();
+            return -1;
+        } finally {
+            session.close();
+        }
+
         return 0;
+
     }
 
     public boolean activeMediaSet() {

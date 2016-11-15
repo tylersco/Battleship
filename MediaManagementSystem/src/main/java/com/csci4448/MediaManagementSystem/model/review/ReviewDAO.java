@@ -1,7 +1,9 @@
 package com.csci4448.MediaManagementSystem.model.review;
 
 import com.csci4448.MediaManagementSystem.model.media.Media;
+import com.csci4448.MediaManagementSystem.model.media.MediaDAO;
 import com.csci4448.MediaManagementSystem.model.user.User;
+import com.csci4448.MediaManagementSystem.model.user.UserDAO;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -30,12 +32,18 @@ public class ReviewDAO implements ReviewInterface {
         return activeReview.getReviewText();
     }
 
-    public User getUser() {
-        return activeReview.getUser();
+    public UserDAO getUser() {
+        User user = activeReview.getUser();
+        UserDAO userDAO = new UserDAO();
+        userDAO.setActiveUser(user.getUserID());
+        return userDAO;
     }
 
-    public Media getMedia() {
-        return activeReview.getMedia();
+    public MediaDAO getMedia() {
+        Media media = activeReview.getMedia();
+        MediaDAO mediaDAO = new MediaDAO();
+        mediaDAO.setActiveMedia(media.getMediaID());
+        return mediaDAO;
     }
 
     public int addReview(String textReview, int rating, int userID, int mediaID) {

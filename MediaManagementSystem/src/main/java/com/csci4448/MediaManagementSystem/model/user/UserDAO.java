@@ -199,6 +199,36 @@ public class UserDAO implements UserInterface {
 
     }
 
+    private User getUser(int userID) {
+        /*
+        Query the User table for a specific user.
+
+        Returns: null if unsuccessful, the specifc User object if successful
+         */
+
+        // Open a DB session
+        Session session = sessionFactory.openSession();
+        Transaction transaction = null;
+
+        User user = null;
+
+        try {
+            // Begin a transaction
+            transaction = session.beginTransaction();
+
+            user = (User) session.createQuery("from User where userID = :userID").setParameter("userID", userID).uniqueResult();
+            transaction.commit();
+        } catch (HibernateException ex) {
+            if (transaction != null)
+                transaction.rollback();
+        } finally {
+            session.close();
+        }
+
+        return user;
+
+    }
+
     public boolean userExists(String username, String password) {
 
         User user = getUser(username, password);
@@ -213,6 +243,12 @@ public class UserDAO implements UserInterface {
     public void setActiveUser(String username, String password) {
 
         activeUser = getUser(username, password);
+
+    }
+
+    public void setActiveUser(int userID) {
+
+        activeUser = getUser(userID);
 
     }
 

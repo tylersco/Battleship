@@ -1,5 +1,6 @@
 package com.csci4448.MediaManagementSystem.controller;
 
+import com.csci4448.MediaManagementSystem.model.review.ReviewDAO;
 import com.csci4448.MediaManagementSystem.model.user.UserDAO;
 import com.csci4448.MediaManagementSystem.model.media.MediaDAO;
 import com.csci4448.MediaManagementSystem.model.media.Media;
@@ -11,8 +12,12 @@ public class MainController {
     private Display display;
     private UserDAO userDAO;
     private MediaDAO mediaDAO;
+    private ReviewDAO reviewDAO;
 
     public MainController() {
+        userDAO = new UserDAO();
+        mediaDAO = new MediaDAO();
+        reviewDAO = new ReviewDAO();
         display = new Display(this);
         loginRequest();
     }
@@ -23,8 +28,6 @@ public class MainController {
     }
 
     public void loginSubmitRequest(String username, String password) {
-
-        userDAO = new UserDAO();
 
         if (userDAO.userExists(username, password)) {
             userDAO.setActiveUser(username, password);
@@ -42,8 +45,6 @@ public class MainController {
     }
 
     public void createAccountSubmitRequest(String firstName, String lastName, String username, String email, String password) {
-
-        userDAO = new UserDAO();
 
         if (userDAO.userExists(username, password)) {
             //ToDo: Send error message in UI that user already exists with that username
@@ -78,7 +79,7 @@ public class MainController {
         //ToDo: populate library with media in users inventory
         for (int i = 0; i < 3; i++) {
             //ToDo: modify MediaListing so it displays owned/rented instead of price
-            MediaListing listing = new MediaListing(this, 1234, "src/main/resources/test.png", "Title", 3.99);
+            MediaListing listing = new MediaListing(this, 1234, "src/main/resources/test.png", "Title", 4);
             library.add(listing);
         }
         display.setState(library);
@@ -94,7 +95,13 @@ public class MainController {
 
     public void individualMediaRequest(int mediaId) {
         //ToDo: get info for particular media, mediaId, and add info to panel
-        IndividualMediaPanel indMedia = new IndividualMediaPanel(this, Media.getDefaultMedia());
+        mediaDAO.setActiveMedia(mediaId);
+
+        if (!mediaDAO.activeMediaSet()) {
+            // ToDo: Send an error to UI saying that the individual media could not be set
+        }
+
+        IndividualMediaPanel indMedia = new IndividualMediaPanel(this, mediaDAO.getTitle(), mediaDAO.getImage(), mediaDAO.getDescription());
         display.setState(indMedia);
     }
 

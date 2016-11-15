@@ -29,23 +29,22 @@ public class IndividualMediaPanel extends MainContentPanel implements ActionList
 
     private boolean isAdminEditing = false;
 
-    public IndividualMediaPanel(MainController controller, Media media) {
+    public IndividualMediaPanel(MainController controller, String title, String imagePath, String description) {
         super(controller);
 
         JPanel content = getContent();
-        //controller.getMediaDAO().setActiveMedia(media);
 
-        //titleText = new TextArea(media.getTitle(), new Font("Helvetice Neue", Font.PLAIN, 35), new Color(75, 75, 75));
+        titleText = new TextArea(title, new Font("Helvetice Neue", Font.PLAIN, 35), new Color(75, 75, 75));
         titleText.setSize(500, (int)titleText.getPreferredSize().getHeight());
         titleText.setLocation(375, 25);
         content.add(titleText);
 
-        //image = new MediaImage(media.getImage());
+        image = new MediaImage(imagePath);
         image.loadMediaImage(325, 456);
         image.setLocation(15, 15);
         content.add(image);
 
-        descriptionText = new TextArea(media.getDescription(), new Font("Helvetice Neue", Font.PLAIN, 18), new Color(75, 75, 75, 200));
+        descriptionText = new TextArea(description, new Font("Helvetice Neue", Font.PLAIN, 18), new Color(75, 75, 75, 200));
         descriptionText.setLineWrap(true);
         descriptionText.setSize(350, 250);
         descriptionText.setLocation(400, 85);
