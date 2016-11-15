@@ -3,7 +3,6 @@ package com.csci4448.MediaManagementSystem.controller;
 import com.csci4448.MediaManagementSystem.model.review.ReviewDAO;
 import com.csci4448.MediaManagementSystem.model.user.UserDAO;
 import com.csci4448.MediaManagementSystem.model.media.MediaDAO;
-import com.csci4448.MediaManagementSystem.model.media.Media;
 import com.csci4448.MediaManagementSystem.ui.*;
 import com.csci4448.MediaManagementSystem.ui.components.*;
 

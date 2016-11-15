@@ -1,9 +1,5 @@
 package com.csci4448.MediaManagementSystem.model.media;
 
-import com.csci4448.MediaManagementSystem.model.review.Review;
-
-import java.util.Set;
-
 public interface MediaInterface {
 
     int getMediaID();
