@@ -328,7 +328,8 @@ public class MediaDAO implements MediaInterface {
     }
 
     public void setActiveMedia(int mediaID) {
-        activeMedia = getMedia(mediaID);
+        activeMedia = Media.getDefaultMedia();
+        //activeMedia = getMedia(mediaID);
     }
 
     //ToDo: Waitlist of rentable media

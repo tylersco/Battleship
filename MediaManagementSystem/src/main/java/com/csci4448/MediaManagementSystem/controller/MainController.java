@@ -100,7 +100,8 @@ public class MainController {
             // ToDo: Send an error to UI saying that the individual media could not be set
         }
 
-        IndividualMediaPanel indMedia = new IndividualMediaPanel(this, mediaDAO.getTitle(), mediaDAO.getImage(), mediaDAO.getDescription());
+        IndividualMediaPanel indMedia = new IndividualMediaPanel(this, userDAO.getIsAdmin());
+        indMedia.populateMedia(mediaDAO.getTitle(), mediaDAO.getDescription(), mediaDAO.getImage());
         display.setState(indMedia);
     }
 
@@ -109,9 +110,5 @@ public class MainController {
     }
     public boolean hasActiveUser() { return userDAO.activeUserSet(); }
 
-    public MediaDAO getMediaDAO() {
-        if (mediaDAO == null)
-            mediaDAO = new MediaDAO();
-        return mediaDAO;
-    }
+    public MediaDAO getMediaDAO() { return mediaDAO; }
 }

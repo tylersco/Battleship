@@ -29,22 +29,26 @@ public class IndividualMediaPanel extends MainContentPanel implements ActionList
 
     private boolean isAdminEditing = false;
 
-    public IndividualMediaPanel(MainController controller, String title, String imagePath, String description) {
+    // The media information, used to revert changes if the admin cancels the edits
+    private String mediaTitle = "";
+    private String mediaDescription = "";
+
+    public IndividualMediaPanel(MainController controller, boolean isAdmin) {
         super(controller);
 
         JPanel content = getContent();
 
-        titleText = new TextArea(title, new Font("Helvetice Neue", Font.PLAIN, 35), new Color(75, 75, 75));
+        titleText = new TextArea("<Title>", new Font("Helvetice Neue", Font.PLAIN, 35), new Color(75, 75, 75));
         titleText.setSize(500, (int)titleText.getPreferredSize().getHeight());
         titleText.setLocation(375, 25);
         content.add(titleText);
 
-        image = new MediaImage(imagePath);
+        image = new MediaImage("src/main/resources/test.png");
         image.loadMediaImage(325, 456);
         image.setLocation(15, 15);
         content.add(image);
 
-        descriptionText = new TextArea(description, new Font("Helvetice Neue", Font.PLAIN, 18), new Color(75, 75, 75, 200));
+        descriptionText = new TextArea("<Description>", new Font("Helvetice Neue", Font.PLAIN, 18), new Color(75, 75, 75, 200));
         descriptionText.setLineWrap(true);
         descriptionText.setSize(350, 250);
         descriptionText.setLocation(400, 85);
@@ -54,7 +58,7 @@ public class IndividualMediaPanel extends MainContentPanel implements ActionList
         adminButton.setSize(adminButton.getPreferredSize());
         adminButton.setLocation(25, 475);
         content.add(adminButton);
-        if (!controller.getUserDAO().isAdmin())
+        if (!isAdmin)
             adminButton.setVisible(false);
 
         saveEditsButton = new TextButton(this, "Save Changes", buttonFont, defaultColor, enteredColor, selectedColor);
@@ -69,13 +73,21 @@ public class IndividualMediaPanel extends MainContentPanel implements ActionList
         content.add(cancelEditsButton);
         cancelEditsButton.setVisible(false);
 
-        //ToDo: add reviews to content (take in arraylist of the reviews)
-
         content.setSize(935, 550);
         updateContentSize();
     }
 
-    private void addReview() {
+    public void populateMedia(String title, String description, String imagePath) {
+        mediaTitle = title;
+        mediaDescription = description;
+
+        titleText.setText(title);
+        descriptionText.setText(description);
+        image.setImagePath(imagePath);
+        image.loadMediaImage(325, 456);
+    }
+
+    public void populateReviews() {
 
     }
 
@@ -96,20 +108,9 @@ public class IndividualMediaPanel extends MainContentPanel implements ActionList
 
         if (save) {
             // TODO: As we add more editable fields, make sure to save the changes to those as well
-
-            // ToDo: This is currently commented out. The MediaDAO is in progress and should have a method for editing media
-            //Media media = getController().getMediaDAO().getActiveMedia();
-            //media.setTitle(titleText.getText());
-            //media.setDescription(descriptionText.getText());
-
-            //getController().getMediaDAO().saveMediaChangesToDatabase();
         }
         else {
             // TODO: As we add more editable fields, make sure to revert the changes to those as well
-
-            //Media media = getController().getMediaDAO().getActiveMedia();
-            //titleText.setText(media.getTitle());
-            //descriptionText.setText(media.getDescription());
         }
     }
 
