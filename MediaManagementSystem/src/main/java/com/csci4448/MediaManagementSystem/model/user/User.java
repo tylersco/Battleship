@@ -9,7 +9,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "USER")
-public class User implements UserInterface {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,7 +31,7 @@ public class User implements UserInterface {
     private boolean isAdmin;
 
     @Column(nullable = false)
-    private int accountBalance = 0;
+    private int accountBalance;
 
     @OneToMany(mappedBy = "user")
     private Set<Review> reviews = new HashSet<Review>();
@@ -46,6 +46,7 @@ public class User implements UserInterface {
         firstName = null;
         lastName = null;
         isAdmin = false;
+        accountBalance = 0;
     }
 
     public int getUserID() {
@@ -56,11 +57,11 @@ public class User implements UserInterface {
         return username;
     }
 
-    void setUsername(String _username) {
+    public void setUsername(String _username) {
         username = _username;
     }
 
-    void setPassword(String _password) {
+    public void setPassword(String _password) {
         password = _password;
     }
 
@@ -68,7 +69,7 @@ public class User implements UserInterface {
         return email;
     }
 
-    void setEmail(String _email) {
+    public void setEmail(String _email) {
         email = _email;
     }
 
@@ -76,7 +77,7 @@ public class User implements UserInterface {
         return firstName;
     }
 
-    void setFirstName(String _firstName) {
+    public void setFirstName(String _firstName) {
         firstName = _firstName;
     }
 
@@ -84,7 +85,7 @@ public class User implements UserInterface {
         return lastName;
     }
 
-    void setLastName(String _lastName) {
+    public void setLastName(String _lastName) {
         lastName = _lastName;
     }
 
@@ -92,7 +93,7 @@ public class User implements UserInterface {
         return isAdmin;
     }
 
-    void setIsAdmin(boolean _isAdmin) {
+    public void setIsAdmin(boolean _isAdmin) {
         isAdmin = _isAdmin;
     }
 
@@ -100,21 +101,21 @@ public class User implements UserInterface {
         return accountBalance;
     }
 
-    void setAccountBalance(int _accountBalance) {
+    public void setAccountBalance(int _accountBalance) {
         accountBalance = _accountBalance;
     }
 
-    Set<Review> getReviews() {
+    public Set<Review> getReviews() {
         return reviews;
     }
 
-    Set<Media> getPersonalInventory() {
+    public Set<Media> getPersonalInventory() {
         return personalInventory;
     }
 
     @Override
     public String toString() {
-        return "First Name: " + firstName + "\nLast Name: " + lastName + "\n Username: " + username + "\nEmail: " + email + "\n";
+        return "First Name: " + firstName + "\nLast Name: " + lastName + "\nUsername: " + username + "\nEmail: " + email + "\n";
     }
 
 }

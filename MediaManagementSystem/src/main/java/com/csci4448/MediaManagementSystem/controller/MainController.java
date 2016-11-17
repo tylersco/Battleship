@@ -1,17 +1,16 @@
 package com.csci4448.MediaManagementSystem.controller;
 
+import com.csci4448.MediaManagementSystem.model.media.MediaDAO;
+import com.csci4448.MediaManagementSystem.model.media.MediaDAOImpl;
 import com.csci4448.MediaManagementSystem.model.media.Media;
 import com.csci4448.MediaManagementSystem.model.review.ReviewDAO;
+import com.csci4448.MediaManagementSystem.model.review.ReviewDAOImpl;
+import com.csci4448.MediaManagementSystem.model.review.Review;
 import com.csci4448.MediaManagementSystem.model.user.UserDAO;
-import com.csci4448.MediaManagementSystem.model.media.MediaDAO;
+import com.csci4448.MediaManagementSystem.model.user.UserDAOImpl;
+import com.csci4448.MediaManagementSystem.model.user.User;
 import com.csci4448.MediaManagementSystem.ui.*;
 import com.csci4448.MediaManagementSystem.ui.components.*;
-
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 
 public class MainController {
 
@@ -20,12 +19,14 @@ public class MainController {
     private MediaDAO mediaDAO;
     private ReviewDAO reviewDAO;
 
-
+    private User activeUser;
+    private Media activeMedia;
+    private Review activeReview;
 
     public MainController() {
-        userDAO = new UserDAO();
-        mediaDAO = new MediaDAO();
-        reviewDAO = new ReviewDAO();
+        userDAO = new UserDAOImpl();
+        mediaDAO = new MediaDAOImpl();
+        reviewDAO = new ReviewDAOImpl();
         display = new Display(this);
         loginRequest();
     }
@@ -38,7 +39,12 @@ public class MainController {
     public void loginSubmitRequest(String username, String password) {
 
         if (userDAO.userExists(username, password)) {
-            userDAO.setActiveUser(username, password);
+            User user = userDAO.getUser(username);
+            if (user != null)
+                activeUser = user;
+            else {
+                //ToDo: Database error, couldn't retrieve user, throw error in UI
+            }
             storeRequest();
         }
         else {
@@ -63,7 +69,12 @@ public class MainController {
                 //ToDo: Error creating user, send error message to UI
             }
             else {
-                userDAO.setActiveUser(username, password);
+                User user = userDAO.getUser(res);
+                if (user != null)
+                    activeUser = user;
+                else {
+                    //ToDo: Database error, couldn't retrieve user, throw error in UI
+                }
                 storeRequest();
             }
         }
@@ -74,6 +85,13 @@ public class MainController {
         GridMediaPanel store = new GridMediaPanel(this, 215, 327, 15, 35);
         store.getMenuPanel().getStoreButton().setIsSelected(true);
 
+        //ToDo: populate library with media in users inventory
+        for (int i = 0; i < 20; i++) {
+            //ToDo: modify MediaListing so it displays owned/rented instead of price
+            MediaListing listing = new MediaListing(this, 1234, "src/main/resources/test.png", "Title", 4);
+            store.add(listing);
+        }
+        /*
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
 
         for(int i = 1; i <= 12; i++){
@@ -96,10 +114,11 @@ public class MainController {
             store.add(listing);
             session.close();
         }
+        */
 
 
         display.setState(store);
-        sessionFactory.close();
+        //sessionFactory.close();
     }
 
 
@@ -126,24 +145,45 @@ public class MainController {
 
     public void individualMediaRequest(int mediaId) {
         //ToDo: get info for particular media, mediaId, and add info to panel
-        mediaDAO.setActiveMedia(mediaId);
+        Media media = mediaDAO.getMedia(mediaId);
 
-        if (!mediaDAO.activeMediaSet()) {
-            // ToDo: Send an error to UI saying that the individual media could not be set
+        if (media == null) {
+            //ToDo: Database error, couldn't fetch media, throw error in UI
+            return;
         }
 
-        IndividualMediaPanel indMedia = new IndividualMediaPanel(this, mediaDAO.getTitle(), mediaDAO.getImage(), mediaDAO.getDescription());
+        activeMedia = media;
+
+        IndividualMediaPanel indMedia = new IndividualMediaPanel(this, activeMedia.getTitle(), activeMedia.getImage(), activeMedia.getDescription());
         display.setState(indMedia);
     }
 
     public UserDAO getUserDAO() {
         return userDAO;
     }
-    public boolean hasActiveUser() { return userDAO.activeUserSet(); }
+
+    public boolean hasActiveUser() {
+        return activeUser != null;
+    }
+
+    public boolean isAdmin() {
+        return activeUser != null && activeUser.getIsAdmin();
+    }
 
     public MediaDAO getMediaDAO() {
-        if (mediaDAO == null)
-            mediaDAO = new MediaDAO();
         return mediaDAO;
     }
+
+    public boolean hasActiveMedia() {
+        return activeMedia != null;
+    }
+
+    public ReviewDAO getReviewDAO() {
+        return reviewDAO;
+    }
+
+    public boolean hasActiveReview() {
+        return activeReview != null;
+    }
+
 }

@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "REVIEW")
-public class Review implements ReviewInterface {
+public class Review {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,7 +35,7 @@ public class Review implements ReviewInterface {
         return ratingValue;
     }
 
-    protected void setRatingValue(int _ratingValue) {
+    public void setRatingValue(int _ratingValue) {
             ratingValue = _ratingValue;
     }
 
@@ -43,7 +43,7 @@ public class Review implements ReviewInterface {
         return reviewText;
     }
 
-    protected void setReviewText(String _reviewText) {
+    public void setReviewText(String _reviewText) {
         reviewText = _reviewText;
     }
 
@@ -51,7 +51,7 @@ public class Review implements ReviewInterface {
         return user;
     }
 
-    protected void setUser(User _user){
+    public void setUser(User _user){
         user = _user;
     }
 
@@ -59,7 +59,7 @@ public class Review implements ReviewInterface {
         return media;
     }
 
-    protected void setMedia(Media _media) {
+    public void setMedia(Media _media) {
         media = _media;
     }
 
