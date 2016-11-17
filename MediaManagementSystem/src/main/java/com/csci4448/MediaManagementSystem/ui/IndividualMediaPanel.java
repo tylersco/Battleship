@@ -24,6 +24,9 @@ public class IndividualMediaPanel extends MainContentPanel implements ActionList
     private MediaImage image;
     private TextArea titleText;
     private TextArea descriptionText;
+    private TextArea typeText;
+    private TextArea genreLabel;
+    private TextArea genreText;
     private TextButton adminButton; // Will only appear if the logged in user is an admin
     private TextButton saveEditsButton; // Will only appear if the logged in user is an admin AND is editing details
     private TextButton cancelEditsButton; // Will only appear if the logged in user is an admin AND is editing details
@@ -51,10 +54,25 @@ public class IndividualMediaPanel extends MainContentPanel implements ActionList
         image.setLocation(15, 15);
         content.add(image);
 
+        typeText = new TextArea(savedMediaInfo.getType(), new Font("Helvetice Neue", Font.ITALIC, 22), new Color(75, 75, 75));
+        typeText.setSize(500, (int)typeText.getPreferredSize().getHeight());
+        typeText.setLocation(380, 65);
+        content.add(typeText);
+
+        genreLabel = new TextArea("Genre:", new Font("Helvetice Neue", Font.ITALIC, 18), new Color(75, 75, 75));
+        genreLabel.setSize(genreLabel.getPreferredSize());
+        genreLabel.setLocation(380, 92);
+        content.add(genreLabel);
+
+        genreText = new TextArea(savedMediaInfo.getGenre(), new Font("Helvetice Neue", Font.ITALIC, 18), new Color(75, 75, 75));
+        genreText.setSize(500, (int)genreText.getPreferredSize().getHeight());
+        genreText.setLocation((int)genreLabel.getPreferredSize().getWidth() + 390, 92);
+        content.add(genreText);
+
         descriptionText = new TextArea(savedMediaInfo.getDescription(), new Font("Helvetice Neue", Font.PLAIN, 18), new Color(75, 75, 75, 200));
         descriptionText.setLineWrap(true);
         descriptionText.setSize(350, 250);
-        descriptionText.setLocation(400, 85);
+        descriptionText.setLocation(400, 130);
         content.add(descriptionText);
 
         adminButton = new TextButton(this, "Edit Details", buttonFont, defaultColor, enteredColor, selectedColor);
@@ -96,6 +114,8 @@ public class IndividualMediaPanel extends MainContentPanel implements ActionList
     private void prepareAdminEditing() {
         titleText.setEditable(true);
         descriptionText.setEditable(true);
+        typeText.setEditable(true);
+        genreText.setEditable(true);
         adminButton.setVisible(false);
         saveEditsButton.setVisible(true);
         cancelEditsButton.setVisible(true);
@@ -104,6 +124,8 @@ public class IndividualMediaPanel extends MainContentPanel implements ActionList
     private void finishAdminEditing(boolean save) {
         titleText.setEditable(false);
         descriptionText.setEditable(false);
+        typeText.setEditable(false);
+        genreText.setEditable(false);
         adminButton.setVisible(true);
         saveEditsButton.setVisible(false);
         cancelEditsButton.setVisible(false);
@@ -111,13 +133,18 @@ public class IndividualMediaPanel extends MainContentPanel implements ActionList
         if (save) { // Save the changes to the database
             // TODO: As we add more editable fields, make sure to save the changes to those as well
             savedMediaInfo = MediaInfo.createFromInfo(
-                    savedMediaInfo.getMediaID(), titleText.getText(), descriptionText.getText(),
-                    image.getImagePath(), savedMediaInfo.getType(), savedMediaInfo.getGenre(),
-                    savedMediaInfo.getPrice(), savedMediaInfo.getSellPrice(), savedMediaInfo.getInventoryCount(),
-                    savedMediaInfo.getIsRentable()
+                    savedMediaInfo.getMediaID(), titleText.getText(), descriptionText.getText(), image.getImagePath(),
+                    typeText.getText(), /* TODO: Validate the type of media entered. */
+                    genreText.getText(), savedMediaInfo.getPrice(), savedMediaInfo.getSellPrice(),
+                    savedMediaInfo.getInventoryCount(), savedMediaInfo.getIsRentable()
             );
 
-            // TODO: Use the MediaDAO object to save the changes
+            if (savedMediaInfo.getMediaID() != 999999) { // Don't update the default media (it does not exist in db)
+                getController().adminEditMediaRequest(savedMediaInfo);
+            }
+            else {
+                System.err.println("MEDIA: Ignoring changes to default media.");
+            }
             System.out.println("MEDIA: Changes to media have been saved.");
         }
         else { // Revert all of the changes
@@ -126,6 +153,8 @@ public class IndividualMediaPanel extends MainContentPanel implements ActionList
             descriptionText.setText(savedMediaInfo.getDescription());
             image.setImagePath(savedMediaInfo.getImage());
             image.loadMediaImage(325, 456);
+            typeText.setText(savedMediaInfo.getType());
+            genreText.setText(savedMediaInfo.getGenre());
         }
     }
 

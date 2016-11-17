@@ -162,6 +162,21 @@ public class MainController {
         display.setState(indMedia);
     }
 
+    public int adminAddMediaRequest(MediaInfo info) {
+        return mediaDAO.addMedia(activeUser.getUsername(), info.getTitle(), info.getDescription(), info.getType(),
+                info.getGenre(), info.getPrice(), info.getSellPrice(), info.getInventoryCount(), info.getIsRentable());
+    }
+
+    public int adminEditMediaRequest(MediaInfo info) {
+        return mediaDAO.editMedia(activeUser.getUsername(), info.getMediaID(), info.getTitle(), info.getDescription(),
+                info.getType(), info.getGenre(), info.getPrice(), info.getSellPrice(), info.getInventoryCount(),
+                info.getIsRentable());
+    }
+
+    public int adminDeleteMediaRequest(int mediaId) {
+        return mediaDAO.deleteMedia(mediaId, activeUser.getUsername());
+    }
+
     public UserDAO getUserDAO() {
         return userDAO;
     }
