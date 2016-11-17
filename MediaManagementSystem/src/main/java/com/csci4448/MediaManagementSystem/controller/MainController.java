@@ -3,6 +3,7 @@ package com.csci4448.MediaManagementSystem.controller;
 import com.csci4448.MediaManagementSystem.model.media.MediaDAO;
 import com.csci4448.MediaManagementSystem.model.media.MediaDAOImpl;
 import com.csci4448.MediaManagementSystem.model.media.Media;
+import com.csci4448.MediaManagementSystem.model.media.MediaInfo;
 import com.csci4448.MediaManagementSystem.model.review.ReviewDAO;
 import com.csci4448.MediaManagementSystem.model.review.ReviewDAOImpl;
 import com.csci4448.MediaManagementSystem.model.review.Review;
@@ -157,7 +158,7 @@ public class MainController {
         }
 
         IndividualMediaPanel indMedia = new IndividualMediaPanel(this);
-        indMedia.populateMedia(activeMedia.getTitle(), activeMedia.getDescription(), activeMedia.getImage());
+        indMedia.populateMedia(MediaInfo.createFromMedia(activeMedia));
         display.setState(indMedia);
     }
 
