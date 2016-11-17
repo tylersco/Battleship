@@ -22,7 +22,7 @@ public class UserDAOImpl
             return false;
 
         user.setAccountBalance(user.getAccountBalance() + _amount);
-        return true;
+        return update(user);
     }
 
     public boolean decreaseAccountBalance(String username, int _amount) {
@@ -42,7 +42,7 @@ public class UserDAOImpl
             return false;
 
         user.setAccountBalance(currentBalance - _amount);
-        return true;
+        return update(user);
     }
 
     public int addUser(String username, String password, String email, String firstName, String lastName) {
@@ -80,7 +80,6 @@ public class UserDAOImpl
 
         if (userID == null)
             return -1;
-        else
             return userID;
     }
 
@@ -93,7 +92,7 @@ public class UserDAOImpl
          */
 
         // Open a DB session
-        Session session = sessionFactory.openSession();
+        Session session = getSessionFactory().openSession();
         Transaction transaction = null;
 
         User user = null;
@@ -123,7 +122,7 @@ public class UserDAOImpl
          */
 
         // Open a DB session
-        Session session = sessionFactory.openSession();
+        Session session = getSessionFactory().openSession();
         Transaction transaction = null;
 
         User user = null;

@@ -54,7 +54,7 @@ public class IndividualMediaPanel extends MainContentPanel implements ActionList
         adminButton.setSize(adminButton.getPreferredSize());
         adminButton.setLocation(25, 475);
         content.add(adminButton);
-        if (!controller.getUserDAO().isAdmin())
+        if (!controller.isAdmin())
             adminButton.setVisible(false);
 
         saveEditsButton = new TextButton(this, "Save Changes", buttonFont, defaultColor, enteredColor, selectedColor);
@@ -97,7 +97,7 @@ public class IndividualMediaPanel extends MainContentPanel implements ActionList
         if (save) {
             // TODO: As we add more editable fields, make sure to save the changes to those as well
 
-            // ToDo: This is currently commented out. The MediaDAO is in progress and should have a method for editing media
+            // ToDo: This is currently commented out. The MediaDAO2 is in progress and should have a method for editing media
             //Media media = getController().getMediaDAO().getActiveMedia();
             //media.setTitle(titleText.getText());
             //media.setDescription(descriptionText.getText());
