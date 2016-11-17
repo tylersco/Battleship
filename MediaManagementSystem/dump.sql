@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.16, for osx10.11 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.16, for Linux (x86_64)
 --
 -- Host: localhost    Database: MediaManagementDB
 -- ------------------------------------------------------
--- Server version	5.7.16
+-- Server version	5.7.16-0ubuntu0.16.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -44,39 +44,8 @@ CREATE TABLE `MEDIA` (
 
 LOCK TABLES `MEDIA` WRITE;
 /*!40000 ALTER TABLE `MEDIA` DISABLE KEYS */;
-INSERT INTO `MEDIA` VALUES (1,'The Shawshank Redemption',NULL,'Movie',NULL,'Drama',5,NULL,2,0),(2,'The Godfather',NULL,'Movie',NULL,'Crime',5,NULL,3,1),(3,'The Dark Knight',NULL,'Movie',NULL,'Action',7,NULL,1,0),(4,'Pulp Fiction',NULL,'Movie',NULL,'Drama',4,NULL,4,1),(5,'Fight Club',NULL,'Movie',NULL,'Thriller',5,NULL,2,1),(6,'Forrest Gump',NULL,'Movie',NULL,'Comedy',3,NULL,3,0),(7,'Goodfellas',NULL,'Movie',NULL,'Crime',6,NULL,4,1),(8,'Hamilton',NULL,'Book',NULL,'Biography',14,NULL,6,0),(9,'Elon Musk',NULL,'Book','src/main/resources/book/elon.jpg','Biography',10,NULL,3,0),(10,'Trump: The Art of the Deal',NULL,'Book','src/main/resources/book/trump.jpg','Business',5,NULL,12,0),(11,'Harry Potter and the Cursed Child',NULL,'Book','src/main/resources/book/harrypotter.jpg','Fiction',7,NULL,10,0),(12,'Blood Meridian',NULL,'Book ','src/main/resources/book/bloodmeridian.jpg','Fiction',8,NULL,9,0);
+INSERT INTO `MEDIA` VALUES (1,'The Shawshank Redemption',NULL,'Movie','src/main/resources/movies/shawshank.jpg','Drama',5,3,2,0),(2,'The Godfather',NULL,'Movie','src/main/resources/movies/godfather.jpg','Crime',5,3,3,1),(3,'The Dark Knight',NULL,'Movie','src/main/resources/movies/darkknight.jpg','Action',7,3,1,0),(4,'Pulp Fiction',NULL,'Movie','src/main/resources/movies/pulpfiction.jpg','Drama',4,3,4,1),(5,'Fight Club',NULL,'Movie','src/main/resources/movies/fightclub.jpg','Thriller',5,3,2,1),(6,'Forrest Gump',NULL,'Movie','src/main/resources/movies/forrestgump.jpg','Comedy',3,3,3,0),(7,'Goodfellas',NULL,'Movie','src/main/resources/movies/goodfellas.jpg','Crime',6,3,4,1),(8,'Alexander Hamilton',NULL,'Book','src/main/resources/book/hamilton.jpg','Biography',14,3,6,0),(9,'Elon Musk',NULL,'Book','src/main/resources/book/elon.jpg','Biography',10,3,3,0),(10,'Trump: The Art of the Deal',NULL,'Book','src/main/resources/book/trump.jpg','Business',5,3,12,0),(11,'Harry Potter and the Cursed Child',NULL,'Book','src/main/resources/book/harrypotter.jpg','Fiction',7,3,10,0),(12,'Blood Meridian',NULL,'Book ','src/main/resources/book/bloodmeridian.jpg','Fiction',8,3,9,0);
 /*!40000 ALTER TABLE `MEDIA` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `REVIEW`
---
-
-DROP TABLE IF EXISTS `REVIEW`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `REVIEW` (
-  `reviewID` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `ratingValue` tinyint(1) NOT NULL,
-  `reviewText` varchar(1024) NOT NULL,
-  `userID` int(10) unsigned NOT NULL,
-  `mediaID` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`reviewID`),
-  UNIQUE KEY `REVIEW_id_uindex` (`reviewID`),
-  KEY `REVIEW_userID_fk` (`userID`),
-  KEY `REVIEW_mediaID_fk` (`mediaID`),
-  CONSTRAINT `REVIEW_mediaID_fk` FOREIGN KEY (`mediaID`) REFERENCES `MEDIA` (`mediaID`),
-  CONSTRAINT `REVIEW_userID_fk` FOREIGN KEY (`userID`) REFERENCES `USER` (`userID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `REVIEW`
---
-
-LOCK TABLES `REVIEW` WRITE;
-/*!40000 ALTER TABLE `REVIEW` DISABLE KEYS */;
-/*!40000 ALTER TABLE `REVIEW` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -150,4 +119,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-11-15 11:20:46
+-- Dump completed on 2016-11-16 23:10:01
