@@ -19,16 +19,25 @@ public class SystemInventory {
         return systemInventory;
     }
 
-    public ArrayList<Media> searchInventory(String searchText){
-
+    public Media searchInventory(String searchText){
+        for(Media media : mediaList){
+            if (media.getTitle().equals(searchText)){
+                return media;
+            }
+        }
+        return null;
     }
 
     public void addMedia(Media media){
-
+        mediaList.add(media);
     }
 
     public void deleteMedia(Media media){
-
+        for(Media m: mediaList){
+            if(m.getTitle().equals(media.getTitle())){
+                mediaList.remove(media);
+            }
+        }
     }
 
     public void addGenre(String genre){
