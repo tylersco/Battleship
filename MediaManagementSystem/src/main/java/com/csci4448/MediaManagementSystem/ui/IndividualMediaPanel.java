@@ -13,6 +13,8 @@ import java.awt.event.ActionListener;
 
 public class IndividualMediaPanel extends MainContentPanel implements ActionListener {
 
+    private final String DEFAULT_IMAGE_PATH = "src/main/resources/test.png";
+
     private Font buttonFont = new Font("Helvetice Neue", Font.PLAIN, 15);
     private Color defaultColor = new Color(75, 75, 75, 180);
     private Color enteredColor = new Color(75, 75, 75);
@@ -29,22 +31,28 @@ public class IndividualMediaPanel extends MainContentPanel implements ActionList
 
     private boolean isAdminEditing = false;
 
-    public IndividualMediaPanel(MainController controller, String title, String imagePath, String description) {
+    // Saved media information (for reverting during admin edits)
+    // TODO: Maybe use a Command pattern for easy undo commands
+    private String savedTitle = "<Title>";
+    private String savedDescription = "<Description>";
+    private String savedImage = DEFAULT_IMAGE_PATH; // This may not ever be editable by the final project
+
+    public IndividualMediaPanel(MainController controller) {
         super(controller);
 
         JPanel content = getContent();
 
-        titleText = new TextArea(title, new Font("Helvetice Neue", Font.PLAIN, 35), new Color(75, 75, 75));
+        titleText = new TextArea(savedTitle, new Font("Helvetice Neue", Font.PLAIN, 35), new Color(75, 75, 75));
         titleText.setSize(500, (int)titleText.getPreferredSize().getHeight());
         titleText.setLocation(375, 25);
         content.add(titleText);
 
-        image = new MediaImage(imagePath);
+        image = new MediaImage(DEFAULT_IMAGE_PATH);
         image.loadMediaImage(325, 456);
         image.setLocation(15, 15);
         content.add(image);
 
-        descriptionText = new TextArea(description, new Font("Helvetice Neue", Font.PLAIN, 18), new Color(75, 75, 75, 200));
+        descriptionText = new TextArea(savedDescription, new Font("Helvetice Neue", Font.PLAIN, 18), new Color(75, 75, 75, 200));
         descriptionText.setLineWrap(true);
         descriptionText.setSize(350, 250);
         descriptionText.setLocation(400, 85);
@@ -69,13 +77,22 @@ public class IndividualMediaPanel extends MainContentPanel implements ActionList
         content.add(cancelEditsButton);
         cancelEditsButton.setVisible(false);
 
-        //ToDo: add reviews to content (take in arraylist of the reviews)
-
         content.setSize(935, 550);
         updateContentSize();
     }
 
-    private void addReview() {
+    public void populateMedia(String _title, String _description, String _imagePath) {
+        savedTitle = _title;
+        savedDescription = _description;
+        savedImage = _imagePath;
+
+        titleText.setText(savedTitle);
+        descriptionText.setText(savedDescription);
+        image.setImagePath(savedImage);
+        image.loadMediaImage(325, 456);
+    }
+
+    public void populateReviews() {
 
     }
 
@@ -94,22 +111,21 @@ public class IndividualMediaPanel extends MainContentPanel implements ActionList
         saveEditsButton.setVisible(false);
         cancelEditsButton.setVisible(false);
 
-        if (save) {
+        if (save) { // Save the changes to the database
             // TODO: As we add more editable fields, make sure to save the changes to those as well
+            savedTitle = titleText.getText();
+            savedDescription = descriptionText.getText();
+            savedImage = image.getImagePath();
 
-            // ToDo: This is currently commented out. The MediaDAO2 is in progress and should have a method for editing media
-            //Media media = getController().getMediaDAO().getActiveMedia();
-            //media.setTitle(titleText.getText());
-            //media.setDescription(descriptionText.getText());
-
-            //getController().getMediaDAO().saveMediaChangesToDatabase();
+            // TODO: Use the MediaDAO object to save the changes
+            System.out.println("MEDIA: Changes to media have been saved.");
         }
-        else {
+        else { // Revert all of the changes
             // TODO: As we add more editable fields, make sure to revert the changes to those as well
-
-            //Media media = getController().getMediaDAO().getActiveMedia();
-            //titleText.setText(media.getTitle());
-            //descriptionText.setText(media.getDescription());
+            titleText.setText(savedTitle);
+            descriptionText.setText(savedDescription);
+            image.setImagePath(savedImage);
+            image.loadMediaImage(325, 456);
         }
     }
 

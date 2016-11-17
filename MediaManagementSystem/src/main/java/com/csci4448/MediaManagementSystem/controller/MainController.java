@@ -149,12 +149,15 @@ public class MainController {
 
         if (media == null) {
             //ToDo: Database error, couldn't fetch media, throw error in UI
-            return;
+            System.err.println("ERROR: Media was null when grabbed from database.");
+            activeMedia = Media.getDefaultMedia();
+        }
+        else {
+            activeMedia = media;
         }
 
-        activeMedia = media;
-
-        IndividualMediaPanel indMedia = new IndividualMediaPanel(this, activeMedia.getTitle(), activeMedia.getImage(), activeMedia.getDescription());
+        IndividualMediaPanel indMedia = new IndividualMediaPanel(this);
+        indMedia.populateMedia(activeMedia.getTitle(), activeMedia.getDescription(), activeMedia.getImage());
         display.setState(indMedia);
     }
 
