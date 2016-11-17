@@ -1,10 +1,17 @@
 package com.csci4448.MediaManagementSystem.controller;
 
+import com.csci4448.MediaManagementSystem.model.media.Media;
 import com.csci4448.MediaManagementSystem.model.review.ReviewDAO;
 import com.csci4448.MediaManagementSystem.model.user.UserDAO;
 import com.csci4448.MediaManagementSystem.model.media.MediaDAO;
 import com.csci4448.MediaManagementSystem.ui.*;
 import com.csci4448.MediaManagementSystem.ui.components.*;
+
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
 public class MainController {
 
@@ -12,6 +19,8 @@ public class MainController {
     private UserDAO userDAO;
     private MediaDAO mediaDAO;
     private ReviewDAO reviewDAO;
+
+
 
     public MainController() {
         userDAO = new UserDAO();
@@ -64,13 +73,36 @@ public class MainController {
     public void storeRequest() {
         GridMediaPanel store = new GridMediaPanel(this, 215, 327, 15, 35);
         store.getMenuPanel().getStoreButton().setIsSelected(true);
-        //ToDo: populate store with media in db
-        for (int i = 0; i < 20; i++) {
-            MediaListing listing = new MediaListing(this, 1234, "src/main/resources/test.png", "Title", 4);
+
+        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+
+        for(int i = 1; i <= 12; i++){
+
+
+
+            Media media = null;
+            int mediaID = i;
+
+            Session session = sessionFactory.openSession();
+
+            session.beginTransaction();
+
+            media = (Media) session.createQuery("from Media where mediaID = :mediaID").setParameter("mediaID", mediaID).uniqueResult();
+
+
+            MediaListing listing = new MediaListing(this, 1234, media.getImage(), media.getTitle(), media.getPrice());
+
+
             store.add(listing);
+            session.close();
         }
+
+
         display.setState(store);
+        sessionFactory.close();
     }
+
+
 
     public void libraryRequest() {
         GridMediaPanel library = new GridMediaPanel(this, 215, 327, 15, 35);
