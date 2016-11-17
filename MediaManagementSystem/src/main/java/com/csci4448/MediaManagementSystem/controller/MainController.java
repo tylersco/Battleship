@@ -1,7 +1,6 @@
 package com.csci4448.MediaManagementSystem.controller;
 
 import com.csci4448.MediaManagementSystem.model.review.ReviewDAO;
-import com.csci4448.MediaManagementSystem.model.user.UserDAO;
 import com.csci4448.MediaManagementSystem.model.media.MediaDAO;
 import com.csci4448.MediaManagementSystem.ui.*;
 import com.csci4448.MediaManagementSystem.ui.components.*;
@@ -9,12 +8,12 @@ import com.csci4448.MediaManagementSystem.ui.components.*;
 public class MainController {
 
     private Display display;
-    private UserDAO userDAO;
+    private UserDAO2 userDAO;
     private MediaDAO mediaDAO;
     private ReviewDAO reviewDAO;
 
     public MainController() {
-        userDAO = new UserDAO();
+        userDAO = new UserDAO2();
         mediaDAO = new MediaDAO();
         reviewDAO = new ReviewDAO();
         display = new Display(this);
@@ -104,7 +103,7 @@ public class MainController {
         display.setState(indMedia);
     }
 
-    public UserDAO getUserDAO() {
+    public UserDAO2 getUserDAO() {
         return userDAO;
     }
     public boolean hasActiveUser() { return userDAO.activeUserSet(); }

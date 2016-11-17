@@ -3,7 +3,6 @@ package com.csci4448.MediaManagementSystem.model.media;
 import com.csci4448.MediaManagementSystem.model.review.Review;
 import com.csci4448.MediaManagementSystem.model.review.ReviewDAO;
 import com.csci4448.MediaManagementSystem.model.user.User;
-import com.csci4448.MediaManagementSystem.model.user.UserDAO;
 import org.hibernate.*;
 import org.hibernate.cfg.Configuration;
 
@@ -79,15 +78,15 @@ public class MediaDAO implements MediaInterface {
 
     }
 
-    public Set<UserDAO> getCurrentUsers() {
+    public Set<UserDAO2> getCurrentUsers() {
 
-        Set<UserDAO> userDAOs = new HashSet<UserDAO>();
+        Set<UserDAO2> userDAOs = new HashSet<UserDAO2>();
 
         Set<User> currentUsers = activeMedia.getCurrentUsers();
         Iterator<User> itr = currentUsers.iterator();
 
         while (itr.hasNext()) {
-            UserDAO userDAO = new UserDAO();
+            UserDAO2 userDAO = new UserDAO2();
             userDAO.setActiveUser(itr.next().getUserID());
             userDAOs.add(userDAO);
         }
@@ -141,7 +140,7 @@ public class MediaDAO implements MediaInterface {
 
     }
 
-    public int addMedia(UserDAO user, String title, String description, String type, String genre, int price, int sellPrice, int inventoryCount, boolean isRentable) {
+    public int addMedia(UserDAO2 user, String title, String description, String type, String genre, int price, int sellPrice, int inventoryCount, boolean isRentable) {
         /*
         Add a media record to the Media table.
 
@@ -220,7 +219,7 @@ public class MediaDAO implements MediaInterface {
 
     }
 
-    public int deleteMedia(int mediaID, UserDAO user) {
+    public int deleteMedia(int mediaID, UserDAO2 user) {
         /*
         Delete a media record from the Media table.
 
@@ -255,7 +254,7 @@ public class MediaDAO implements MediaInterface {
 
     }
 
-    public int editMedia(UserDAO user, int mediaID, String title, String description, String type, String genre, int price, int sellPrice, int inventoryCount, boolean isRentable) {
+    public int editMedia(UserDAO2 user, int mediaID, String title, String description, String type, String genre, int price, int sellPrice, int inventoryCount, boolean isRentable) {
         /*
         Edit a media record in the Media table.
 
