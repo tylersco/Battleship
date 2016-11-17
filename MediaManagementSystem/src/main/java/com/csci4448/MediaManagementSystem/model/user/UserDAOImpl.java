@@ -1,9 +1,14 @@
 package com.csci4448.MediaManagementSystem.model.user;
 
 import com.csci4448.MediaManagementSystem.model.GenericDAOImpl;
+import com.csci4448.MediaManagementSystem.model.media.Media;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class UserDAOImpl
         extends GenericDAOImpl<User, Integer>
@@ -112,6 +117,20 @@ public class UserDAOImpl
 
         return user;
 
+    }
+
+    public List<Media> getPersonalInventory(String username){
+        User user = getUser(username);
+
+        if(user == null){
+            return Collections.emptyList();
+        }
+
+        List<Media> personalInventory = new ArrayList<Media>();
+
+        personalInventory.addAll(user.getPersonalInventory());
+
+        return personalInventory;
     }
 
     public User getUser(String username) {

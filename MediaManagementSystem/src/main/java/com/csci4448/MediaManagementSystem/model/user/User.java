@@ -33,10 +33,10 @@ public class User {
     @Column(nullable = false)
     private int accountBalance;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private Set<Review> reviews = new HashSet<Review>();
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "USER_MEDIA",
                 joinColumns = @JoinColumn(name = "userID"),
                 inverseJoinColumns = @JoinColumn(name = "mediaID"))

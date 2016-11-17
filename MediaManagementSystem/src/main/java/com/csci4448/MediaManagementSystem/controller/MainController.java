@@ -98,7 +98,7 @@ public class MainController {
 
 
         display.setState(store);
-        //sessionFactory.close();
+
     }
 
 
@@ -107,9 +107,15 @@ public class MainController {
         GridMediaPanel library = new GridMediaPanel(this, 215, 327, 15, 35);
         library.getMenuPanel().getLibraryButton().setIsSelected(true);
         //ToDo: populate library with media in users inventory
-        for (int i = 0; i < 3; i++) {
+
+
+        UserDAOImpl userDAO = new UserDAOImpl();
+
+        List<Media> personalInventory = userDAO.getPersonalInventory(activeUser.getUsername());
+
+        for(Media media: personalInventory) {
             //ToDo: modify MediaListing so it displays owned/rented instead of price
-            MediaListing listing = new MediaListing(this, 1234, "src/main/resources/test.png", "Title", 4);
+            MediaListing listing = new MediaListing(this, media.getMediaID(), media.getImage(), media.getTitle(), media.getPrice());
             library.add(listing);
         }
         display.setState(library);
