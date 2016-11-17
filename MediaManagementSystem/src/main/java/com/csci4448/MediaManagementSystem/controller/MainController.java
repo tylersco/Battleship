@@ -11,6 +11,8 @@ import com.csci4448.MediaManagementSystem.model.user.UserDAOImpl;
 import com.csci4448.MediaManagementSystem.model.user.User;
 import com.csci4448.MediaManagementSystem.ui.*;
 import com.csci4448.MediaManagementSystem.ui.components.*;
+import com.csci4448.MediaManagementSystem.model.media.SystemInventory;
+import java.util.List;
 
 public class MainController {
 
@@ -85,36 +87,14 @@ public class MainController {
         GridMediaPanel store = new GridMediaPanel(this, 215, 327, 15, 35);
         store.getMenuPanel().getStoreButton().setIsSelected(true);
 
-        //ToDo: populate library with media in users inventory
-        for (int i = 0; i < 20; i++) {
-            //ToDo: modify MediaListing so it displays owned/rented instead of price
-            MediaListing listing = new MediaListing(this, 1234, "src/main/resources/test.png", "Title", 4);
+
+        List<Media> mediaRecords = SystemInventory.getSystemInventory().getAllMedia();
+
+        for(Media media: mediaRecords) {
+            MediaListing listing = new MediaListing(this, media.getMediaID(), media.getImage(), media.getTitle(), media.getPrice());
             store.add(listing);
         }
-        /*
-        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
 
-        for(int i = 1; i <= 12; i++){
-
-
-
-            Media media = null;
-            int mediaID = i;
-
-            Session session = sessionFactory.openSession();
-
-            session.beginTransaction();
-
-            media = (Media) session.createQuery("from Media where mediaID = :mediaID").setParameter("mediaID", mediaID).uniqueResult();
-
-
-            MediaListing listing = new MediaListing(this, 1234, media.getImage(), media.getTitle(), media.getPrice());
-
-
-            store.add(listing);
-            session.close();
-        }
-        */
 
 
         display.setState(store);
