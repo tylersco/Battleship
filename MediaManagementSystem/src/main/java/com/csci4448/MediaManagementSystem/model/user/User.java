@@ -33,7 +33,7 @@ public class User {
     @Column(nullable = false)
     private int accountBalance;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Review> reviews = new HashSet<Review>();
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
