@@ -33,7 +33,6 @@ public class MainController {
         loginRequest();
     }
 
-
     public void loginRequest() {
         display.setState(new LoginPanel(this));
     }
@@ -87,7 +86,6 @@ public class MainController {
         GridMediaPanel store = new GridMediaPanel(this, 215, 327, 15, 35);
         store.getMenuPanel().getStoreButton().setIsSelected(true);
 
-
         List<Media> mediaRecords = SystemInventory.getSystemInventory().getAllMedia();
 
         for(Media media: mediaRecords) {
@@ -95,19 +93,13 @@ public class MainController {
             store.add(listing);
         }
 
-
-
         display.setState(store);
 
     }
 
-
-
     public void libraryRequest() {
         GridMediaPanel library = new GridMediaPanel(this, 215, 327, 15, 35);
         library.getMenuPanel().getLibraryButton().setIsSelected(true);
-        //ToDo: populate library with media in users inventory
-
 
         UserDAOImpl userDAO = new UserDAOImpl();
 
@@ -122,15 +114,15 @@ public class MainController {
     }
 
     public void adminRequest() {
+        // ToDo: Implement this
         /* display.setState(new IndividualMediaPanel(this, null)); */
     }
 
     public void addFundsRequest() {
-
+        // ToDo: Implement this
     }
 
     public void individualMediaRequest(int mediaId) {
-        //ToDo: get info for particular media, mediaId, and add info to panel
         Media media = mediaDAO.getMedia(mediaId);
 
         if (media == null) {

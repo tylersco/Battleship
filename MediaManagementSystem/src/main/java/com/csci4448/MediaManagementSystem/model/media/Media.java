@@ -11,22 +11,6 @@ import java.util.Set;
 @Table(name = "MEDIA")
 public class Media {
 
-    // This is temporary until media gets pulled from the database.
-    public static Media getDefaultMedia() {
-        Media med = new Media();
-        med.mediaID = 999999;
-        med.title = "Test Media";
-        med.description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do...";
-        med.type = "Book";
-        med.image = "src/main/resources/test.png";
-        med.genre = "Everything";
-        med.price = 1;
-        med.sellPrice = 1;
-        med.inventoryCount = 99;
-        med.isRentable = true;
-        return med;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int mediaID;
