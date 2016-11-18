@@ -52,6 +52,7 @@ public class ReviewDAOImpl
 
         reviewID = create(review);
 
+
         if (reviewID == null)
             return -1;
         else

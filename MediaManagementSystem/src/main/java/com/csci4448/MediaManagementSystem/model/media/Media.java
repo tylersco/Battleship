@@ -39,7 +39,7 @@ public class Media {
     @Column(nullable = false)
     private boolean isRentable;
 
-    @OneToMany(mappedBy = "media")
+    @OneToMany(mappedBy = "media",fetch = FetchType.EAGER)
     private Set<Review> reviews = new HashSet<Review>();
 
     @ManyToMany(mappedBy = "personalInventory")
