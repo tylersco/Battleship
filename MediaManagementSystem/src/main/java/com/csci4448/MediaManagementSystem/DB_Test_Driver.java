@@ -64,9 +64,7 @@ public class DB_Test_Driver {
 
         media.addUserOwner(user);
         user.addPersonalMedia(media);
-
-
-
+        
     }
 
 
