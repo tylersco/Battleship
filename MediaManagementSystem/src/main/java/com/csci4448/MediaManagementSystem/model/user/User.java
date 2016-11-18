@@ -113,6 +113,10 @@ public class User {
         return personalInventory;
     }
 
+    public void addPersonalMedia(Media media){
+        personalInventory.add(media);
+    }
+
     @Override
     public String toString() {
         return "First Name: " + firstName + "\nLast Name: " + lastName + "\nUsername: " + username + "\nEmail: " + email + "\n";

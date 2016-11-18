@@ -123,6 +123,10 @@ public class Media {
         return isRentable;
     }
 
+    public void addUserOwner(User user){
+        currentUsers.add(user);
+    }
+
     public void setIsRentable(boolean _isRentable) {
         isRentable = _isRentable;
     }
