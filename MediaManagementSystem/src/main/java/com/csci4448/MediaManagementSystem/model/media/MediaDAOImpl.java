@@ -6,6 +6,7 @@ import com.csci4448.MediaManagementSystem.model.user.UserDAO;
 import com.csci4448.MediaManagementSystem.model.user.UserDAOImpl;
 
 import java.io.File;
+import java.util.List;
 
 public class MediaDAOImpl
         extends GenericDAOImpl<Media, Integer>
@@ -194,12 +195,16 @@ public class MediaDAOImpl
         */
 
         UserDAO userDAO = new UserDAOImpl();
-        User user = userDAO.getUser(username);
+        User adminUser = userDAO.getUser(username);
 
-        if (user == null || !user.getIsAdmin())
+        if (adminUser == null || !adminUser.getIsAdmin())
             return -2;
 
         Media media = retrieve(mediaID);
+        List<User> allUsers = userDAO.getAll();
+
+        for (User user: allUsers)
+            user.removePersonalMedia(media);
 
         if (media == null)
             return -1;

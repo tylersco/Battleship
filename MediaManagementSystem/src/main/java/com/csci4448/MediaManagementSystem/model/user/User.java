@@ -33,10 +33,10 @@ public class User {
     @Column(nullable = false)
     private int accountBalance;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE, CascadeType.DETACH}, orphanRemoval = true)
     private Set<Review> reviews = new HashSet<Review>();
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinTable(name = "USER_MEDIA",
                 joinColumns = @JoinColumn(name = "userID"),
                 inverseJoinColumns = @JoinColumn(name = "mediaID"))
@@ -115,6 +115,10 @@ public class User {
 
     public void addPersonalMedia(Media media){
         personalInventory.add(media);
+    }
+
+    public void removePersonalMedia(Media media) {
+        personalInventory.remove(media);
     }
 
     @Override

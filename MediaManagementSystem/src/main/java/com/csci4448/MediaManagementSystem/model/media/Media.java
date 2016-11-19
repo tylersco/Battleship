@@ -39,10 +39,10 @@ public class Media {
     @Column(nullable = false)
     private boolean isRentable;
 
-    @OneToMany(mappedBy = "media", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "media", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE, CascadeType.DETACH}, orphanRemoval = true)
     private Set<Review> reviews = new HashSet<Review>();
 
-    @ManyToMany(mappedBy = "personalInventory", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "personalInventory", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     private Set<User> currentUsers = new HashSet<User>();
 
     public Media() {
@@ -141,7 +141,7 @@ public class Media {
 
     @Override
     public String toString() {
-        return "Title: " + title + "\nType: " + type + "\n Genre: " + genre + "\n";
+        return "Title: " + title + "\nType: " + type + "\nGenre: " + genre + "\n";
     }
 
 }

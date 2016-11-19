@@ -102,6 +102,7 @@ public abstract class GenericDAOImpl<T, ID extends Serializable>
             transaction = session.beginTransaction();
             // Delete the record
             session.delete(record);
+            session.flush();
             transaction.commit();
         } catch (HibernateException ex) {
             if (transaction != null)

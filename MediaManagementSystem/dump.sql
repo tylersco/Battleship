@@ -35,7 +35,7 @@ CREATE TABLE `MEDIA` (
   `isRentable` tinyint(1) NOT NULL,
   PRIMARY KEY (`mediaID`),
   UNIQUE KEY `MEDIA_id_uindex` (`mediaID`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -67,7 +67,7 @@ CREATE TABLE `REVIEW` (
   KEY `REVIEW_mediaID_fk` (`mediaID`),
   CONSTRAINT `REVIEW_mediaID_fk` FOREIGN KEY (`mediaID`) REFERENCES `MEDIA` (`mediaID`),
   CONSTRAINT `REVIEW_userID_fk` FOREIGN KEY (`userID`) REFERENCES `USER` (`userID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -99,7 +99,7 @@ CREATE TABLE `USER` (
   UNIQUE KEY `USER_username_uindex` (`username`),
   UNIQUE KEY `USER_email_uindex` (`email`),
   UNIQUE KEY `USER_id_uindex` (`userID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -108,7 +108,7 @@ CREATE TABLE `USER` (
 
 LOCK TABLES `USER` WRITE;
 /*!40000 ALTER TABLE `USER` DISABLE KEYS */;
-INSERT INTO `USER` VALUES (1,'admin','admin','tysc7237@colorado.edu','Admin',NULL,1,100);
+INSERT INTO `USER` VALUES (1,'admin','admin','tysc7237@colorado.edu','Admin',NULL,1,100),(30,'cjr','password','cjr@colorado.edu','chris','james',0,5);
 /*!40000 ALTER TABLE `USER` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -150,4 +150,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-11-17 10:28:26
+-- Dump completed on 2016-11-18 22:14:18
