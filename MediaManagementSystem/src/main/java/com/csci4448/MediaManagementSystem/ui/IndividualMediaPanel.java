@@ -23,6 +23,8 @@ public class IndividualMediaPanel extends MainContentPanel implements ActionList
     private MediaImage image;
     private TextArea titleText;
     private TextArea descriptionText;
+    private TextButton addReviewButton;
+
     private TextButton adminButton; // Will only appear if the logged in user is an admin
     private TextButton saveEditsButton; // Will only appear if the logged in user is an admin AND is editing details
     private TextButton cancelEditsButton; // Will only appear if the logged in user is an admin AND is editing details
@@ -51,6 +53,11 @@ public class IndividualMediaPanel extends MainContentPanel implements ActionList
         descriptionText.setSize(350, 250);
         descriptionText.setLocation(400, 85);
         content.add(descriptionText);
+
+        addReviewButton = new TextButton(this, "Add Review +", buttonFont, defaultColor, enteredColor, selectedColor);
+        addReviewButton.setSize(addReviewButton.getPreferredSize());
+        addReviewButton.setLocation(800, 500);
+        content.add(addReviewButton);
 
         adminButton = new TextButton(this, "Edit Details", buttonFont, defaultColor, enteredColor, selectedColor);
         adminButton.setSize(adminButton.getPreferredSize());
@@ -141,6 +148,9 @@ public class IndividualMediaPanel extends MainContentPanel implements ActionList
             // TODO: Ask user if they want to cancel the changes
             isAdminEditing = false;
             finishAdminEditing(false);
+        }
+        else if (component.equals(addReviewButton)) {
+            //ToDo: call request method in controller
         }
     }
 }
