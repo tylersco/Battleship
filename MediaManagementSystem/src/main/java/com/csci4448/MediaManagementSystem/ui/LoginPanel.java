@@ -39,16 +39,12 @@ public class LoginPanel extends JPanel implements ActionListener, DisplayState{
         password.setLocation(75, 125);
         add(password);
 
-        submit = new TextButton(this, "Submit", defaultFont, lightColor, darkColor);
-        Dimension size = submit.getPreferredSize();
-        submit.setSize(size.width+1, size.height);
-        submit.setLocation((350-(int)size.getWidth())/2, 185);
+        submit = TextComponentFactory.smallButton(this, "Submit", Style.LOGIN_BASIC);
+        submit.setLocation((350-submit.getWidth())/2, 185);
         add(submit);
 
-        createAccount = new TextButton(this, "Create Account", new Font("Helvetice Neue", Font.PLAIN, 10), new Color(55, 137, 199), new Color(70, 177, 249));
-        size = createAccount.getPreferredSize();
-        createAccount.setSize(size.width+1, size.height);
-        createAccount.setLocation((350-(int)size.getWidth())/2, 215);
+        createAccount = TextComponentFactory.smallButton(this, "Create Account",  Style.LOGIN_CREATE);
+        createAccount.setLocation((350-createAccount.getWidth())/2, 215);
         add(createAccount);
 
     }

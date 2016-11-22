@@ -1,9 +1,8 @@
-package com.csci4448.MediaManagementSystem.ui.components;
+package com.csci4448.MediaManagementSystem.ui;
 
 import com.csci4448.MediaManagementSystem.controller.MainController;
-import com.csci4448.MediaManagementSystem.ui.ButtonFactory;
-import com.sun.deploy.uitoolkit.impl.text.TextUIFactory;
-import com.sun.javafx.scene.text.TextLayoutFactory;
+import com.csci4448.MediaManagementSystem.ui.components.SearchBar;
+import com.csci4448.MediaManagementSystem.ui.components.TextButton;
 
 import javax.swing.*;
 import java.awt.*;
@@ -35,26 +34,24 @@ public class MenuPanel extends JPanel implements ActionListener {
     }
 
     private void initializeMenuComponents() {
-        Dimension size;
-        storeButton = ButtonFactory.menuMain(this, "Store");
+        storeButton = TextComponentFactory.menuMainButton(this, "Store", Style.MENU_MAIN);
         storeButton.setLocation(80, 0);
         add(storeButton);
 
-        libraryButton = ButtonFactory.menuMain(this, "Library");
+        libraryButton = TextComponentFactory.menuMainButton(this, "Library", Style.MENU_MAIN);
         libraryButton.setLocation(180, 0);
         add(libraryButton);
 
-        accountButton = ButtonFactory.menuSub(this, "Account");
+        accountButton = TextComponentFactory.smallButton(this, "Account", Style.MENU_SUB);
         accountButton.setLocation(775, 5);
         add(accountButton);
 
-        fundsButton = ButtonFactory.menuSub(this, "$0.00");
+        fundsButton = TextComponentFactory.smallButton(this, "$0.00", Style.MENU_SUB);
         fundsButton.setLocation(840, 5);
         add(fundsButton);
 
         searchBar = new SearchBar(this);
-        size = searchBar.getPreferredSize();
-        searchBar.setSize(size);
+        searchBar.setSize(searchBar.getPreferredSize());
         searchBar.setLocation(775, 26);
         add(searchBar);
     }
