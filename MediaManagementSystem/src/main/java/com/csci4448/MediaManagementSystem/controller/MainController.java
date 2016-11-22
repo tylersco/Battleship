@@ -150,6 +150,18 @@ public class MainController {
         display.setState(indMedia);
     }
 
+    public void individualMediaActionRequest(int mediaId) {
+        //ToDo: request when user clicks buy, rent, return, or sell back
+    }
+
+    public void reviewMediaRequest() {
+        //ToDo: check to see if user is allowed to add a review
+    }
+
+    public void reviewMediaSubmitRequest(String reviewText, int rating) {
+        //ToDo: add review to media and db
+    }
+
     public UserDAO getUserDAO() {
         return userDAO;
     }

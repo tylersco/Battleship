@@ -2,10 +2,8 @@ package com.csci4448.MediaManagementSystem.ui;
 
 import com.csci4448.MediaManagementSystem.controller.MainController;
 import com.csci4448.MediaManagementSystem.model.media.Media;
-import com.csci4448.MediaManagementSystem.ui.components.MediaImage;
-import com.csci4448.MediaManagementSystem.ui.components.ReviewPanel;
+import com.csci4448.MediaManagementSystem.ui.components.*;
 import com.csci4448.MediaManagementSystem.ui.components.TextArea;
-import com.csci4448.MediaManagementSystem.ui.components.TextButton;
 
 import javax.swing.*;
 import java.awt.*;
@@ -36,7 +34,7 @@ public class IndividualMediaPanel extends MainContentPanel implements ActionList
     public IndividualMediaPanel(MainController controller, String title, String imagePath, String description) {
         super(controller);
 
-        JPanel content = getContent();
+        JLayeredPane content = getContent();
 
         titleText = new TextArea(title, new Font("Helvetice Neue", Font.PLAIN, 35), new Color(75, 75, 75));
         titleText.setSize(500, (int)titleText.getPreferredSize().getHeight());
@@ -46,7 +44,7 @@ public class IndividualMediaPanel extends MainContentPanel implements ActionList
         image = new MediaImage(imagePath);
         image.loadMediaImage(325, 456);
         image.setLocation(15, 15);
-        content.add(image);
+        content.add(image, 0);
 
         descriptionText = new TextArea(description, new Font("Helvetice Neue", Font.PLAIN, 18), new Color(75, 75, 75, 200));
         descriptionText.setLineWrap(true);
@@ -86,7 +84,7 @@ public class IndividualMediaPanel extends MainContentPanel implements ActionList
 
     //ToDo: make private, constructor should take reviews
     public void addReviews(ArrayList<ReviewPanel> reviews) {
-        JPanel content = getContent();
+        JLayeredPane content = getContent();
         for (int i = 0; i < reviews.size(); i++) {
             ReviewPanel review = reviews.get(i);
             review.setSize(900, 65);
@@ -150,7 +148,8 @@ public class IndividualMediaPanel extends MainContentPanel implements ActionList
             finishAdminEditing(false);
         }
         else if (component.equals(addReviewButton)) {
-            //ToDo: call request method in controller
+            //ToDo: limit one panel open at a time
+            getContent().add(new EditReviewPanel(this), 2);
         }
     }
 }

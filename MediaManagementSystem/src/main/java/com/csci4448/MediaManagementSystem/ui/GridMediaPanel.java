@@ -29,7 +29,7 @@ public class GridMediaPanel extends MainContentPanel {
         int row = count / columns;
         media.setSize(cellWidth, cellHeight);
         media.setLocation((col * (cellWidth + marginWidth)), (row * (cellHeight + marginHeight)));
-        JPanel content = getContent();
+        JLayeredPane content = getContent();
         content.add(media);
         count++;
         if (col == 0) {

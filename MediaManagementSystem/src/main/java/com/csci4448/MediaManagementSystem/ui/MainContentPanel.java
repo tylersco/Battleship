@@ -13,7 +13,7 @@ public abstract class MainContentPanel extends JLayeredPane implements DisplaySt
     private JScrollPane scrollView;
     private JPanel scrollLayout;
     private MenuPanel menuPanel;
-    private JPanel content;
+    private JLayeredPane content;
     private MainController controller;
 
     public MainContentPanel(MainController controller) {
@@ -52,7 +52,7 @@ public abstract class MainContentPanel extends JLayeredPane implements DisplaySt
         //scrollView.getHorizontalScrollBar().setPreferredSize(new Dimension(0, 0));
         add(scrollView, new Integer(1));
 
-        content = new JPanel();
+        content = new JLayeredPane();
         content.setLayout(null);
         content.setSize(935, 0);
         content.setLocation(15, 10);
@@ -64,7 +64,7 @@ public abstract class MainContentPanel extends JLayeredPane implements DisplaySt
         return menuPanel;
     }
 
-    public JPanel getContent() {
+    public JLayeredPane getContent() {
         return content;
     }
 
