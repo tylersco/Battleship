@@ -3,6 +3,7 @@ package com.csci4448.MediaManagementSystem.ui;
 import com.csci4448.MediaManagementSystem.controller.MainController;
 import com.csci4448.MediaManagementSystem.model.media.Media;
 import com.csci4448.MediaManagementSystem.ui.components.MediaImage;
+import com.csci4448.MediaManagementSystem.ui.components.ReviewPanel;
 import com.csci4448.MediaManagementSystem.ui.components.TextArea;
 import com.csci4448.MediaManagementSystem.ui.components.TextButton;
 
@@ -10,6 +11,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class IndividualMediaPanel extends MainContentPanel implements ActionListener {
 
@@ -75,8 +77,18 @@ public class IndividualMediaPanel extends MainContentPanel implements ActionList
         updateContentSize();
     }
 
-    private void addReview() {
-
+    //ToDo: make private, constructor should take reviews
+    public void addReviews(ArrayList<ReviewPanel> reviews) {
+        JPanel content = getContent();
+        for (int i = 0; i < reviews.size(); i++) {
+            ReviewPanel review = reviews.get(i);
+            review.setSize(900, 65);
+            //ToDo: add margin
+            review.setLocation(15, 525 + (i * 65) + (i * 5));
+            content.add(review);
+        }
+        content.setSize(935, reviews.size()*70 + 550);
+        updateContentSize();
     }
 
     private void prepareAdminEditing() {

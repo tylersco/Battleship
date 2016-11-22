@@ -12,6 +12,8 @@ import com.csci4448.MediaManagementSystem.model.user.User;
 import com.csci4448.MediaManagementSystem.ui.*;
 import com.csci4448.MediaManagementSystem.ui.components.*;
 import com.csci4448.MediaManagementSystem.model.media.SystemInventory;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainController {
@@ -132,7 +134,19 @@ public class MainController {
 
         activeMedia = media;
 
+
         IndividualMediaPanel indMedia = new IndividualMediaPanel(this, activeMedia.getTitle(), activeMedia.getImage(), activeMedia.getDescription());
+
+        //ToDo: take reviews from media and pass them in on indMedia creation
+        ReviewPanel r = new ReviewPanel("Name1", "this is what i have to say", 5);
+        ReviewPanel r2 = new ReviewPanel("Name2", "this is what i have to say", 5);
+        ReviewPanel r3 = new ReviewPanel("Name3", "this is what i have to say", 5);
+        ArrayList<ReviewPanel> rs = new ArrayList<ReviewPanel>();
+        rs.add(r);
+        rs.add(r2);
+        rs.add(r3);
+        indMedia.addReviews(rs);
+
         display.setState(indMedia);
     }
 
