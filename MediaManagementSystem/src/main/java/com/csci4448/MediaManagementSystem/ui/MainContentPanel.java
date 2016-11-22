@@ -5,10 +5,12 @@ import com.csci4448.MediaManagementSystem.ui.components.MenuPanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
-public abstract class MainContentPanel extends JLayeredPane implements DisplayState {
+public abstract class MainContentPanel extends JLayeredPane implements DisplayState, ActionListener {
 
     private JScrollPane scrollView;
     private JPanel scrollLayout;
@@ -93,4 +95,8 @@ public abstract class MainContentPanel extends JLayeredPane implements DisplaySt
 
 
     protected MainController getController() { return controller; }
+
+    public void actionPerformed(ActionEvent event) {
+
+    }
 }

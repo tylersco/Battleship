@@ -151,5 +151,12 @@ public class IndividualMediaPanel extends MainContentPanel implements ActionList
             //ToDo: limit one panel open at a time
             getContent().add(new EditReviewPanel(this), 2);
         }
+        else if (component instanceof ConfirmationWindow) {
+            if (((ConfirmationWindow) component).getIsConfirmed()) {
+                //ToDo: perform media action
+            } else {
+                //ToDo: dont perfrom media action
+            }
+        }
     }
 }
