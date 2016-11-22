@@ -139,8 +139,8 @@ public class MainController {
 
         activeMedia = media;
 
-
-        IndividualMediaPanel indMedia = new IndividualMediaPanel(this, activeMedia.getTitle(), activeMedia.getImage(), activeMedia.getDescription());
+        //ToDo: "Buy 5.00" needs to be replaced with the particular media's action (buy, rent, sell, return)
+        IndividualMediaPanel indMedia = new IndividualMediaPanel(this, activeMedia.getMediaID(), activeMedia.getTitle(), activeMedia.getImage(), activeMedia.getDescription(), "Buy $5.00");
 
         //ToDo: take reviews from media and pass them in on indMedia creation
         ReviewPanel r = new ReviewPanel("Name1", "this is what i have to say", 5);
@@ -156,14 +156,14 @@ public class MainController {
     }
 
     public void individualMediaActionRequest(int mediaId) {
-        //ToDo: request when user clicks buy, rent, return, or sell back
+        //ToDo: request when user clicks buy, rent, return, or sell
     }
 
-    public void reviewMediaRequest() {
+    public void reviewMediaRequest(int mediaId) {
         //ToDo: check to see if user is allowed to add a review
     }
 
-    public void reviewMediaSubmitRequest(String reviewText, int rating) {
+    public void reviewMediaSubmitRequest(int mediaId, String reviewText, int rating) {
         //ToDo: add review to media and db
     }
 

@@ -13,6 +13,8 @@ import java.util.ArrayList;
 
 public class IndividualMediaPanel extends MainContentPanel implements ActionListener {
 
+    private int mediaId;
+
     private Font buttonFont = new Font("Helvetice Neue", Font.PLAIN, 15);
     private Color defaultColor = new Color(75, 75, 75, 180);
     private Color enteredColor = new Color(75, 75, 75);
@@ -22,17 +24,19 @@ public class IndividualMediaPanel extends MainContentPanel implements ActionList
     private TextArea titleText;
     private TextArea descriptionText;
     private TextButton addReviewButton;
+    private TextButton actionButton;
 
     private TextButton adminButton; // Will only appear if the logged in user is an admin
     private TextButton saveEditsButton; // Will only appear if the logged in user is an admin AND is editing details
     private TextButton cancelEditsButton; // Will only appear if the logged in user is an admin AND is editing details
-    private TextButton actionButton;
     private JPanel reviews;
 
     private boolean isAdminEditing = false;
 
-    public IndividualMediaPanel(MainController controller, String title, String imagePath, String description) {
+    public IndividualMediaPanel(MainController controller, int mediaId, String title, String imagePath, String description, String action) {
         super(controller);
+        //ToDo: potentially convert this class to use mediaListing
+        this.mediaId = mediaId;
 
         JLayeredPane content = getContent();
 
@@ -51,6 +55,11 @@ public class IndividualMediaPanel extends MainContentPanel implements ActionList
         descriptionText.setSize(350, 250);
         descriptionText.setLocation(400, 85);
         content.add(descriptionText);
+
+        actionButton = new TextButton(this, action, buttonFont, defaultColor, enteredColor, selectedColor);
+        actionButton.setSize(actionButton.getPreferredSize());
+        actionButton.setLocation(700, 345);
+        content.add(actionButton);
 
         addReviewButton = new TextButton(this, "Add Review +", buttonFont, defaultColor, enteredColor, selectedColor);
         addReviewButton.setSize(addReviewButton.getPreferredSize());
@@ -149,7 +158,11 @@ public class IndividualMediaPanel extends MainContentPanel implements ActionList
         }
         else if (component.equals(addReviewButton)) {
             //ToDo: limit one panel open at a time
+            //ToDo: call controller method to check if review is allowed
             getContent().add(new EditReviewPanel(this), 2);
+        }
+        else if (component.equals(actionButton)) {
+            getController().individualMediaActionRequest(mediaId);
         }
         else if (component instanceof ConfirmationWindow) {
             if (((ConfirmationWindow) component).getIsConfirmed()) {
@@ -158,5 +171,6 @@ public class IndividualMediaPanel extends MainContentPanel implements ActionList
                 //ToDo: dont perfrom media action
             }
         }
+
     }
 }

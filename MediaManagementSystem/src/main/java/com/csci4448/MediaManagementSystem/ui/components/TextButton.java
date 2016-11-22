@@ -42,6 +42,7 @@ public class TextButton extends JTextField {
 
     public void setIsSelected(boolean isSelected) {
         if (!this.isSelected && isSelected) {
+            //ToDo: this is really only used for menuMain buttons so potentially move it out of here
             setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, new Color(202, 114, 110)));
             setLocation(getX(), getY()+2);
             setSize(getWidth(), getHeight()-2);

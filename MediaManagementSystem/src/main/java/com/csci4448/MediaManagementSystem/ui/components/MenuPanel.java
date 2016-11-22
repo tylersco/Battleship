@@ -1,6 +1,9 @@
 package com.csci4448.MediaManagementSystem.ui.components;
 
 import com.csci4448.MediaManagementSystem.controller.MainController;
+import com.csci4448.MediaManagementSystem.ui.ButtonFactory;
+import com.sun.deploy.uitoolkit.impl.text.TextUIFactory;
+import com.sun.javafx.scene.text.TextLayoutFactory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -33,27 +36,19 @@ public class MenuPanel extends JPanel implements ActionListener {
 
     private void initializeMenuComponents() {
         Dimension size;
-        storeButton = new TextButton(this, "Store", mainButtonFont, defaultColor, enteredColor, selectedColor);
-        size = storeButton.getPreferredSize();
-        storeButton.setSize((int)size.getWidth(), 55);
+        storeButton = ButtonFactory.menuMain(this, "Store");
         storeButton.setLocation(80, 0);
         add(storeButton);
 
-        libraryButton = new TextButton(this, "Library", mainButtonFont, defaultColor, enteredColor, selectedColor);
-        size = libraryButton.getPreferredSize();
-        libraryButton.setSize((int)size.getWidth(), 55);
+        libraryButton = ButtonFactory.menuMain(this, "Library");
         libraryButton.setLocation(180, 0);
         add(libraryButton);
 
-        accountButton = new TextButton(this, "Account", subButtonFont, defaultColor, enteredColor, selectedColor);
-        size = accountButton.getPreferredSize();
-        accountButton.setSize(size.width+1, size.height);
+        accountButton = ButtonFactory.menuSub(this, "Account");
         accountButton.setLocation(775, 5);
         add(accountButton);
 
-        fundsButton = new TextButton(this, "$0.00", subButtonFont, defaultColor, enteredColor, selectedColor);
-        size = fundsButton.getPreferredSize();
-        fundsButton.setSize(size.width+1, size.height);
+        fundsButton = ButtonFactory.menuSub(this, "$0.00");
         fundsButton.setLocation(840, 5);
         add(fundsButton);
 
