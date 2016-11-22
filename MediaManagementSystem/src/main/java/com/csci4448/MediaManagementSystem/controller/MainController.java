@@ -121,6 +121,11 @@ public class MainController {
     }
 
     public void addFundsRequest() {
+        AddFundsPanel funds = new AddFundsPanel(this);
+        display.setState(funds);
+    }
+
+    public void addFundsSubmitRequest() {
         // ToDo: Implement this
     }
 

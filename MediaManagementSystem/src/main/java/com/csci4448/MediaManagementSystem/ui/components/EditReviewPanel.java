@@ -79,7 +79,6 @@ public class EditReviewPanel extends JPanel implements ActionListener {
             parent.getContent().remove(this);
             parent.getContent().validate();
             parent.getContent().repaint();
-            System.out.println("Hello");
         } else if (component.equals(submit)) {
             //ToDo: controller submit review request
         }
