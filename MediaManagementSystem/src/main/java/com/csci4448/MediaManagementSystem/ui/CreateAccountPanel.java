@@ -132,10 +132,6 @@ public class CreateAccountPanel extends JPanel implements ActionListener, Displa
         display.setVisible(true);
     }
 
-    public void update(Update update) {
-
-    }
-
     public void onDeactivate(MainController controller, Display display) {
         display.remove(this);
     }

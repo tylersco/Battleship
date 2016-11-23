@@ -88,15 +88,6 @@ public class LoginPanel extends JPanel implements ActionListener, DisplayState{
         display.setVisible(true);
     }
 
-    public void update(Update update) {
-        switch (update) {
-            case INVALIDINPUT:
-                //ToDo: notify of invalid input
-            default:
-                break;
-        }
-    }
-
     public void onDeactivate(MainController controller, Display display) {
         display.remove(this);
     }

@@ -84,10 +84,6 @@ public abstract class MainContentPanel extends JLayeredPane implements DisplaySt
         display.setVisible(true);
     }
 
-    public void update(Update update) {
-
-    }
-
     public void onDeactivate(MainController controller, Display display) {
         display.remove(this);
     }
