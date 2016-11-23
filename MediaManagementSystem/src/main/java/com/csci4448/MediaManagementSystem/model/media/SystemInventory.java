@@ -93,4 +93,23 @@ public class SystemInventory {
         return values != null && values.contains(genre);
     }
 
+    public int buyMedia(String username, int mediaID){
+
+        /*
+        User can purchase media
+
+         -1 if user doesn't have enough money
+         -2 if there is no media in inventory
+         -3 if there is a system error
+         0 if success
+          */
+        int returnVal;
+        MediaDAO mediaDAO = new MediaDAOImpl();
+
+        returnVal = mediaDAO.buyMedia(username, mediaID);
+
+        return returnVal;
+
+    }
+
 }

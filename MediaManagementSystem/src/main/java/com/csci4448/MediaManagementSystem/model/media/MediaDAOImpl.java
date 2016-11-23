@@ -274,6 +274,44 @@ public class MediaDAOImpl
 
     }
 
+    public int buyMedia(String username, int mediaID){
+
+
+        UserDAO user = new UserDAOImpl();
+        Media media = getMedia(mediaID);
+        User userAccount = user.getUser(username);
+
+        // return -3 for system error
+        if(userAccount == null || media == null){
+            return -3;
+        }
+
+
+        // return -1 if user doesn't have enough money
+        if(userAccount.getAccountBalance() < media.getPrice()){
+            return -1;
+        }
+
+        // return -2 if inventory doesn't have enough media objects
+        if(media.getInventoryCount() < 1){
+            return -2;
+        }
+
+        // subtract the price of media from user's account
+        user.decreaseAccountBalance(username, media.getPrice());
+
+        // add the media to the user's account
+        userAccount.addPersonalMedia(media);
+
+        // subtract 1 media item from system inventory
+        media.setInventoryCount(media.getInventoryCount()-1);
+
+        // add user to the list of current users of media
+        media.addUserOwner(userAccount);
+
+        return 0;
+    }
+
     // ToDo: Possibly implement waitlist functionality if we have time
 
 }

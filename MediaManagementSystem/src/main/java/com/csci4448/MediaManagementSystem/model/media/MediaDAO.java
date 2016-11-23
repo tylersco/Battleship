@@ -12,5 +12,5 @@ public interface MediaDAO {
     int deleteMedia(int mediaID, String username);
     List<Media> searchMedia(String searchText);
     int rentMedia(String username, int mediaID);
-
+    int buyMedia(String username, int mediaID);
 }
