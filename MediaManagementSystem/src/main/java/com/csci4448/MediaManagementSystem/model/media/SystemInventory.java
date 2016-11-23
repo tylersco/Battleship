@@ -61,11 +61,34 @@ public class SystemInventory {
         /*
         User can rent a specific media record.
 
-        Returns 0 if successful, -1 if user doesn't have enough money, -2 if inventory count is 0, -3 if system error
+        Returns 0 if successful,
+        -1 if user doesn't have enough money,
+        -2 if inventory count is 0,
+        -3 if media is not rentable,
+        -4 if system error
          */
 
         MediaDAO mediaDAO = new MediaDAOImpl();
         return mediaDAO.rentMedia(username, mediaID);
+
+    }
+
+    public int buyMedia(String username, int mediaID){
+
+        /*
+        User can purchase media
+
+         -1 if user doesn't have enough money
+         -2 if there is no media in inventory
+         -3 if there is a system error
+         0 if success
+          */
+        int returnVal;
+        MediaDAO mediaDAO = new MediaDAOImpl();
+
+        returnVal = mediaDAO.buyMedia(username, mediaID);
+
+        return returnVal;
 
     }
 
@@ -91,25 +114,6 @@ public class SystemInventory {
     public boolean isValidGenre(String type, String genre) {
         ArrayList<String> values = typeGenreMap.get(type);
         return values != null && values.contains(genre);
-    }
-
-    public int buyMedia(String username, int mediaID){
-
-        /*
-        User can purchase media
-
-         -1 if user doesn't have enough money
-         -2 if there is no media in inventory
-         -3 if there is a system error
-         0 if success
-          */
-        int returnVal;
-        MediaDAO mediaDAO = new MediaDAOImpl();
-
-        returnVal = mediaDAO.buyMedia(username, mediaID);
-
-        return returnVal;
-
     }
 
 }

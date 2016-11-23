@@ -256,8 +256,12 @@ public class MediaDAOImpl
 
         // System error
         if (user == null || media == null)
+            return -4;
+
+        if (!media.getIsRentable())
             return -3;
 
+        // ToDo: Possibly implement waitlist, if we get to it
         if (media.getInventoryCount() <= 0)
             return -2;
 
@@ -275,7 +279,6 @@ public class MediaDAOImpl
     }
 
     public int buyMedia(String username, int mediaID){
-
 
         UserDAO user = new UserDAOImpl();
         Media media = getMedia(mediaID);
@@ -309,6 +312,16 @@ public class MediaDAOImpl
         // add user to the list of current users of media
         media.addUserOwner(userAccount);
 
+        return 0;
+    }
+
+    public int sellMedia(String username, int mediaID) {
+        // ToDo: Implement this
+        return 0;
+    }
+
+    public int returnMedia(String username, int mediaID) {
+        // ToDo: Implement this
         return 0;
     }
 

@@ -140,8 +140,12 @@ public class MainController {
         activeMedia = media;
 
         String mediaAction = "";
-        if (activeMedia.getIsRentable())
-            mediaAction = "Rent $" + activeMedia.getPrice();
+        if (activeMedia.getIsRentable() && activeUser.getPersonalInventory().contains(activeMedia))
+            mediaAction = "Return Media";
+        else if (activeMedia.getIsRentable())
+            mediaAction = "Rent $" + media.getPrice();
+        else if (!activeMedia.getIsRentable() && activeUser.getPersonalInventory().contains(activeMedia))
+            mediaAction = "Sell $" + activeMedia.getSellPrice();
         else
             mediaAction = "Buy $" + activeMedia.getPrice();
 
@@ -161,19 +165,65 @@ public class MainController {
     }
 
     public void individualMediaActionRequest(int mediaId) {
-        //ToDo: request when user clicks buy, rent, return, or sell
+        Media media = mediaDAO.getMedia(mediaId);
+
+        if (media == null) {
+            // ToDo: Database error, couldn't fetch media, throw error in UI
+            return;
+        }
+
+        activeMedia = media;
+
+        String mediaAction = "";
+        if (activeMedia.getIsRentable() && activeUser.getPersonalInventory().contains(activeMedia))
+            mediaAction = "return";
+        else if (activeMedia.getIsRentable())
+            mediaAction = "rent";
+        else if (!activeMedia.getIsRentable() && activeUser.getPersonalInventory().contains(activeMedia))
+            mediaAction = "sell";
+        else
+            mediaAction = "buy";
 
         //This is how you add a confirmation window. To remove it, do the same thing but call removePopUpWindow instead
         DisplayState state = display.getActiveState();
         if (state instanceof IndividualMediaPanel) {
-            ((MainContentPanel) state).setPopUpWindow(new ConfirmationWindow(this, "Are you sure you want to buy this?"));
+            ((MainContentPanel) state).setPopUpWindow(new ConfirmationWindow(this, "Are you sure you want to " + mediaAction + " this?"));
+        }
+    }
+
+    private void buyOrRentRequestErrorHandle(int res) {
+        if (res == -4) {
+            // ToDo: Throw error to UI saying that there was a system error
+        } else if (res == -3) {
+            // ToDo: Throw error to UI saying that the media is not rentable
+        } else if (res == -2) {
+            // ToDo: Throw error to UI saying that the media is out of stock
+            // This may change if we implement the waitlist functionality
+        } else if (res == -1) {
+            // ToDo: Throw error to UI saying that the user doesn't have enough money in account balance
         }
     }
 
     public void confirmationRequest(boolean isConfirmed) {
-        //ToDO: handle return from confirmation.  true means the user confirmed, false means the user didn't(canceled)
-
-
+        //ToDo: handle return from confirmation.  true means the user confirmed, false means the user didn't(canceled)
+        if (!isConfirmed) {
+            DisplayState state = display.getActiveState();
+            if (state instanceof IndividualMediaPanel) {
+                ((MainContentPanel) state).removePopUpWindow();
+            }
+        } else {
+            if (activeMedia.getIsRentable() && activeUser.getPersonalInventory().contains(activeMedia)) {
+                // ToDo: Implement return media in system inventory
+            } else if (activeMedia.getIsRentable()) {
+                int res = SystemInventory.getSystemInventory().rentMedia(activeUser.getUsername(), activeMedia.getMediaID());
+                buyOrRentRequestErrorHandle(res);
+            } else if (!activeMedia.getIsRentable() && activeUser.getPersonalInventory().contains(activeMedia)) {
+                // ToDo: Implement sell media in system inventory
+            } else {
+                int res = SystemInventory.getSystemInventory().buyMedia(activeUser.getUsername(), activeMedia.getMediaID());
+                buyOrRentRequestErrorHandle(res);
+            }
+        }
     }
 
     public void reviewMediaRequest(int mediaId) {
