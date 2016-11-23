@@ -19,15 +19,14 @@ public class MenuPanel extends JPanel implements ActionListener {
     private TextButton fundsButton;
     private TextButton accountButton;
 
-    private Font mainButtonFont = new Font("Helvetice Neue", Font.PLAIN, 25);
-    private Font subButtonFont = new Font("Helvetice Neue", Font.PLAIN, 12);
-    private Color defaultColor = new Color(75, 75, 75, 180);
-    private Color enteredColor = new Color(75, 75, 75);
-    private Color selectedColor = new Color(75, 75, 75);
+    private Font defaultFont = new Font("Helvetice Neue", Font.PLAIN, 14);
+    private Color darkColor = new Color(75, 75, 75);
+    private Color lightColor = new Color(75, 75, 75, 140);
 
     public MenuPanel(MainController controller) {
         this.controller = controller;
-        setLayout(null);
+        setSize(950, 55);
+        setLayout(new GridBagLayout());
         initializeMenuComponents();
         setBackground(new Color(250, 250, 250));
         setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(200, 200, 200)));
@@ -35,35 +34,24 @@ public class MenuPanel extends JPanel implements ActionListener {
 
     private void initializeMenuComponents() {
         storeButton = TextComponentFactory.menuMainButton(this, "Store", Style.MENU_MAIN);
-        storeButton.setLocation(80, 0);
-        add(storeButton);
+        GridBagConstraints storeConst = new GridBagConstraints(0, 0, 1, 2, .25, .5, GridBagConstraints.LINE_END, GridBagConstraints.NONE, new Insets(0,0,0,0), 0, 0);
+        add(storeButton, storeConst);
 
         libraryButton = TextComponentFactory.menuMainButton(this, "Library", Style.MENU_MAIN);
-        libraryButton.setLocation(180, 0);
-        add(libraryButton);
+        GridBagConstraints libConst = new GridBagConstraints(1, 0, 1, 2, 1, .5, GridBagConstraints.LINE_START, GridBagConstraints.NONE, new Insets(0,25,0,0), 0, 0);
+        add(libraryButton, libConst);
 
         accountButton = TextComponentFactory.smallButton(this, "Account", Style.MENU_SUB);
-        accountButton.setLocation(775, 5);
-        add(accountButton);
+        GridBagConstraints accConst = new GridBagConstraints(3, 1, 1, 1, .25, .5, GridBagConstraints.LINE_END, GridBagConstraints.NONE, new Insets(0,0,0,20), 0, 0);
+        add(accountButton, accConst);
 
         fundsButton = TextComponentFactory.smallButton(this, "$0.00", Style.MENU_SUB);
-        fundsButton.setLocation(840, 5);
-        add(fundsButton);
+        GridBagConstraints fundConst = new GridBagConstraints(4, 1, 1, 1, .25, .5, GridBagConstraints.LINE_START, GridBagConstraints.NONE, new Insets(0,0,0,0), 0, 0);
+        add(fundsButton, fundConst);
 
         searchBar = new SearchBar(this);
-        searchBar.setSize(searchBar.getPreferredSize());
-        searchBar.setLocation(775, 26);
-        add(searchBar);
-    }
-
-    public void setSize(int width, int height) {
-        super.setSize(width, height);
-        //storeButton.setLocation();
-        //libraryButton.setLocation();
-        searchBar.setLocation(width-185, 10);
-        //ToDo: shift funds to end of searchBar
-        fundsButton.setLocation(width-110, 35);
-        accountButton.setLocation(width-175, 35);
+        GridBagConstraints searchConst = new GridBagConstraints(3, 0, 2, 1, .5, .5, GridBagConstraints.PAGE_END, GridBagConstraints.NONE, new Insets(0,0,0,0), 0, 0);
+        add(searchBar, searchConst);
     }
 
     public TextButton getStoreButton() {

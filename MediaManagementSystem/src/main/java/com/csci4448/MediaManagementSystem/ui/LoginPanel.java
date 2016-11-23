@@ -24,28 +24,44 @@ public class LoginPanel extends JPanel implements ActionListener, DisplayState{
 
     public LoginPanel(MainController controller) {
         this.controller = controller;
-        setLayout(null);
+        setLayout(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
         setSize(350, 300);
-        setPreferredSize(new Dimension(350, 300));
         setBackground(new Color(237, 237, 237));
 
         username = new EnterTextField(this, "Username", defaultFont, lightColor, darkColor, false);
         username.setSize(200, 30);
-        username.setLocation(75, 75);
-        add(username);
+        username.setPreferredSize(new Dimension(200, 30));
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.insets = new Insets(0, 0, 20, 0);
+        c.gridx = 0;
+        c.gridwidth = 3;
+        c.gridy = 0;
+        c.anchor = GridBagConstraints.CENTER;
+        //username.setLocation(75, 75);
+        add(username, c);
 
         password = new EnterTextField(this, "Password", defaultFont, lightColor, darkColor, true);
         password.setSize(200, 30);
-        password.setLocation(75, 125);
-        add(password);
+        password.setPreferredSize(new Dimension(200, 30));
+        c.insets = new Insets(0, 0, 30, 0);
+        c.gridy = 1;
+        //password.setLocation(75, 125);
+        add(password, c);
 
         submit = TextComponentFactory.smallButton(this, "Submit", Style.LOGIN_BASIC);
-        submit.setLocation((350-submit.getWidth())/2, 185);
-        add(submit);
+        //submit.setLocation((350-submit.getWidth())/2, 185);
+        c.fill = GridBagConstraints.NONE;
+        c.insets = new Insets(0, 0, 10, 0);
+        c.gridwidth = 1;
+        c.gridx = 2;
+        c.gridy = 2;
+        add(submit, c);
 
         createAccount = TextComponentFactory.smallButton(this, "Create Account",  Style.LOGIN_CREATE);
-        createAccount.setLocation((350-createAccount.getWidth())/2, 215);
-        add(createAccount);
+        //createAccount.setLocation((350-createAccount.getWidth())/2, 215);
+        c.gridy = 3;
+        add(createAccount, c);
 
     }
 

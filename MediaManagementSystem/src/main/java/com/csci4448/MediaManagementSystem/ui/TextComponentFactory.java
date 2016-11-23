@@ -15,7 +15,7 @@ public class TextComponentFactory {
 
     public static TextButton menuMainButton(ActionListener container, String text, Style style) {
         TextButton button = new TextButton(container, text, style.getDefaultFont(), style.getDefaultColor(), style.getEnteredColor(), style.getSelectedColor());
-        setSizeWrapWidth(button, 55);
+        setSizeWrap(button);
         return button;
     }
 
@@ -34,13 +34,9 @@ public class TextComponentFactory {
     private static void setSizeWrap(JComponent component, int widthBuffer, int heightBuffer) {
         Dimension size;
         size = component.getPreferredSize();
-        component.setSize((int)size.getWidth() + widthBuffer, (int)size.getHeight() + heightBuffer);
-    }
-
-    //ToDo: potentially change menuMain to be a regular wrap instead of needing this
-    private static void setSizeWrapWidth(JComponent component , int height) {
-        Dimension size;
-        size = component.getPreferredSize();
-        component.setSize((int)size.getWidth(), height);
+        size.width = (int)size.getWidth() + widthBuffer;
+        size.height = (int)size.getHeight() + heightBuffer;
+        component.setSize(size);
+        component.setPreferredSize(size);
     }
 }

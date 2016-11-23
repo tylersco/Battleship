@@ -125,7 +125,7 @@ public class MainController {
         display.setState(funds);
     }
 
-    public void addFundsSubmitRequest() {
+    public void addFundsSubmitRequest(double amount) {
         // ToDo: Implement this
     }
 
@@ -149,7 +149,6 @@ public class MainController {
         else
             mediaAction = "Buy $" + activeMedia.getPrice();
 
-        //ToDo: "Buy 5.00" needs to be replaced with the particular media's action (buy, rent, sell, return)
         IndividualMediaPanel indMedia = new IndividualMediaPanel(this, activeMedia.getMediaID(), activeMedia.getTitle(), activeMedia.getImage(), activeMedia.getDescription(), mediaAction);
 
         List<Review> reviews = new ArrayList<Review>(activeMedia.getReviews());

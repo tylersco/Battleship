@@ -17,7 +17,6 @@ public abstract class MainContentPanel extends JLayeredPane implements DisplaySt
     private JPanel scrollLayout;
     private MenuPanel menuPanel;
     private JLayeredPane content;
-
     private JComponent popUpWindow = null;
 
     public MainContentPanel(MainController controller) {
