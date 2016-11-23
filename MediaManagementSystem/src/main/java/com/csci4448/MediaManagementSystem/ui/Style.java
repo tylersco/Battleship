@@ -8,26 +8,29 @@ public enum Style {
     MENU_SUB (UIFont.MENU_SMALL, UIColor.DEFAULT_MEDIUM, UIColor.DEFAULT_DARK),
 
     LOGIN_BASIC (UIFont.LOGIN_LARGE, UIColor.DEFAULT_LIGHT, UIColor.DEFAULT_DARK),
-    LOGIN_CREATE (UIFont.LOGIN_SMALL, UIColor.BLUE_DARK, UIColor.BLUE_LIGHT);
+    LOGIN_CREATE (UIFont.LOGIN_SMALL, UIColor.BLUE_DARK, UIColor.BLUE_LIGHT),
+
+    CREATE_BASIC (UIFont.CREATE_LARGE, UIColor.DEFAULT_LIGHT, UIColor.DEFAULT_DARK),
+    CREATE_CANCEL (UIFont.CREATE_SMALL, UIColor.DEFAULT_LIGHT, UIColor.RED_CANCEL);
 
 
     private final UIFont defaultFont;
-    private final UIColor defaultColor;
-    private final UIColor enteredColor;
-    private final UIColor selectedColor;
+    private final UIColor primaryColor;
+    private final UIColor secondaryColor;
+    private final UIColor highlightColor;
 
-    Style(UIFont defaultFont, UIColor defaultColor, UIColor enteredColor) {
+    Style(UIFont defaultFont, UIColor primaryColor, UIColor secondaryColor) {
         this.defaultFont = defaultFont;
-        this.defaultColor = defaultColor;
-        this.enteredColor = enteredColor;
-        this.selectedColor = defaultColor;
+        this.primaryColor = primaryColor;
+        this.secondaryColor = secondaryColor;
+        this.highlightColor = primaryColor;
     }
 
-    Style(UIFont defaultFont, UIColor defaultColor, UIColor enteredColor, UIColor selectedColor) {
+    Style(UIFont defaultFont, UIColor primaryColor, UIColor secondaryColor, UIColor highlightColor) {
         this.defaultFont = defaultFont;
-        this.defaultColor = defaultColor;
-        this.enteredColor = enteredColor;
-        this.selectedColor = selectedColor;
+        this.primaryColor = primaryColor;
+        this.secondaryColor = secondaryColor;
+        this.highlightColor = highlightColor;
     }
 
 
@@ -35,15 +38,15 @@ public enum Style {
         return defaultFont.getFont();
     }
 
-    public Color getDefaultColor() {
-        return defaultColor.getColor();
+    public Color getPrimaryColor() {
+        return primaryColor.getColor();
     }
 
-    public Color getEnteredColor() {
-        return enteredColor.getColor();
+    public Color getSecondaryColor() {
+        return secondaryColor.getColor();
     }
 
-    public Color getSelectedColor() {
-        return selectedColor.getColor();
+    public Color getHighlightColor() {
+        return highlightColor.getColor();
     }
 }

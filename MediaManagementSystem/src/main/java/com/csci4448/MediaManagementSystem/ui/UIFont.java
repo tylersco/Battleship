@@ -7,7 +7,10 @@ public enum UIFont {
     MENU_LARGE ("Helvetice Neue", Font.PLAIN, 25),
     MENU_SMALL ("Helvetice Neue", Font.PLAIN, 12),
     LOGIN_LARGE ("Helvetice Neue", Font.PLAIN, 14),
-    LOGIN_SMALL ("Helvetice Neue", Font.PLAIN, 10);
+    LOGIN_SMALL ("Helvetice Neue", Font.PLAIN, 10),
+    CREATE_LARGE ("Helvetice Neue", Font.PLAIN, 16),
+    CREATE_SMALL ("Helvetice Neue", Font.PLAIN, 11);
+
 
     private final Font font;
 

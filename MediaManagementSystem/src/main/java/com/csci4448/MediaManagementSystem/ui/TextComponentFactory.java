@@ -13,16 +13,42 @@ public class TextComponentFactory {
 
     }
 
-    public static TextButton menuMainButton(ActionListener container, String text, Style style) {
-        TextButton button = new TextButton(container, text, style.getDefaultFont(), style.getDefaultColor(), style.getEnteredColor(), style.getSelectedColor());
+    public static TextButton largeButton(ActionListener container, String text, Style style) {
+        TextButton button = new TextButton(container, text, style.getDefaultFont(), style.getPrimaryColor(), style.getSecondaryColor(), style.getHighlightColor());
         setSizeWrap(button);
         return button;
     }
 
     public static TextButton smallButton(ActionListener container, String text, Style style) {
-        TextButton button = new TextButton(container, text, style.getDefaultFont(), style.getDefaultColor(), style.getEnteredColor(), style.getSelectedColor());
+        TextButton button = new TextButton(container, text, style.getDefaultFont(), style.getPrimaryColor(), style.getSecondaryColor(), style.getHighlightColor());
         setSizeWrap(button, 1, 0);
         return button;
+    }
+
+    public static EnterTextField enterText(ActionListener container, String text, Style style) {
+        EnterTextField field = new EnterTextField(container, text, style.getDefaultFont(), style.getPrimaryColor(), style.getSecondaryColor(), false);
+        setSizeWrap(field);
+        return field;
+    }
+
+    public static EnterTextField enterTextHidden(ActionListener container, String text, Style style) {
+        EnterTextField field = new EnterTextField(container, text, style.getDefaultFont(), style.getPrimaryColor(), style.getSecondaryColor(), true);
+        setSizeWrap(field);
+        return field;
+    }
+
+    public static EnterTextField enterText(ActionListener container, String text, Style style, int width, int height) {
+        EnterTextField field = new EnterTextField(container, text, style.getDefaultFont(), style.getPrimaryColor(), style.getSecondaryColor(), false);
+        field.setSize(width, height);
+        field.setPreferredSize(new Dimension(width, height));
+        return field;
+    }
+
+    public static EnterTextField enterTextHidden(ActionListener container, String text, Style style, int width, int height) {
+        EnterTextField field = new EnterTextField(container, text, style.getDefaultFont(), style.getPrimaryColor(), style.getSecondaryColor(), true);
+        field.setSize(width, height);
+        field.setPreferredSize(new Dimension(width, height));
+        return field;
     }
 
     private static void setSizeWrap(JComponent component) {

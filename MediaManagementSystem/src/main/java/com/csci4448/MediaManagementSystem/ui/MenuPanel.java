@@ -33,11 +33,11 @@ public class MenuPanel extends JPanel implements ActionListener {
     }
 
     private void initializeMenuComponents() {
-        storeButton = TextComponentFactory.menuMainButton(this, "Store", Style.MENU_MAIN);
+        storeButton = TextComponentFactory.largeButton(this, "Store", Style.MENU_MAIN);
         GridBagConstraints storeConst = new GridBagConstraints(0, 0, 1, 2, .25, .5, GridBagConstraints.LINE_END, GridBagConstraints.NONE, new Insets(0,0,0,0), 0, 0);
         add(storeButton, storeConst);
 
-        libraryButton = TextComponentFactory.menuMainButton(this, "Library", Style.MENU_MAIN);
+        libraryButton = TextComponentFactory.largeButton(this, "Library", Style.MENU_MAIN);
         GridBagConstraints libConst = new GridBagConstraints(1, 0, 1, 2, 1, .5, GridBagConstraints.LINE_START, GridBagConstraints.NONE, new Insets(0,25,0,0), 0, 0);
         add(libraryButton, libConst);
 

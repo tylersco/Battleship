@@ -18,50 +18,27 @@ public class LoginPanel extends JPanel implements ActionListener, DisplayState{
     private TextButton submit;
     private TextButton createAccount;
 
-    private Font defaultFont = new Font("Helvetice Neue", Font.PLAIN, 14);
-    private Color darkColor = new Color(75, 75, 75);
-    private Color lightColor = new Color(75, 75, 75, 140);
-
     public LoginPanel(MainController controller) {
         this.controller = controller;
         setLayout(new GridBagLayout());
-        GridBagConstraints c = new GridBagConstraints();
         setSize(350, 300);
         setBackground(new Color(237, 237, 237));
 
-        username = new EnterTextField(this, "Username", defaultFont, lightColor, darkColor, false);
-        username.setSize(200, 30);
-        username.setPreferredSize(new Dimension(200, 30));
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.insets = new Insets(0, 0, 20, 0);
-        c.gridx = 0;
-        c.gridwidth = 3;
-        c.gridy = 0;
-        c.anchor = GridBagConstraints.CENTER;
-        //username.setLocation(75, 75);
-        add(username, c);
+        username = TextComponentFactory.enterText(this, "Username", Style.LOGIN_BASIC, 200, 30);
+        GridBagConstraints userConst = new GridBagConstraints(0, 0, 3, 1, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0,0,20,0), 0, 0);
+        add(username, userConst);
 
-        password = new EnterTextField(this, "Password", defaultFont, lightColor, darkColor, true);
-        password.setSize(200, 30);
-        password.setPreferredSize(new Dimension(200, 30));
-        c.insets = new Insets(0, 0, 30, 0);
-        c.gridy = 1;
-        //password.setLocation(75, 125);
-        add(password, c);
+        password = TextComponentFactory.enterTextHidden(this, "Password", Style.LOGIN_BASIC, 200, 30);
+        GridBagConstraints passConst = new GridBagConstraints(0, 1, 3, 1, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0,0,30,0), 0, 0);
+        add(password, passConst);
 
         submit = TextComponentFactory.smallButton(this, "Submit", Style.LOGIN_BASIC);
-        //submit.setLocation((350-submit.getWidth())/2, 185);
-        c.fill = GridBagConstraints.NONE;
-        c.insets = new Insets(0, 0, 10, 0);
-        c.gridwidth = 1;
-        c.gridx = 2;
-        c.gridy = 2;
-        add(submit, c);
+        GridBagConstraints submConst = new GridBagConstraints(2, 2, 1, 1, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0,0,10,0), 0, 0);
+        add(submit, submConst);
 
         createAccount = TextComponentFactory.smallButton(this, "Create Account",  Style.LOGIN_CREATE);
-        //createAccount.setLocation((350-createAccount.getWidth())/2, 215);
-        c.gridy = 3;
-        add(createAccount, c);
+        GridBagConstraints creaConst = new GridBagConstraints(2, 3, 1, 1, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0,0,10,0), 0, 0);
+        add(createAccount, creaConst);
 
     }
 

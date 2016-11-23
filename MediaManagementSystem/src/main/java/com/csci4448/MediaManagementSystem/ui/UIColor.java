@@ -8,8 +8,10 @@ public enum UIColor {
     DEFAULT_MEDIUM (75, 75, 75, 180),
     DEFAULT_DARK (75, 75, 75),
 
-    BLUE_LIGHT(70, 177, 249),
-    BLUE_DARK(55, 137, 199);
+    BLUE_LIGHT (70, 177, 249),
+    BLUE_DARK (55, 137, 199),
+
+    RED_CANCEL (249, 72, 67);
 
     private final Color color;
 

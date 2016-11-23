@@ -23,58 +23,44 @@ public class CreateAccountPanel extends JPanel implements ActionListener, Displa
     private TextButton submit;
     private TextButton cancel;
 
-    private Font defaultFont = new Font("Helvetice Neue", Font.PLAIN, 14);
-    private Color darkColor = new Color(75, 75, 75);
-    private Color lightColor = new Color(75, 75, 75, 140);
-
     public CreateAccountPanel(MainController controller) {
         this.controller = controller;
-        setLayout(null);
+        setLayout(new GridBagLayout());
         setSize(350, 500);
         setPreferredSize(new Dimension(350, 500));
         setBackground(new Color(237, 237, 237));
 
-        firstName = new EnterTextField(this, "First", defaultFont, lightColor, darkColor, false);
-        firstName.setSize(145, 30);
-        firstName.setLocation(25, 35);
-        add(firstName);
+        firstName = TextComponentFactory.enterText(this, "First", Style.LOGIN_BASIC, 145, 30);
+        GridBagConstraints firsConst = new GridBagConstraints(0, 0, 1, 1, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0,0,30,10), 0, 0);
+        add(firstName, firsConst);
 
-        lastName = new EnterTextField(this, "Last", defaultFont, lightColor, darkColor, false);
-        lastName.setSize(145, 30);
-        lastName.setLocation(180, 35);
-        add(lastName);
+        lastName = TextComponentFactory.enterText(this, "Last", Style.LOGIN_BASIC, 145, 30);
+        GridBagConstraints lastConst = new GridBagConstraints(1, 0, 1, 1, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0,0,30,0), 0, 0);
+        add(lastName, lastConst);
 
-        username = new EnterTextField(this, "username", defaultFont, lightColor, darkColor, false);
-        username.setSize(215, 30);
-        username.setLocation(25, 95);
-        add(username);
+        username = TextComponentFactory.enterText(this, "username", Style.LOGIN_BASIC, 215, 30);
+        GridBagConstraints userConst = new GridBagConstraints(0, 1, 2, 1, 0, 0, GridBagConstraints.LINE_START, GridBagConstraints.NONE, new Insets(0,0,30,0), 0, 0);
+        add(username, userConst);
 
-        email = new EnterTextField(this, "email", defaultFont, lightColor, darkColor, false);
-        email.setSize(215, 30);
-        email.setLocation(25, 155);
-        add(email);
+        email = TextComponentFactory.enterText(this, "email", Style.LOGIN_BASIC, 215, 30);
+        GridBagConstraints emaiConst = new GridBagConstraints(0, 2, 2, 1, 0, 0, GridBagConstraints.LINE_START, GridBagConstraints.NONE, new Insets(0,0,30,0), 0, 0);
+        add(email, emaiConst);
 
-        password1 = new EnterTextField(this, "password", defaultFont, lightColor, darkColor, true);
-        password1.setSize(215, 30);
-        password1.setLocation(25, 215);
-        add(password1);
+        password1 = TextComponentFactory.enterTextHidden(this, "password", Style.LOGIN_BASIC, 215, 30);
+        GridBagConstraints pas1Const = new GridBagConstraints(0, 3, 2, 1, 0, 0, GridBagConstraints.LINE_START, GridBagConstraints.NONE, new Insets(0,0,30,0), 0, 0);
+        add(password1, pas1Const);
 
-        password2 = new EnterTextField(this, "confirm password", defaultFont, lightColor, darkColor, true);
-        password2.setSize(215, 30);
-        password2.setLocation(25, 275);
-        add(password2);
+        password2 = TextComponentFactory.enterTextHidden(this, "confirm password", Style.LOGIN_BASIC, 215, 30);
+        GridBagConstraints pas2Const = new GridBagConstraints(0, 4, 2, 1, 0, 0, GridBagConstraints.LINE_START, GridBagConstraints.NONE, new Insets(0,0,50,0), 0, 0);
+        add(password2, pas2Const);
 
-        submit = new TextButton(this, "Create Account", new Font("Helvetice Neue", Font.PLAIN, 16), lightColor, darkColor);
-        Dimension size = submit.getPreferredSize();
-        submit.setSize(size.width+1, size.height);
-        submit.setLocation((350-(int)size.getWidth())/2, 355);
-        add(submit);
+        submit = TextComponentFactory.smallButton(this, "Create Account", Style.CREATE_BASIC);
+        GridBagConstraints submConst = new GridBagConstraints(0, 5, 2, 1, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0,0,10,0), 0, 0);
+        add(submit, submConst);
 
-        cancel = new TextButton(this, "cancel", new Font("Helvetice Neue", Font.PLAIN, 11), lightColor, new Color(249, 72, 67));
-        size = cancel.getPreferredSize();
-        cancel.setSize(size.width+1, size.height);
-        cancel.setLocation((350-(int)size.getWidth())/2, 395);
-        add(cancel);
+        cancel = TextComponentFactory.smallButton(this, "cancel", Style.CREATE_CANCEL);
+        GridBagConstraints cancConst = new GridBagConstraints(0, 6, 2, 1, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0,0,10,0), 0, 0);
+        add(cancel, cancConst);
 
     }
 
