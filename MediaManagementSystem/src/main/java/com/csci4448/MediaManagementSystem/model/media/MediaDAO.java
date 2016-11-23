@@ -11,5 +11,6 @@ public interface MediaDAO {
     int editMedia(String username, int mediaID, String title, String description, String type, String genre, int price, int sellPrice, int inventoryCount, boolean isRentable);
     int deleteMedia(int mediaID, String username);
     List<Media> searchMedia(String searchText);
+    int rentMedia(String username, int mediaID);
 
 }

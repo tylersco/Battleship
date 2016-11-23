@@ -57,6 +57,18 @@ public class SystemInventory {
 
     }
 
+    public int rentMedia(String username, int mediaID) {
+        /*
+        User can rent a specific media record.
+
+        Returns 0 if successful, -1 if user doesn't have enough money, -2 if inventory count is 0, -3 if system error
+         */
+
+        MediaDAO mediaDAO = new MediaDAOImpl();
+        return mediaDAO.rentMedia(username, mediaID);
+
+    }
+
     public void addType(String type) {
         if (type != null && !type.equals("") && !typeGenreMap.containsKey(type))
             typeGenreMap.put(type.substring(0, 1).toUpperCase() + type.substring(1), new ArrayList<String>());

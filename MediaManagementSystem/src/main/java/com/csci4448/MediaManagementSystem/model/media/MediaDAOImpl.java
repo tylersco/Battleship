@@ -8,7 +8,6 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import javax.persistence.Query;
 import java.io.File;
 import java.util.List;
 
@@ -242,6 +241,37 @@ public class MediaDAOImpl
         }
 
         return mediaList;
+    }
+
+    public int rentMedia(String username, int mediaID) {
+        /*
+        User can rent a specific media record.
+
+        Returns 0 if successful, -1 if user doesn't have enough money, -2 if inventory count is 0, -3 if system error
+         */
+
+        UserDAO userDAO = new UserDAOImpl();
+        User user = userDAO.getUser(username);
+        Media media = getMedia(mediaID);
+
+        // System error
+        if (user == null || media == null)
+            return -3;
+
+        if (media.getInventoryCount() <= 0)
+            return -2;
+
+        // User does not have enough money
+        if (user.getAccountBalance() < media.getPrice())
+            return -1;
+
+        media.setInventoryCount(media.getInventoryCount() - 1);
+        userDAO.decreaseAccountBalance(username, media.getPrice());
+        user.addPersonalMedia(media);
+        media.addUserOwner(user);
+
+        return 0;
+
     }
 
     // ToDo: Possibly implement waitlist functionality if we have time
