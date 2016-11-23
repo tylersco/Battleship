@@ -1,5 +1,6 @@
 package com.csci4448.MediaManagementSystem.ui.components;
 
+import com.csci4448.MediaManagementSystem.controller.MainController;
 import com.csci4448.MediaManagementSystem.ui.IndividualMediaPanel;
 import com.csci4448.MediaManagementSystem.ui.MainContentPanel;
 
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 
 public class ConfirmationWindow extends JPanel implements ActionListener {
 
-    MainContentPanel parent;
+    MainController controller;
 
     private boolean isConfirmed = false;
 
@@ -22,8 +23,8 @@ public class ConfirmationWindow extends JPanel implements ActionListener {
     private Color defaultColor = new Color(75, 75, 75, 255);
     private Color enteredColor = new Color(75, 75, 75);
 
-    public ConfirmationWindow(IndividualMediaPanel parent, String confirmation) {
-        this.parent = parent;
+    public ConfirmationWindow(MainController controller, String confirmation) {
+        this.controller = controller;
 
         setLayout(null);
         setBackground(new Color(250, 250, 250));
@@ -51,29 +52,14 @@ public class ConfirmationWindow extends JPanel implements ActionListener {
 
     }
 
-    public void setSize(int width, int height) {
-        super.setSize(width, height);
-    }
-
     public void actionPerformed(ActionEvent event) {
         Object component = event.getSource();
         if (component.equals(cancel)) {
             isConfirmed = false;
-            parent.actionPerformed(new ActionEvent(ConfirmationWindow.this, 1, "Not Confirmed"));
-            //ToDo: clean up
-            parent.getContent().remove(this);
-            parent.getContent().validate();
-            parent.getContent().repaint();
+            controller.confirmationRequest(isConfirmed);
         } else if (component.equals(confirm)) {
             isConfirmed = true;
-            parent.actionPerformed(new ActionEvent(ConfirmationWindow.this, 1, "Confirmed"));
-            parent.getContent().remove(this);
-            parent.getContent().validate();
-            parent.getContent().repaint();
+            controller.confirmationRequest(isConfirmed);
         }
-    }
-
-    public boolean getIsConfirmed() {
-        return isConfirmed;
     }
 }

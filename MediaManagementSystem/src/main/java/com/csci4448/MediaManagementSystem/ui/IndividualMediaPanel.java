@@ -157,19 +157,10 @@ public class IndividualMediaPanel extends MainContentPanel implements ActionList
             finishAdminEditing(false);
         }
         else if (component.equals(addReviewButton)) {
-            //ToDo: limit one panel open at a time
-            //ToDo: call controller method to check if review is allowed
-            getContent().add(new EditReviewPanel(this), 2);
+            getController().reviewMediaRequest(mediaId);
         }
         else if (component.equals(actionButton)) {
             getController().individualMediaActionRequest(mediaId);
-        }
-        else if (component instanceof ConfirmationWindow) {
-            if (((ConfirmationWindow) component).getIsConfirmed()) {
-                //ToDo: perform media action
-            } else {
-                //ToDo: dont perfrom media action
-            }
         }
 
     }

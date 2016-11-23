@@ -1,5 +1,6 @@
 package com.csci4448.MediaManagementSystem.ui.components;
 
+import com.csci4448.MediaManagementSystem.controller.MainController;
 import com.csci4448.MediaManagementSystem.ui.IndividualMediaPanel;
 
 import javax.swing.*;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 
 public class EditReviewPanel extends JPanel implements ActionListener {
 
-    IndividualMediaPanel parent;
+    MainController controller;
 
     private TextArea reviewTextField;
     private TextArea reviewTitle;
@@ -25,8 +26,8 @@ public class EditReviewPanel extends JPanel implements ActionListener {
     private Color defaultColorStar = new Color(149, 149, 149);
     private Color selectedColorStar = new Color(253, 216, 75);
 
-    public EditReviewPanel(IndividualMediaPanel parent) {
-        this.parent = parent;
+    public EditReviewPanel(MainController controller) {
+        this.controller = controller;
 
         setLayout(null);
         setBackground(new Color(250, 250, 250));
@@ -76,11 +77,9 @@ public class EditReviewPanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent event) {
         Object component = event.getSource();
         if (component.equals(cancel)) {
-            parent.getContent().remove(this);
-            parent.getContent().validate();
-            parent.getContent().repaint();
+            controller.reviewMediaSubmitRequest(1, "hi", 5);
         } else if (component.equals(submit)) {
-            //ToDo: controller submit review request
+            //controller.reviewMediaSubmitRequest();
         }
     }
 }

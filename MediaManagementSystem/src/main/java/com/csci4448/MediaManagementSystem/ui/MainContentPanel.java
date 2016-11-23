@@ -11,11 +11,14 @@ import java.awt.event.ComponentEvent;
 
 public abstract class MainContentPanel extends JLayeredPane implements DisplayState, ActionListener {
 
+    private MainController controller;
+
     private JScrollPane scrollView;
     private JPanel scrollLayout;
     private MenuPanel menuPanel;
     private JLayeredPane content;
-    private MainController controller;
+
+    private JComponent popUpWindow = null;
 
     public MainContentPanel(MainController controller) {
         this.controller = controller;
@@ -72,6 +75,22 @@ public abstract class MainContentPanel extends JLayeredPane implements DisplaySt
     public void updateContentSize() {
         int height = content.getHeight();
         scrollLayout.setPreferredSize(new Dimension(935,height));
+    }
+
+    public void setPopUpWindow(JComponent popUpWindow) {
+        if (this.popUpWindow == null) {
+            this.popUpWindow = popUpWindow;
+            add(this.popUpWindow, new Integer(3));
+        }
+    }
+
+    public void removePopUpWindow() {
+        if (popUpWindow != null) {
+            remove(popUpWindow);
+            popUpWindow = null;
+            validate();
+            repaint();
+        }
     }
 
     public void onActivate(MainController controller, Display display) {

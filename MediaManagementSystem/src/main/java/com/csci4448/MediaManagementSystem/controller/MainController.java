@@ -157,14 +157,33 @@ public class MainController {
 
     public void individualMediaActionRequest(int mediaId) {
         //ToDo: request when user clicks buy, rent, return, or sell
+
+        //This is how you add a confirmation window. To remove it, do the same thing but call removePopUpWindow instead
+        DisplayState state = display.getActiveState();
+        if (state instanceof IndividualMediaPanel) {
+            ((MainContentPanel) state).setPopUpWindow(new ConfirmationWindow(this, "Are you sure you want to buy this?"));
+        }
+    }
+
+    public void confirmationRequest(boolean isConfirmed) {
+        //ToDO: handle return from confirmation.  true means the user confirmed, false means the user didn't(canceled)
+
+
     }
 
     public void reviewMediaRequest(int mediaId) {
-        //ToDo: check to see if user is allowed to add a review
+        DisplayState state = display.getActiveState();
+        if (state instanceof MainContentPanel) {
+            ((MainContentPanel) state).setPopUpWindow(new EditReviewPanel(this));
+        }
     }
 
     public void reviewMediaSubmitRequest(int mediaId, String reviewText, int rating) {
         //ToDo: add review to media and db
+        DisplayState state = display.getActiveState();
+        if (state instanceof MainContentPanel) {
+            ((MainContentPanel) state).removePopUpWindow();
+        }
     }
 
     public UserDAO getUserDAO() {
