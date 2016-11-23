@@ -4,7 +4,11 @@ import com.csci4448.MediaManagementSystem.model.GenericDAOImpl;
 import com.csci4448.MediaManagementSystem.model.user.User;
 import com.csci4448.MediaManagementSystem.model.user.UserDAO;
 import com.csci4448.MediaManagementSystem.model.user.UserDAOImpl;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
+import javax.persistence.Query;
 import java.io.File;
 import java.util.List;
 
@@ -213,6 +217,31 @@ public class MediaDAOImpl
             return 0;
         return -1;
 
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<Media> searchMedia(String searchText) {
+
+        // Open a DB session
+        Session session = getSessionFactory().openSession();
+        Transaction transaction = null;
+
+        List<Media> mediaList = null;
+
+        try {
+            // Begin a transaction
+            transaction = session.beginTransaction();
+
+            mediaList = session.createQuery("from Media where title like :title").setParameter("title", "%" + searchText + "%").list();
+            transaction.commit();
+        } catch (HibernateException ex) {
+            if (transaction != null)
+                transaction.rollback();
+        } finally {
+            session.close();
+        }
+
+        return mediaList;
     }
 
     // ToDo: Possibly implement waitlist functionality if we have time

@@ -1,17 +1,34 @@
 package com.csci4448.MediaManagementSystem.model.media;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class SystemInventory {
 
     private static SystemInventory systemInventory = null;
 
-    private HashMap<String, ArrayList<String>> typeGenreMap;
+    private Map<String, ArrayList<String>> typeGenreMap;
 
-    private SystemInventory() {}
+    private SystemInventory() {
+
+        // This is hard-coded for now. Not the best practice.
+        typeGenreMap = new HashMap<String, ArrayList<String>>();
+
+        ArrayList<String> bookGenres = new ArrayList<String>();
+        bookGenres.add("Biography");
+        bookGenres.add("Business");
+        bookGenres.add("Fiction");
+
+        ArrayList<String> movieGenres = new ArrayList<String>();
+        movieGenres.add("Drama");
+        movieGenres.add("Crime");
+        movieGenres.add("Action");
+        movieGenres.add("Thriller");
+        movieGenres.add("Comedy");
+
+        typeGenreMap.put("Movie", movieGenres);
+        typeGenreMap.put("Book", bookGenres);
+
+    }
 
     public static synchronized SystemInventory getSystemInventory() {
         if (systemInventory == null)
@@ -19,7 +36,7 @@ public class SystemInventory {
         return systemInventory;
     }
 
-    public List<Media> getAllMedia(){
+    public List<Media> getAllMedia() {
         MediaDAOImpl mediaDAO = new MediaDAOImpl();
         List<Media> mediaRecords = mediaDAO.getAll();
 
@@ -30,29 +47,38 @@ public class SystemInventory {
         return mediaRecords;
     }
 
-    public Media searchInventory(String searchText) {
+    public List<Media> searchInventory(String searchText) {
 
-        // ToDo: Implement this using new model structure
-        return null;
+        MediaDAO mediaDAO = new MediaDAOImpl();
+        List<Media> mediaList = mediaDAO.searchMedia(searchText);
+        if (mediaList == null)
+            return Collections.emptyList();
+        return mediaList;
 
     }
 
-    public void addGenre(String genre){
-        // ToDo: Implement this
+    public void addType(String type) {
+        if (type != null && !type.equals("") && !typeGenreMap.containsKey(type))
+            typeGenreMap.put(type.substring(0, 1).toUpperCase() + type.substring(1), new ArrayList<String>());
     }
 
-    public void addType(String type, String genre){
-        // ToDo: Implement this
+    public void addGenre(String type, String genre) {
+        if (type != null && genre != null && !genre.equals("") && typeGenreMap.containsKey(type)) {
+            ArrayList<String> values = typeGenreMap.get(type);
+            if (values != null && !values.contains(genre)) {
+                values.add(genre.substring(0, 1).toUpperCase() + genre.substring(1));
+                typeGenreMap.put(type, values);
+            }
+        }
     }
 
     public boolean isValidType(String type) {
-        // ToDo: Implement this
-        return true;
+        return typeGenreMap.containsKey(type);
     }
 
-    public boolean isValidGenre(String type, String genre)   {
-        // ToDo: Implement this
-        return true;
+    public boolean isValidGenre(String type, String genre) {
+        ArrayList<String> values = typeGenreMap.get(type);
+        return values != null && values.contains(genre);
     }
 
 }

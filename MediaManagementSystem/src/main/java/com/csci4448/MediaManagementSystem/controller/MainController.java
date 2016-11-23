@@ -139,17 +139,22 @@ public class MainController {
 
         activeMedia = media;
 
-        //ToDo: "Buy 5.00" needs to be replaced with the particular media's action (buy, rent, sell, return)
-        IndividualMediaPanel indMedia = new IndividualMediaPanel(this, activeMedia.getMediaID(), activeMedia.getTitle(), activeMedia.getImage(), activeMedia.getDescription(), "Buy $5.00");
+        String mediaAction = "";
+        if (activeMedia.getIsRentable())
+            mediaAction = "Rent $" + activeMedia.getPrice();
+        else
+            mediaAction = "Buy $" + activeMedia.getPrice();
 
-        //ToDo: take reviews from media and pass them in on indMedia creation
-        ReviewPanel r = new ReviewPanel("Name1", "this is what i have to say", 5);
-        ReviewPanel r2 = new ReviewPanel("Name2", "this is what i have to say", 5);
-        ReviewPanel r3 = new ReviewPanel("Name3", "this is what i have to say", 5);
+        //ToDo: "Buy 5.00" needs to be replaced with the particular media's action (buy, rent, sell, return)
+        IndividualMediaPanel indMedia = new IndividualMediaPanel(this, activeMedia.getMediaID(), activeMedia.getTitle(), activeMedia.getImage(), activeMedia.getDescription(), mediaAction);
+
+        List<Review> reviews = new ArrayList<Review>(activeMedia.getReviews());
         ArrayList<ReviewPanel> rs = new ArrayList<ReviewPanel>();
-        rs.add(r);
-        rs.add(r2);
-        rs.add(r3);
+
+        for (Review r : reviews) {
+            rs.add(new ReviewPanel(r.getUser().getUsername(), r.getReviewText(), r.getRatingValue()));
+        }
+
         indMedia.addReviews(rs);
 
         display.setState(indMedia);

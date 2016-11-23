@@ -75,7 +75,7 @@ public class DB_Test_Driver {
         System.out.println();
 
         // Delete all created records from the database
-        
+
         // NOTE: We do not need to delete the User, since this will not occur in the system
         reviewDAO.delete(review);
         mediaDAO.deleteMedia(mediaID, "admin");
