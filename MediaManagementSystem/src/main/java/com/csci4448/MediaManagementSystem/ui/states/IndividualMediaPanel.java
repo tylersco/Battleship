@@ -67,14 +67,20 @@ public class IndividualMediaPanel extends MainContentPanel {
         content.add(descriptionText);
 
         rentButton = TextComponentFactory.smallButton(this, "Rent", Style.INDMEDIA_BUTTON);
-        rentButton.setSize(125, 25);
-        rentButton.setLocation(15, 485);
+        rentButton.setSize(75, 25);
+        rentButton.setLocation(15, 480);
+        rentButton.setOpaque(true);
+        rentButton.setBorder(BorderFactory.createMatteBorder(2, 5, 2, 2, Color.DARK_GRAY));
+        rentButton.setHorizontalAlignment(JTextField.CENTER);
         rentButton.setBackground(Color.GREEN);
         content.add(rentButton);
 
         buyButton = TextComponentFactory.smallButton(this, "Buy", Style.INDMEDIA_BUTTON);
-        buyButton.setSize(125, 25);
-        buyButton.setLocation(155, 485);
+        buyButton.setSize(75, 25);
+        buyButton.setLocation(105, 480);
+        buyButton.setOpaque(true);
+        buyButton.setBorder(BorderFactory.createMatteBorder(2, 5, 2, 2, Color.DARK_GRAY));
+        buyButton.setHorizontalAlignment(JTextField.CENTER);
         buyButton.setBackground(Color.RED);
         content.add(buyButton);
 
