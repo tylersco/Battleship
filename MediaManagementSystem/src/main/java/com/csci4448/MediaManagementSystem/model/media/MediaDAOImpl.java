@@ -247,7 +247,10 @@ public class MediaDAOImpl
         /*
         User can rent a specific media record.
 
-        Returns 0 if successful, -1 if user doesn't have enough money, -2 if inventory count is 0, -3 if system error
+        Returns 0 if successful,
+        -1 if user doesn't have enough money,
+        -2 if inventory count is 0,
+        -3 if system error
          */
 
         UserDAO userDAO = new UserDAOImpl();
@@ -279,6 +282,14 @@ public class MediaDAOImpl
     }
 
     public int buyMedia(String username, int mediaID){
+        /*
+        User can buy a specific media record.
+
+        Returns 0 if successful,
+        -1 if user doesn't have enough money,
+        -2 if inventory count is 0,
+        -3 if system error
+         */
 
         UserDAO user = new UserDAOImpl();
         Media media = getMedia(mediaID);
@@ -288,7 +299,6 @@ public class MediaDAOImpl
         if(userAccount == null || media == null){
             return -3;
         }
-
 
         // return -1 if user doesn't have enough money
         if(userAccount.getAccountBalance() < media.getPrice()){
@@ -316,12 +326,64 @@ public class MediaDAOImpl
     }
 
     public int sellMedia(String username, int mediaID) {
+        /*
+        User can sell back a bought media record.
+
+        Returns 0 if successful,
+        -1 if user hasn't purchased the media,
+        -2 if the media is not buyable,
+        -3 if system error
+         */
+
         // ToDo: Implement this
+        UserDAO userDAO = new UserDAOImpl();
+        User user = userDAO.getUser(username);
+        Media media = getMedia(mediaID);
+
+        if (user == null || media == null)
+            return -3;
+
+        if (media.getIsRentable())
+            return -2;
+
+        if (!user.getPersonalInventory().contains(media))
+            return -1;
+
+        user.removePersonalMedia(media);
+        media.removeCurrentUser(user);
+        media.setInventoryCount(media.getInventoryCount() + 1);
+        userDAO.increaseAccountBalance(username, media.getSellPrice());
+
         return 0;
     }
 
     public int returnMedia(String username, int mediaID) {
-        // ToDo: Implement this
+        /*
+        User can return a rented media record.
+
+        Returns 0 if successful,
+        -1 if the user hasn't rented the media,
+        -2 if the media is not rentable,
+        -3 if system error
+         */
+
+        UserDAO userDAO = new UserDAOImpl();
+        User user = userDAO.getUser(username);
+        Media media = getMedia(mediaID);
+
+        if (user == null || media == null)
+            return -3;
+
+        if (!media.getIsRentable())
+            return -2;
+
+        if (!user.getPersonalInventory().contains(media))
+            return -1;
+
+        user.removePersonalMedia(media);
+        media.removeCurrentUser(user);
+        media.setInventoryCount(media.getInventoryCount() + 1);
+
         return 0;
     }
 

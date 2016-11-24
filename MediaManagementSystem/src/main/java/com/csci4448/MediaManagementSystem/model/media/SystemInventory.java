@@ -74,7 +74,6 @@ public class SystemInventory {
     }
 
     public int buyMedia(String username, int mediaID){
-
         /*
         User can purchase media
 
@@ -83,6 +82,7 @@ public class SystemInventory {
          -3 if there is a system error
          0 if success
           */
+
         int returnVal;
         MediaDAO mediaDAO = new MediaDAOImpl();
 
@@ -90,6 +90,34 @@ public class SystemInventory {
 
         return returnVal;
 
+    }
+
+    public int sellMedia(String username, int mediaID) {
+        /*
+        User can sell back a bought media record.
+
+        Returns 0 if successful,
+        -1 if user hasn't purchased the media,
+        -2 if the media is not buyable,
+        -3 if system error
+         */
+
+        MediaDAO mediaDAO = new MediaDAOImpl();
+        return mediaDAO.sellMedia(username, mediaID);
+    }
+
+    public int returnMedia(String username, int mediaID) {
+        /*
+        User can return a rented media record.
+
+        Returns 0 if successful,
+        -1 if the user hasn't rented the media,
+        -2 if the media is not rentable,
+        -3 if system error
+         */
+
+        MediaDAO mediaDAO = new MediaDAOImpl();
+        return mediaDAO.returnMedia(username, mediaID);
     }
 
     public void addType(String type) {

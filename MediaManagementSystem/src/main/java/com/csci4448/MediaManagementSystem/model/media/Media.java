@@ -155,6 +155,14 @@ public class Media {
         return currentUsers;
     }
 
+    public void addCurrentUser(User user){
+        currentUsers.add(user);
+    }
+
+    public void removeCurrentUser(User user) {
+        currentUsers.remove(user);
+    }
+
     @Override
     public String toString() {
         return "Title: " + title + "\nType: " + type + "\nGenre: " + genre + "\n";
