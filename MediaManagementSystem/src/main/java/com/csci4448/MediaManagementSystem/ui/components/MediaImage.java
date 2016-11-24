@@ -15,6 +15,11 @@ public class MediaImage extends JLabel {
         this.imagePath = imagePath;
     }
 
+    public void setImagePath(String newpath) {
+        imagePath = newpath;
+    }
+    public String getImagePath() { return imagePath; }
+
     public void loadMediaImage(int width, int height) {
         setIcon(new ImageIcon(retrieveMediaImage().getScaledInstance(width, height, Image.SCALE_SMOOTH)));
         setSize(width, height);
