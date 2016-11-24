@@ -1,14 +1,16 @@
-package com.csci4448.MediaManagementSystem.ui;
+package com.csci4448.MediaManagementSystem.ui.states;
 
 import com.csci4448.MediaManagementSystem.controller.MainController;
 import com.csci4448.MediaManagementSystem.model.media.Media;
 import com.csci4448.MediaManagementSystem.model.media.MediaInfo;
 import com.csci4448.MediaManagementSystem.ui.components.MediaImage;
-import com.csci4448.MediaManagementSystem.ui.components.TextArea;
+import com.csci4448.MediaManagementSystem.ui.components.ReviewPanel;
+import com.csci4448.MediaManagementSystem.ui.components.TextPane;
 import com.csci4448.MediaManagementSystem.ui.components.TextButton;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -22,15 +24,11 @@ public class IndividualMediaPanel extends MainContentPanel {
     private Color selectedColor = new Color(75, 75, 75);
 
     private MediaImage image;
-    private TextArea titleText;
-    private TextArea descriptionText;
-    private TextArea typeText;
-    private TextArea genreLabel;
-    private TextArea genreText;
-    private TextButton actionButton;
-    private JPanel reviews;
-
-    private boolean isAdminEditing = false;
+    private TextPane titleText;
+    private TextPane descriptionText;
+    private TextPane typeText;
+    private TextPane genreLabel;
+    private TextPane genreText;
 
     // Saved media information (for reverting during admin edits)
     // TODO: Maybe use a Command pattern for easy undo commands
@@ -39,9 +37,9 @@ public class IndividualMediaPanel extends MainContentPanel {
     public IndividualMediaPanel(MainController controller) {
         super(controller);
 
-        JPanel content = getContent();
+        JLayeredPane content = getContent();
 
-        titleText = new TextArea(savedMediaInfo.getTitle(), new Font("Helvetice Neue", Font.PLAIN, 35), new Color(75, 75, 75));
+        titleText = new TextPane(savedMediaInfo.getTitle(), new Font("Helvetice Neue", Font.PLAIN, 35), new Color(75, 75, 75));
         titleText.setSize(500, (int)titleText.getPreferredSize().getHeight());
         titleText.setLocation(375, 25);
         content.add(titleText);
@@ -51,22 +49,22 @@ public class IndividualMediaPanel extends MainContentPanel {
         image.setLocation(15, 15);
         content.add(image);
 
-        typeText = new TextArea(savedMediaInfo.getType(), new Font("Helvetice Neue", Font.ITALIC, 22), new Color(75, 75, 75));
+        typeText = new TextPane(savedMediaInfo.getType(), new Font("Helvetice Neue", Font.ITALIC, 22), new Color(75, 75, 75));
         typeText.setSize(500, (int)typeText.getPreferredSize().getHeight());
         typeText.setLocation(380, 65);
         content.add(typeText);
 
-        genreLabel = new TextArea("Genre:", new Font("Helvetice Neue", Font.ITALIC, 18), new Color(75, 75, 75));
+        genreLabel = new TextPane("Genre:", new Font("Helvetice Neue", Font.ITALIC, 18), new Color(75, 75, 75));
         genreLabel.setSize(genreLabel.getPreferredSize());
         genreLabel.setLocation(380, 92);
         content.add(genreLabel);
 
-        genreText = new TextArea(savedMediaInfo.getGenre(), new Font("Helvetice Neue", Font.ITALIC, 18), new Color(75, 75, 75));
+        genreText = new TextPane(savedMediaInfo.getGenre(), new Font("Helvetice Neue", Font.ITALIC, 18), new Color(75, 75, 75));
         genreText.setSize(500, (int)genreText.getPreferredSize().getHeight());
         genreText.setLocation((int)genreLabel.getPreferredSize().getWidth() + 390, 92);
         content.add(genreText);
 
-        descriptionText = new TextArea(savedMediaInfo.getDescription(), new Font("Helvetice Neue", Font.PLAIN, 18), new Color(75, 75, 75, 200));
+        descriptionText = new TextPane(savedMediaInfo.getDescription(), new Font("Helvetice Neue", Font.PLAIN, 18), new Color(75, 75, 75, 200));
         descriptionText.setLineWrap(true);
         descriptionText.setSize(350, 250);
         descriptionText.setLocation(400, 130);
@@ -85,7 +83,7 @@ public class IndividualMediaPanel extends MainContentPanel {
         image.loadMediaImage(325, 456);
     }
 
-    public void populateReviews() {
+    public void populateReviews(ArrayList<ReviewPanel> rs) {
 
     }
 }

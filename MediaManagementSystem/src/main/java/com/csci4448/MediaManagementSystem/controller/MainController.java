@@ -1,8 +1,6 @@
 package com.csci4448.MediaManagementSystem.controller;
 
-import com.csci4448.MediaManagementSystem.model.media.MediaDAO;
-import com.csci4448.MediaManagementSystem.model.media.MediaDAOImpl;
-import com.csci4448.MediaManagementSystem.model.media.Media;
+import com.csci4448.MediaManagementSystem.model.media.*;
 import com.csci4448.MediaManagementSystem.model.review.ReviewDAO;
 import com.csci4448.MediaManagementSystem.model.review.ReviewDAOImpl;
 import com.csci4448.MediaManagementSystem.model.review.Review;
@@ -11,7 +9,6 @@ import com.csci4448.MediaManagementSystem.model.user.UserDAOImpl;
 import com.csci4448.MediaManagementSystem.model.user.User;
 import com.csci4448.MediaManagementSystem.ui.states.*;
 import com.csci4448.MediaManagementSystem.ui.components.*;
-import com.csci4448.MediaManagementSystem.model.media.SystemInventory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -162,7 +159,9 @@ public class MainController {
         else
             mediaAction = "Buy $" + activeMedia.getPrice();
 
-        IndividualMediaPanel indMedia = new IndividualMediaPanel(this, activeMedia.getMediaID(), activeMedia.getTitle(), activeMedia.getImage(), activeMedia.getDescription(), mediaAction);
+        IndividualMediaPanel indMedia = new IndividualMediaPanel(this);
+
+        indMedia.populateMedia(MediaInfo.createFromMedia(activeMedia));
 
         List<Review> reviews = new ArrayList<Review>(activeMedia.getReviews());
         ArrayList<ReviewPanel> rs = new ArrayList<ReviewPanel>();
@@ -171,7 +170,7 @@ public class MainController {
             rs.add(new ReviewPanel(r.getUser().getUsername(), r.getReviewText(), r.getRatingValue()));
         }
 
-        indMedia.addReviews(rs);
+        indMedia.populateReviews(rs);
 
         display.setState(indMedia);
     }
