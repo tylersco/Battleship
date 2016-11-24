@@ -7,6 +7,8 @@ import java.awt.event.ActionListener;
 
 public class AdminEditPanel extends MainContentPanel {
 
+
+
     public AdminEditPanel(MainController controller) {
         super(controller);
     }

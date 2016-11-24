@@ -112,6 +112,7 @@ public class MainController {
         display.setState(library);
     }
 
+    // TODO: Allow passing in an existing media to edit or delete
     public void adminRequest() {
         // ToDo: Implement this
         AdminEditPanel admin = new AdminEditPanel(this);
