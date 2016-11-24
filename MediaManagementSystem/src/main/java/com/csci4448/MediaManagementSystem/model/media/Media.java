@@ -11,22 +11,6 @@ import java.util.Set;
 @Table(name = "MEDIA")
 public class Media {
 
-    // This is temporary until media gets pulled from the database.
-    public static Media getDefaultMedia() {
-        Media med = new Media();
-        med.mediaID = 999999;
-        med.title = "Test Media";
-        med.description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do...";
-        med.type = "Book";
-        med.image = "src/main/resources/test.png";
-        med.genre = "Everything";
-        med.price = 1;
-        med.sellPrice = 1;
-        med.inventoryCount = 99;
-        med.isRentable = true;
-        return med;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int mediaID;
@@ -55,10 +39,10 @@ public class Media {
     @Column(nullable = false)
     private boolean isRentable;
 
-    @OneToMany(mappedBy = "media")
+    @OneToMany(mappedBy = "media", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE, CascadeType.DETACH}, orphanRemoval = true)
     private Set<Review> reviews = new HashSet<Review>();
 
-    @ManyToMany(mappedBy = "personalInventory")
+    @ManyToMany(mappedBy = "personalInventory", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     private Set<User> currentUsers = new HashSet<User>();
 
     public Media() {
@@ -139,6 +123,10 @@ public class Media {
         return isRentable;
     }
 
+    public void addUserOwner(User user){
+        currentUsers.add(user);
+    }
+
     public void setIsRentable(boolean _isRentable) {
         isRentable = _isRentable;
     }
@@ -153,7 +141,7 @@ public class Media {
 
     @Override
     public String toString() {
-        return "Title: " + title + "\nType: " + type + "\n Genre: " + genre + "\n";
+        return "Title: " + title + "\nType: " + type + "\nGenre: " + genre + "\n";
     }
 
 }

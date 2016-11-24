@@ -19,11 +19,11 @@ public class Review {
     @Column(nullable = false)
     private String reviewText;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "userID")
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "mediaID")
     private Media media;
 

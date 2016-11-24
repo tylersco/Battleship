@@ -1,20 +1,24 @@
-package com.csci4448.MediaManagementSystem.ui;
+package com.csci4448.MediaManagementSystem.ui.states;
 
 import com.csci4448.MediaManagementSystem.controller.MainController;
 import com.csci4448.MediaManagementSystem.ui.components.MenuPanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
-public abstract class MainContentPanel extends JLayeredPane implements DisplayState {
+public abstract class MainContentPanel extends JLayeredPane implements DisplayState, ActionListener {
+
+    private MainController controller;
 
     private JScrollPane scrollView;
     private JPanel scrollLayout;
     private MenuPanel menuPanel;
-    private JPanel content;
-    private final MainController controller;
+    private JLayeredPane content;
+    private JComponent popUpWindow = null;
 
     public MainContentPanel(MainController controller) {
         this.controller = controller;
@@ -52,7 +56,7 @@ public abstract class MainContentPanel extends JLayeredPane implements DisplaySt
         //scrollView.getHorizontalScrollBar().setPreferredSize(new Dimension(0, 0));
         add(scrollView, new Integer(1));
 
-        content = new JPanel();
+        content = new JLayeredPane();
         content.setLayout(null);
         content.setSize(935, 0);
         content.setLocation(15, 10);
@@ -64,13 +68,32 @@ public abstract class MainContentPanel extends JLayeredPane implements DisplaySt
         return menuPanel;
     }
 
-    public JPanel getContent() {
+    public JLayeredPane getContent() {
         return content;
     }
 
     public void updateContentSize() {
         int height = content.getHeight();
         scrollLayout.setPreferredSize(new Dimension(935,height));
+    }
+
+    public void setPopUpWindow(JComponent popUpWindow) {
+        if (this.popUpWindow == null) {
+            this.popUpWindow = popUpWindow;
+            Dimension windowSize = popUpWindow.getPreferredSize();
+            popUpWindow.setSize(windowSize);
+            popUpWindow.setLocation((getWidth() - (int)windowSize.getWidth())/2, 150);
+            add(this.popUpWindow, new Integer(3));
+        }
+    }
+
+    public void removePopUpWindow() {
+        if (popUpWindow != null) {
+            remove(popUpWindow);
+            popUpWindow = null;
+            validate();
+            repaint();
+        }
     }
 
     public void onActivate(MainController controller, Display display) {
@@ -83,13 +106,14 @@ public abstract class MainContentPanel extends JLayeredPane implements DisplaySt
         display.setVisible(true);
     }
 
-    public void update(Update update) {
-
-    }
-
     public void onDeactivate(MainController controller, Display display) {
         display.remove(this);
     }
 
+
     protected MainController getController() { return controller; }
+
+    public void actionPerformed(ActionEvent event) {
+
+    }
 }

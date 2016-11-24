@@ -15,6 +15,8 @@ public class EnterTextField extends JLayeredPane {
     private JTextField underlaidText;
     private JTextField userInput;
 
+    private boolean hideText = false;
+
     private boolean underlaidTextAdded = true;
 
     public EnterTextField(ActionListener container, String text, Font defaultFont, Color underlaidColor, Color inputColor, boolean hideInput, boolean edit) {

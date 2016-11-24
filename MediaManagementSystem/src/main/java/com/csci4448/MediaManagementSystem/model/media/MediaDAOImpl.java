@@ -4,8 +4,12 @@ import com.csci4448.MediaManagementSystem.model.GenericDAOImpl;
 import com.csci4448.MediaManagementSystem.model.user.User;
 import com.csci4448.MediaManagementSystem.model.user.UserDAO;
 import com.csci4448.MediaManagementSystem.model.user.UserDAOImpl;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import java.io.File;
+import java.util.List;
 
 public class MediaDAOImpl
         extends GenericDAOImpl<Media, Integer>
@@ -194,12 +198,16 @@ public class MediaDAOImpl
         */
 
         UserDAO userDAO = new UserDAOImpl();
-        User user = userDAO.getUser(username);
+        User adminUser = userDAO.getUser(username);
 
-        if (user == null || !user.getIsAdmin())
+        if (adminUser == null || !adminUser.getIsAdmin())
             return -2;
 
         Media media = retrieve(mediaID);
+        List<User> allUsers = userDAO.getAll();
+
+        for (User user: allUsers)
+            user.removePersonalMedia(media);
 
         if (media == null)
             return -1;
@@ -208,6 +216,113 @@ public class MediaDAOImpl
             return 0;
         return -1;
 
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<Media> searchMedia(String searchText) {
+
+        // Open a DB session
+        Session session = getSessionFactory().openSession();
+        Transaction transaction = null;
+
+        List<Media> mediaList = null;
+
+        try {
+            // Begin a transaction
+            transaction = session.beginTransaction();
+
+            mediaList = session.createQuery("from Media where title like :title").setParameter("title", "%" + searchText + "%").list();
+            transaction.commit();
+        } catch (HibernateException ex) {
+            if (transaction != null)
+                transaction.rollback();
+        } finally {
+            session.close();
+        }
+
+        return mediaList;
+    }
+
+    public int rentMedia(String username, int mediaID) {
+        /*
+        User can rent a specific media record.
+
+        Returns 0 if successful, -1 if user doesn't have enough money, -2 if inventory count is 0, -3 if system error
+         */
+
+        UserDAO userDAO = new UserDAOImpl();
+        User user = userDAO.getUser(username);
+        Media media = getMedia(mediaID);
+
+        // System error
+        if (user == null || media == null)
+            return -4;
+
+        if (!media.getIsRentable())
+            return -3;
+
+        // ToDo: Possibly implement waitlist, if we get to it
+        if (media.getInventoryCount() <= 0)
+            return -2;
+
+        // User does not have enough money
+        if (user.getAccountBalance() < media.getPrice())
+            return -1;
+
+        media.setInventoryCount(media.getInventoryCount() - 1);
+        userDAO.decreaseAccountBalance(username, media.getPrice());
+        user.addPersonalMedia(media);
+        media.addUserOwner(user);
+
+        return 0;
+
+    }
+
+    public int buyMedia(String username, int mediaID){
+
+        UserDAO user = new UserDAOImpl();
+        Media media = getMedia(mediaID);
+        User userAccount = user.getUser(username);
+
+        // return -3 for system error
+        if(userAccount == null || media == null){
+            return -3;
+        }
+
+
+        // return -1 if user doesn't have enough money
+        if(userAccount.getAccountBalance() < media.getPrice()){
+            return -1;
+        }
+
+        // return -2 if inventory doesn't have enough media objects
+        if(media.getInventoryCount() < 1){
+            return -2;
+        }
+
+        // subtract the price of media from user's account
+        user.decreaseAccountBalance(username, media.getPrice());
+
+        // add the media to the user's account
+        userAccount.addPersonalMedia(media);
+
+        // subtract 1 media item from system inventory
+        media.setInventoryCount(media.getInventoryCount()-1);
+
+        // add user to the list of current users of media
+        media.addUserOwner(userAccount);
+
+        return 0;
+    }
+
+    public int sellMedia(String username, int mediaID) {
+        // ToDo: Implement this
+        return 0;
+    }
+
+    public int returnMedia(String username, int mediaID) {
+        // ToDo: Implement this
+        return 0;
     }
 
     // ToDo: Possibly implement waitlist functionality if we have time

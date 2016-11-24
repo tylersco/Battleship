@@ -1,6 +1,8 @@
-package com.csci4448.MediaManagementSystem.ui;
+package com.csci4448.MediaManagementSystem.ui.states;
 
 import com.csci4448.MediaManagementSystem.controller.MainController;
+import com.csci4448.MediaManagementSystem.ui.design.Style;
+import com.csci4448.MediaManagementSystem.ui.design.TextComponentFactory;
 import com.csci4448.MediaManagementSystem.ui.components.EnterTextField;
 import com.csci4448.MediaManagementSystem.ui.components.TextButton;
 
@@ -9,7 +11,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class LoginPanel extends JPanel implements ActionListener, DisplayState{
+public class LoginPanel extends JPanel implements ActionListener, DisplayState {
 
     private MainController controller;
 
@@ -18,38 +20,27 @@ public class LoginPanel extends JPanel implements ActionListener, DisplayState{
     private TextButton submit;
     private TextButton createAccount;
 
-    private Font defaultFont = new Font("Helvetice Neue", Font.PLAIN, 14);
-    private Color darkColor = new Color(75, 75, 75);
-    private Color lightColor = new Color(75, 75, 75, 140);
-
     public LoginPanel(MainController controller) {
         this.controller = controller;
-        setLayout(null);
+        setLayout(new GridBagLayout());
         setSize(350, 300);
-        setPreferredSize(new Dimension(350, 300));
         setBackground(new Color(237, 237, 237));
 
-        username = new EnterTextField(this, "Username", defaultFont, lightColor, darkColor, false);
-        username.setSize(200, 30);
-        username.setLocation(75, 75);
-        add(username);
+        username = TextComponentFactory.enterText(this, "Username", Style.LOGIN_BASIC, 200, 30);
+        GridBagConstraints userConst = new GridBagConstraints(0, 0, 3, 1, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0,0,20,0), 0, 0);
+        add(username, userConst);
 
-        password = new EnterTextField(this, "Password", defaultFont, lightColor, darkColor, true);
-        password.setSize(200, 30);
-        password.setLocation(75, 125);
-        add(password);
+        password = TextComponentFactory.enterTextHidden(this, "Password", Style.LOGIN_BASIC, 200, 30);
+        GridBagConstraints passConst = new GridBagConstraints(0, 1, 3, 1, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0,0,30,0), 0, 0);
+        add(password, passConst);
 
-        submit = new TextButton(this, "Submit", defaultFont, lightColor, darkColor);
-        Dimension size = submit.getPreferredSize();
-        submit.setSize(size.width+1, size.height);
-        submit.setLocation((350-(int)size.getWidth())/2, 185);
-        add(submit);
+        submit = TextComponentFactory.smallButton(this, "Submit", Style.LOGIN_BASIC);
+        GridBagConstraints submConst = new GridBagConstraints(2, 2, 1, 1, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0,0,10,0), 0, 0);
+        add(submit, submConst);
 
-        createAccount = new TextButton(this, "Create Account", new Font("Helvetice Neue", Font.PLAIN, 10), new Color(55, 137, 199), new Color(70, 177, 249));
-        size = createAccount.getPreferredSize();
-        createAccount.setSize(size.width+1, size.height);
-        createAccount.setLocation((350-(int)size.getWidth())/2, 215);
-        add(createAccount);
+        createAccount = TextComponentFactory.smallButton(this, "Create Account",  Style.LOGIN_CREATE);
+        GridBagConstraints creaConst = new GridBagConstraints(2, 3, 1, 1, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0,0,10,0), 0, 0);
+        add(createAccount, creaConst);
 
     }
 
@@ -90,15 +81,6 @@ public class LoginPanel extends JPanel implements ActionListener, DisplayState{
         display.add(this);
 
         display.setVisible(true);
-    }
-
-    public void update(Update update) {
-        switch (update) {
-            case INVALIDINPUT:
-                //ToDo: notify of invalid input
-            default:
-                break;
-        }
     }
 
     public void onDeactivate(MainController controller, Display display) {

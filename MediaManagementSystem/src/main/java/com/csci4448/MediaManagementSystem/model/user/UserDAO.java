@@ -1,6 +1,9 @@
 package com.csci4448.MediaManagementSystem.model.user;
 
 import com.csci4448.MediaManagementSystem.model.GenericDAO;
+import com.csci4448.MediaManagementSystem.model.media.Media;
+
+import java.util.List;
 
 public interface UserDAO extends GenericDAO<User, Integer> {
 
@@ -11,5 +14,6 @@ public interface UserDAO extends GenericDAO<User, Integer> {
     User getUser(String username);
     User getUser(int userID);
     boolean userExists(String username, String password);
+    List<Media> getPersonalInventory(String username);
 
 }

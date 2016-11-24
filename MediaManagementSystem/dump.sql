@@ -35,7 +35,7 @@ CREATE TABLE `MEDIA` (
   `isRentable` tinyint(1) NOT NULL,
   PRIMARY KEY (`mediaID`),
   UNIQUE KEY `MEDIA_id_uindex` (`mediaID`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,7 +44,7 @@ CREATE TABLE `MEDIA` (
 
 LOCK TABLES `MEDIA` WRITE;
 /*!40000 ALTER TABLE `MEDIA` DISABLE KEYS */;
-INSERT INTO `MEDIA` VALUES (1,'The Shawshank Redemption',NULL,'Movie','src/main/resources/movie/theshawshankredemption.jpg','Drama',5,3,2,0),(2,'The Godfather',NULL,'Movie','src/main/resources/movie/thegodfather.jpg','Crime',5,3,3,1),(3,'The Dark Knight',NULL,'Movie','src/main/resources/movie/thedarkknight.jpg','Action',7,3,1,0),(4,'Pulp Fiction',NULL,'Movie','src/main/resources/movie/pulpfiction.jpg','Drama',4,3,4,1),(5,'Fight Club',NULL,'Movie','src/main/resources/movie/fightclub.jpg','Thriller',5,3,2,1),(6,'Forrest Gump',NULL,'Movie','src/main/resources/movie/forrestgump.jpg','Comedy',3,3,3,0),(7,'Goodfellas',NULL,'Movie','src/main/resources/movie/goodfellas.jpg','Crime',6,3,4,1),(8,'Alexander Hamilton',NULL,'Book','src/main/resources/book/alexanderhamilton.jpg','Biography',14,3,6,0),(9,'Elon Musk',NULL,'Book','src/main/resources/book/elonmusk.jpg','Biography',10,3,3,0),(10,'Trump The Art of the Deal',NULL,'Book','src/main/resources/book/trumptheartofthedeal.jpg','Business',5,3,12,0),(11,'Harry Potter and the Cursed Child',NULL,'Book','src/main/resources/book/harrypotterandthecursedchild.jpg','Fiction',7,3,10,0),(12,'Blood Meridian',NULL,'Book ','src/main/resources/book/bloodmeridian.jpg','Fiction',8,3,9,0);
+INSERT INTO `MEDIA` VALUES (1,'The Shawshank Redemption',NULL,'Movie','src/main/resources/movie/theshawshankredemption.jpg','Drama',5,3,2,0),(2,'The Godfather',NULL,'Movie','src/main/resources/movie/thegodfather.jpg','Crime',5,3,3,1),(3,'The Dark Knight','Action movie about Batman, the Joker, and Two Face.','Movie','src/main/resources/movie/thedarkknight.jpg','Action',7,3,1,0),(4,'Pulp Fiction',NULL,'Movie','src/main/resources/movie/pulpfiction.jpg','Drama',4,3,4,1),(5,'Fight Club',NULL,'Movie','src/main/resources/movie/fightclub.jpg','Thriller',5,3,2,1),(6,'Forrest Gump',NULL,'Movie','src/main/resources/movie/forrestgump.jpg','Comedy',3,3,3,0),(7,'Goodfellas',NULL,'Movie','src/main/resources/movie/goodfellas.jpg','Crime',6,3,4,1),(8,'Alexander Hamilton',NULL,'Book','src/main/resources/book/alexanderhamilton.jpg','Biography',14,3,6,0),(9,'Elon Musk','Biography about Elon Musk and the companies he has founded.','Book','src/main/resources/book/elonmusk.jpg','Biography',10,3,3,0),(10,'Trump The Art of the Deal',NULL,'Book','src/main/resources/book/trumptheartofthedeal.jpg','Business',5,3,12,0),(11,'Harry Potter and the Cursed Child',NULL,'Book','src/main/resources/book/harrypotterandthecursedchild.jpg','Fiction',7,3,10,0),(12,'Blood Meridian',NULL,'Book ','src/main/resources/book/bloodmeridian.jpg','Fiction',8,3,9,0);
 /*!40000 ALTER TABLE `MEDIA` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -67,7 +67,7 @@ CREATE TABLE `REVIEW` (
   KEY `REVIEW_mediaID_fk` (`mediaID`),
   CONSTRAINT `REVIEW_mediaID_fk` FOREIGN KEY (`mediaID`) REFERENCES `MEDIA` (`mediaID`),
   CONSTRAINT `REVIEW_userID_fk` FOREIGN KEY (`userID`) REFERENCES `USER` (`userID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -76,6 +76,7 @@ CREATE TABLE `REVIEW` (
 
 LOCK TABLES `REVIEW` WRITE;
 /*!40000 ALTER TABLE `REVIEW` DISABLE KEYS */;
+INSERT INTO `REVIEW` VALUES (21,5,'This was an awesome movie.',31,3),(22,5,'Wish there would be another one!',1,3);
 /*!40000 ALTER TABLE `REVIEW` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -99,7 +100,7 @@ CREATE TABLE `USER` (
   UNIQUE KEY `USER_username_uindex` (`username`),
   UNIQUE KEY `USER_email_uindex` (`email`),
   UNIQUE KEY `USER_id_uindex` (`userID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -108,7 +109,7 @@ CREATE TABLE `USER` (
 
 LOCK TABLES `USER` WRITE;
 /*!40000 ALTER TABLE `USER` DISABLE KEYS */;
-INSERT INTO `USER` VALUES (1,'admin','admin','tysc7237@colorado.edu','Admin',NULL,1,100),(2,'user','user','user@user.com','User','One',0,50);
+INSERT INTO `USER` VALUES (1,'admin','admin','tysc7237@colorado.edu','Admin',NULL,1,100),(31,'tysc7237','abc','tylersco4@gmail.com','Tyler','Scott',0,20);
 /*!40000 ALTER TABLE `USER` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -150,4 +151,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-11-17 10:28:26
+-- Dump completed on 2016-11-22 21:09:41
