@@ -15,5 +15,5 @@ public interface MediaDAO {
     int buyMedia(String username, int mediaID);
     int sellMedia(String username, int mediaID);
     int returnMedia(String username, int mediaID);
-    
+
 }

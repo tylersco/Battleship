@@ -272,7 +272,7 @@ public class MediaDAOImpl
         if (user.getAccountBalance() < media.getPrice())
             return -1;
 
-        media.setInventoryCount(media.getInventoryCount() - 1);
+        decrementInventoryCount(mediaID);
         userDAO.decreaseAccountBalance(username, media.getPrice());
         user.addPersonalMedia(media);
         media.addUserOwner(user);
@@ -351,7 +351,7 @@ public class MediaDAOImpl
 
         user.removePersonalMedia(media);
         media.removeCurrentUser(user);
-        media.setInventoryCount(media.getInventoryCount() + 1);
+        incrementInventoryCount(mediaID);
         userDAO.increaseAccountBalance(username, media.getSellPrice());
 
         return 0;
@@ -382,7 +382,7 @@ public class MediaDAOImpl
 
         user.removePersonalMedia(media);
         media.removeCurrentUser(user);
-        media.setInventoryCount(media.getInventoryCount() + 1);
+        incrementInventoryCount(mediaID);
 
         return 0;
     }
