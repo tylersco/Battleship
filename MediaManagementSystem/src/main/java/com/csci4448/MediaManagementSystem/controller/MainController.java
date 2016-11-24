@@ -131,8 +131,9 @@ public class MainController {
         }
     }
 
-    public void addFundsSubmitRequest(double amount) {
-        //ToDo: add funds to user
+    public void addFundsSubmitRequest(int amount) {
+        userDAO.increaseAccountBalance(activeUser.getUsername(), amount);
+
         DisplayState state = display.getActiveState();
         if (state instanceof MainContentPanel) {
             ((MainContentPanel) state).removePopUpWindow();
@@ -206,7 +207,7 @@ public class MainController {
         if (res == -4) {
             // ToDo: Throw error to UI saying that there was a system error
         } else if (res == -3) {
-            // ToDo: Throw error to UI saying that the media is not rentable
+            // ToDo: Throw error to UI saying that the media is not correct purchasable type
         } else if (res == -2) {
             // ToDo: Throw error to UI saying that the media is out of stock
             // This may change if we implement the waitlist functionality
@@ -215,8 +216,18 @@ public class MainController {
         }
     }
 
+    private void sellOrReturnRequestErrorHandle(int res) {
+        if (res == -3) {
+            // ToDo: Throw error to UI saying that there was a system error
+        } else if (res == -2) {
+            // ToDo: Throw error to UI saying that the media is not correct purchasable type
+        } else if (res == -1) {
+            // ToDo: Throw error to UI saying that the media is not currently owned/rented by the user
+        }
+    }
+
     public void confirmationRequest(boolean isConfirmed) {
-        //ToDo: handle return from confirmation.  true means the user confirmed, false means the user didn't(canceled)
+
         if (!isConfirmed) {
             DisplayState state = display.getActiveState();
             if (state instanceof IndividualMediaPanel) {
@@ -224,12 +235,14 @@ public class MainController {
             }
         } else {
             if (activeMedia.getIsRentable() && activeUser.getPersonalInventory().contains(activeMedia)) {
-                // ToDo: Implement return media in system inventory
+                int res = SystemInventory.getSystemInventory().returnMedia(activeUser.getUsername(), activeMedia.getMediaID());
+                sellOrReturnRequestErrorHandle(res);
             } else if (activeMedia.getIsRentable()) {
                 int res = SystemInventory.getSystemInventory().rentMedia(activeUser.getUsername(), activeMedia.getMediaID());
                 buyOrRentRequestErrorHandle(res);
             } else if (!activeMedia.getIsRentable() && activeUser.getPersonalInventory().contains(activeMedia)) {
-                // ToDo: Implement sell media in system inventory
+                int res = SystemInventory.getSystemInventory().sellMedia(activeUser.getUsername(), activeMedia.getMediaID());
+                sellOrReturnRequestErrorHandle(res);
             } else {
                 int res = SystemInventory.getSystemInventory().buyMedia(activeUser.getUsername(), activeMedia.getMediaID());
                 buyOrRentRequestErrorHandle(res);
@@ -252,7 +265,8 @@ public class MainController {
     }
 
     public void reviewMediaSubmitRequest(int mediaId, String reviewText, int rating) {
-        //ToDo: add review to media and db
+        reviewDAO.addReview(reviewText, rating, activeUser.getUserID(), mediaId);
+
         DisplayState state = display.getActiveState();
         if (state instanceof MainContentPanel) {
             ((MainContentPanel) state).removePopUpWindow();
