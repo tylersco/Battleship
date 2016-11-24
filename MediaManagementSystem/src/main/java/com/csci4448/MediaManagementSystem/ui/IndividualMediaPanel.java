@@ -12,7 +12,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class IndividualMediaPanel extends MainContentPanel implements ActionListener {
+public class IndividualMediaPanel extends MainContentPanel {
 
     private final String DEFAULT_IMAGE_PATH = "src/main/resources/test.png";
 
@@ -27,9 +27,6 @@ public class IndividualMediaPanel extends MainContentPanel implements ActionList
     private TextArea typeText;
     private TextArea genreLabel;
     private TextArea genreText;
-    private TextButton adminButton; // Will only appear if the logged in user is an admin
-    private TextButton saveEditsButton; // Will only appear if the logged in user is an admin AND is editing details
-    private TextButton cancelEditsButton; // Will only appear if the logged in user is an admin AND is editing details
     private TextButton actionButton;
     private JPanel reviews;
 
@@ -75,25 +72,6 @@ public class IndividualMediaPanel extends MainContentPanel implements ActionList
         descriptionText.setLocation(400, 130);
         content.add(descriptionText);
 
-        adminButton = new TextButton(this, "Edit Details", buttonFont, defaultColor, enteredColor, selectedColor);
-        adminButton.setSize(adminButton.getPreferredSize());
-        adminButton.setLocation(25, 475);
-        content.add(adminButton);
-        if (!controller.isAdmin())
-            adminButton.setVisible(false);
-
-        saveEditsButton = new TextButton(this, "Save Changes", buttonFont, defaultColor, enteredColor, selectedColor);
-        saveEditsButton.setSize(saveEditsButton.getPreferredSize());
-        saveEditsButton.setLocation(25, 475);
-        content.add(saveEditsButton);
-        saveEditsButton.setVisible(false);
-
-        cancelEditsButton = new TextButton(this, "Cancel Changes", buttonFont, defaultColor, enteredColor, selectedColor);
-        cancelEditsButton.setSize(cancelEditsButton.getPreferredSize());
-        cancelEditsButton.setLocation(145, 475);
-        content.add(cancelEditsButton);
-        cancelEditsButton.setVisible(false);
-
         content.setSize(935, 550);
         updateContentSize();
     }
@@ -109,71 +87,5 @@ public class IndividualMediaPanel extends MainContentPanel implements ActionList
 
     public void populateReviews() {
 
-    }
-
-    private void prepareAdminEditing() {
-        titleText.setEditable(true);
-        descriptionText.setEditable(true);
-        typeText.setEditable(true);
-        genreText.setEditable(true);
-        adminButton.setVisible(false);
-        saveEditsButton.setVisible(true);
-        cancelEditsButton.setVisible(true);
-    }
-
-    private void finishAdminEditing(boolean save) {
-        titleText.setEditable(false);
-        descriptionText.setEditable(false);
-        typeText.setEditable(false);
-        genreText.setEditable(false);
-        adminButton.setVisible(true);
-        saveEditsButton.setVisible(false);
-        cancelEditsButton.setVisible(false);
-
-        if (save) { // Save the changes to the database
-            // TODO: As we add more editable fields, make sure to save the changes to those as well
-            savedMediaInfo = MediaInfo.createFromInfo(
-                    savedMediaInfo.getMediaID(), titleText.getText(), descriptionText.getText(), image.getImagePath(),
-                    typeText.getText(), /* TODO: Validate the type of media entered. */
-                    genreText.getText(), savedMediaInfo.getPrice(), savedMediaInfo.getSellPrice(),
-                    savedMediaInfo.getInventoryCount(), savedMediaInfo.getIsRentable()
-            );
-
-            if (savedMediaInfo.getMediaID() != 999999) { // Don't update the default media (it does not exist in db)
-                getController().adminEditMediaRequest(savedMediaInfo);
-            }
-            else {
-                System.err.println("MEDIA: Ignoring changes to default media.");
-            }
-            System.out.println("MEDIA: Changes to media have been saved.");
-        }
-        else { // Revert all of the changes
-            // TODO: As we add more editable fields, make sure to revert the changes to those as well
-            titleText.setText(savedMediaInfo.getTitle());
-            descriptionText.setText(savedMediaInfo.getDescription());
-            image.setImagePath(savedMediaInfo.getImage());
-            image.loadMediaImage(325, 456);
-            typeText.setText(savedMediaInfo.getType());
-            genreText.setText(savedMediaInfo.getGenre());
-        }
-    }
-
-    public void actionPerformed(ActionEvent event) {
-        Object component = event.getSource();
-
-        if (component.equals(adminButton)) {
-            isAdminEditing = true;
-            prepareAdminEditing();
-        }
-        else if (component.equals(saveEditsButton)) {
-            // TODO: Ask user if they want to commit the changes
-            isAdminEditing = false;
-            finishAdminEditing(true);
-        }
-        else if (component.equals(cancelEditsButton)) {
-            // TODO: Ask user if they want to cancel the changes
-            isAdminEditing = false;
-            finishAdminEditing(false);
-        }
     }
 }

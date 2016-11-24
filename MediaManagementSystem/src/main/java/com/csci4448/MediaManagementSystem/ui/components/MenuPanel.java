@@ -13,6 +13,7 @@ public class MenuPanel extends JPanel implements ActionListener {
 
     private TextButton storeButton;
     private TextButton libraryButton;
+    private TextButton adminButton;
     private SearchBar searchBar;
     private TextButton fundsButton;
     private TextButton accountButton;
@@ -44,6 +45,14 @@ public class MenuPanel extends JPanel implements ActionListener {
         libraryButton.setSize((int)size.getWidth(), 55);
         libraryButton.setLocation(180, 0);
         add(libraryButton);
+
+        adminButton = new TextButton(this, "Admin", mainButtonFont, defaultColor, enteredColor, selectedColor);
+        size = adminButton.getPreferredSize();
+        adminButton.setSize((int)size.getWidth(), 55);
+        adminButton.setLocation(290, 0);
+        add(adminButton);
+        if (!controller.isAdmin())
+            adminButton.setVisible(false);
 
         accountButton = new TextButton(this, "Account", subButtonFont, defaultColor, enteredColor, selectedColor);
         size = accountButton.getPreferredSize();
