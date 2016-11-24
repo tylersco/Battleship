@@ -7,6 +7,7 @@ public enum UIColor {
     DEFAULT_LIGHT (75, 75, 75, 140),
     DEFAULT_MEDIUM (75, 75, 75, 180),
     DEFAULT_DARK (75, 75, 75),
+    DEFAULT_BLACK (50, 50, 50),
 
     BLUE_LIGHT (70, 177, 249),
     BLUE_DARK (55, 137, 199),

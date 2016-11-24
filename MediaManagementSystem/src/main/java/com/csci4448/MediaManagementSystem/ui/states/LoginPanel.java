@@ -67,11 +67,11 @@ public class LoginPanel extends JLayeredPane implements ActionListener, DisplayS
         String passwordText = password.getText().trim();
 
         if (usernameText.length() <= 0) {
-            //ToDo: inform needed username
+            username.errorText("Username");
             validInput = false;
         }
-        else if (passwordText.length() <= 0) {
-            //ToDo: inform needed password
+        if (passwordText.length() <= 0) {
+            password.errorText("Password");
             validInput = false;
         }
 

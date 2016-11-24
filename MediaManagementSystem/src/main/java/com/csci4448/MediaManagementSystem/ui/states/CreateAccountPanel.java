@@ -91,24 +91,32 @@ public class CreateAccountPanel extends JLayeredPane implements ActionListener, 
         String lastNameText = lastName.getText().trim();
         String emailText = email.getText().trim();
 
+        if (firstNameText.length() <= 0) {
+            firstName.errorText("First");
+            validInput = false;
+        }
+        if (lastNameText.length() <= 0) {
+            lastName.errorText("Last");
+            validInput = false;
+        }
         if (usernameText.length() <= 0) {
-            //ToDo: inform needed username
+            username.errorText("username");
             validInput = false;
         }
-        else if (password1Text.length() <= 0) {
-            //ToDo: inform needed password
+        if (password1Text.length() <= 0) {
+            password1.errorText("password");
             validInput = false;
         }
-        else if (password2Text.length() <= 0) {
-            //ToDo: inform needed password
+        if (password2Text.length() <= 0) {
+            password2.errorText("password");
             validInput = false;
         }
-        else if (emailText.length() <= 0) {
-            //ToDo: inform needed email
+        if (emailText.length() <= 0) {
+            email.errorText("email");
             validInput = false;
         }
-        else if (!password1Text.equals(password2Text)) {
-            //ToDo: inform that passwords do not match
+        if (!password1Text.equals(password2Text)) {
+            controller.errorThrowRequest("Passwords do not match", "Ok");
             validInput = false;
         }
 
@@ -121,10 +129,6 @@ public class CreateAccountPanel extends JLayeredPane implements ActionListener, 
         display.setSize(350, 500);
         display.setResizable(false);
         display.setLocationRelativeTo(null);
-
-        //display.add(this);
-
-        //display.setVisible(true);
     }
 
     public JComponent getStateView() {

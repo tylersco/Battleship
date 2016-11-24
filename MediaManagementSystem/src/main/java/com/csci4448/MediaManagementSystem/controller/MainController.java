@@ -257,6 +257,10 @@ public class MainController {
         }
     }
 
+    public void errorThrowRequest(String msg, String close) {
+        display.getActiveState().setErrorWindow(new ErrorWindow(this, msg, close));
+    }
+
     public void errorHandledRequest() {
         display.getActiveState().setErrorWindow(null);
     }
