@@ -12,6 +12,7 @@ import com.csci4448.MediaManagementSystem.ui.components.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class MainController {
 
@@ -251,9 +252,23 @@ public class MainController {
     }
 
     public void reviewMediaRequest(int mediaId) {
-        DisplayState state = display.getActiveState();
-        if (state instanceof MainContentPanel) {
-            ((MainContentPanel) state).setPopUpWindow(new EditReviewPanel(this,  mediaId));
+        //ToDo: potentially move to the model as a method
+        boolean userAlreadyReviewedMedia = false;
+        Set<Review> reviews = activeMedia.getReviews();
+        for (Review r : reviews) {
+            if (r.getUser().getUserID() == activeUser.getUserID()) {
+                userAlreadyReviewedMedia = true;
+                break;
+            }
+        }
+
+        if (userAlreadyReviewedMedia) {
+            //ToDo: error to ui, user has already reviewed the selected media
+        } else {
+            DisplayState state = display.getActiveState();
+            if (state instanceof MainContentPanel) {
+                ((MainContentPanel) state).setPopUpWindow(new EditReviewPanel(this, mediaId));
+            }
         }
     }
 
@@ -274,8 +289,8 @@ public class MainController {
         }
     }
 
-    public UserDAO getUserDAO() {
-        return userDAO;
+    public User getUser() {
+        return activeUser;
     }
 
     public boolean hasActiveUser() {

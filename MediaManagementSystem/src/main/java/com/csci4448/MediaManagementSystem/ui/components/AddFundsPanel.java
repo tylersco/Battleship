@@ -47,9 +47,9 @@ public class AddFundsPanel extends JPanel implements ActionListener {
         if (component.equals(cancel)) {
             controller.addFundsCancelRequest();
         } else if (component.equals(submit)) {
-            Double amount;
+            int amount;
             try {
-                amount = Double.parseDouble(fundsEnterText.getText().trim());
+                amount = Integer.parseInt(fundsEnterText.getText().trim());
                 controller.addFundsSubmitRequest(amount);
             } catch (NumberFormatException e) {
                 //ToDo: inform user of incorrect amount
