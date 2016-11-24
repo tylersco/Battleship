@@ -1,6 +1,7 @@
 package com.csci4448.MediaManagementSystem.ui.states;
 
 import com.csci4448.MediaManagementSystem.controller.MainController;
+import com.csci4448.MediaManagementSystem.ui.components.ErrorWindow;
 import com.csci4448.MediaManagementSystem.ui.design.Style;
 import com.csci4448.MediaManagementSystem.ui.design.TextComponentFactory;
 import com.csci4448.MediaManagementSystem.ui.components.EnterTextField;
@@ -11,9 +12,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class LoginPanel extends JPanel implements ActionListener, DisplayState {
+public class LoginPanel extends JLayeredPane implements ActionListener, DisplayState {
 
     private MainController controller;
+
+    private JPanel content;
+    private ErrorWindow errorWindow;
 
     private EnterTextField username;
     private EnterTextField password;
@@ -22,25 +26,28 @@ public class LoginPanel extends JPanel implements ActionListener, DisplayState {
 
     public LoginPanel(MainController controller) {
         this.controller = controller;
-        setLayout(new GridBagLayout());
-        setSize(350, 300);
-        setBackground(new Color(237, 237, 237));
+        content = new JPanel();
+        content.setLayout(new GridBagLayout());
+        content.setSize(350, 300);
+        content.setBackground(new Color(237, 237, 237));
 
         username = TextComponentFactory.enterText(this, "Username", Style.LOGIN_BASIC, 200, 30);
         GridBagConstraints userConst = new GridBagConstraints(0, 0, 3, 1, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0,0,20,0), 0, 0);
-        add(username, userConst);
+        content.add(username, userConst);
 
         password = TextComponentFactory.enterTextHidden(this, "Password", Style.LOGIN_BASIC, 200, 30);
         GridBagConstraints passConst = new GridBagConstraints(0, 1, 3, 1, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0,0,30,0), 0, 0);
-        add(password, passConst);
+        content.add(password, passConst);
 
         submit = TextComponentFactory.smallButton(this, "Submit", Style.LOGIN_BASIC);
         GridBagConstraints submConst = new GridBagConstraints(2, 2, 1, 1, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0,0,10,0), 0, 0);
-        add(submit, submConst);
+        content.add(submit, submConst);
 
         createAccount = TextComponentFactory.smallButton(this, "Create Account",  Style.LOGIN_CREATE);
         GridBagConstraints creaConst = new GridBagConstraints(2, 3, 1, 1, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0,0,10,0), 0, 0);
-        add(createAccount, creaConst);
+        content.add(createAccount, creaConst);
+
+        add(content, new Integer(1));
 
     }
 
@@ -77,14 +84,30 @@ public class LoginPanel extends JPanel implements ActionListener, DisplayState {
         display.setSize(350, 300);
         display.setResizable(false);
         display.setLocationRelativeTo(null);
+    }
 
-        display.add(this);
+    public JComponent getStateView() {
+        return this;
+    }
 
-        display.setVisible(true);
+    public void setErrorWindow(ErrorWindow errorWindow) {
+        if (this.errorWindow != null) {
+            remove(this.errorWindow);
+            this.errorWindow = null;
+            validate();
+            repaint();
+        }
+        if (errorWindow != null) {
+            this.errorWindow = errorWindow;
+            Dimension windowSize = errorWindow.getPreferredSize();
+            errorWindow.setSize(windowSize);
+            errorWindow.setLocation((getWidth() - (int)windowSize.getWidth())/2, 70);
+            add(errorWindow, new Integer(3));
+        }
     }
 
     public void onDeactivate(MainController controller, Display display) {
-        display.remove(this);
+
     }
 
 }

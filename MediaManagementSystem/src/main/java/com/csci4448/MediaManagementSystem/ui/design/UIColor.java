@@ -12,6 +12,7 @@ public enum UIColor {
     BLUE_DARK (55, 137, 199),
 
     RED_CANCEL (249, 72, 67),
+    RED_ERROR (200, 65, 60),
     GREED_CONFIRM (66, 177, 66),
 
     GRAY_STAR (149, 149, 149),
