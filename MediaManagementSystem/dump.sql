@@ -109,7 +109,7 @@ CREATE TABLE `USER` (
 
 LOCK TABLES `USER` WRITE;
 /*!40000 ALTER TABLE `USER` DISABLE KEYS */;
-INSERT INTO `USER` VALUES (1,'admin','admin','tysc7237@colorado.edu','Admin',NULL,1,100),(31,'tysc7237','abc','tylersco4@gmail.com','Tyler','Scott',0,20);
+INSERT INTO `USER` VALUES (1,'admin','admin','tysc7237@colorado.edu','Admin',NULL,1,100),(31,'tysc7237','abc','tylersco4@gmail.com','Tyler','Scott',0,20),(2,'user1','user1','user1@user.com','User','One',0,0);
 /*!40000 ALTER TABLE `USER` ENABLE KEYS */;
 UNLOCK TABLES;
 
