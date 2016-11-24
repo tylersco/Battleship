@@ -3,52 +3,63 @@ package com.csci4448.MediaManagementSystem.ui;
 import com.csci4448.MediaManagementSystem.controller.MainController;
 import com.csci4448.MediaManagementSystem.ui.components.EnterTextField;
 import com.csci4448.MediaManagementSystem.ui.components.TextButton;
+import com.csci4448.MediaManagementSystem.ui.components.TextPane;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class AddFundsPanel extends MainContentPanel implements ActionListener {
+public class AddFundsPanel extends JPanel implements ActionListener {
 
-    private Font buttonFont = new Font("Helvetice Neue", Font.PLAIN, 15);
-    private Color defaultColor = new Color(75, 75, 75, 180);
-    private Color defaultColor2 = new Color(75, 75, 75);
+    private MainController controller;
 
+    private TextPane dollarSign;
     private EnterTextField fundsEnterText;
     private TextButton submit;
     private TextButton cancel;
 
     public AddFundsPanel(MainController controller) {
-        super(controller);
+        this.controller = controller;
 
-        JLayeredPane content = getContent();
+        setLayout(new GridBagLayout());
+        setBackground(new Color(250, 250, 250));
+        setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, new Color(205, 205, 205)));
 
-        //ToDo: add title, "Add Funds", and add dollar sign
-        //ToDo: fix size and format of components
-        fundsEnterText = new EnterTextField(this, "Enter Amount", buttonFont, defaultColor, defaultColor2, false);
-        fundsEnterText.setSize(200, 30);
-        fundsEnterText.setLocation(375, 50);
-        content.add(fundsEnterText);
+        dollarSign = TextComponentFactory.textPane("$", Style.LOGIN_BASIC);
+        GridBagConstraints dollConst = new GridBagConstraints(0, 0, 1, 1, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(20,20,0,0), 0, 0);
+        add(dollarSign, dollConst);
 
-        submit = new TextButton(this, "Submit", new Font("Helvetice Neue", Font.PLAIN, 15), defaultColor, defaultColor2);
-        submit.setSize(submit.getPreferredSize());
-        submit.setLocation(525, 100);
-        content.add(submit);
+        fundsEnterText = TextComponentFactory.enterText(this, "Enter Amount", Style.LOGIN_BASIC, 200, 30);
+        GridBagConstraints textConst = new GridBagConstraints(1, 0, 2, 1, 1, 0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(20,0,0,20), 0, 0);
+        add(fundsEnterText, textConst);
 
-        cancel = new TextButton(this, "Cancel", new Font("Helvetice Neue", Font.PLAIN, 15), defaultColor, defaultColor2);
-        cancel.setSize(cancel.getPreferredSize());
-        cancel.setLocation(350, 100);
-        content.add(cancel);
+        submit = TextComponentFactory.smallButton(this, "Add Funds", Style.CONFIRM_OK);
+        GridBagConstraints submConst = new GridBagConstraints(2, 1, 1, 1, .5, 0, GridBagConstraints.LINE_START, GridBagConstraints.NONE, new Insets(10,10,20,0), 0, 0);
+        add(submit, submConst);
 
-        content.setSize(950, 550);
-        //ToDo: make updateContentSize apart of content.add method
-        updateContentSize();
+        cancel = TextComponentFactory.smallButton(this, "Cancel", Style.CONFIRM_CANCEL);
+        GridBagConstraints cancConst = new GridBagConstraints(1, 1, 1, 1, .5, 0, GridBagConstraints.LINE_END, GridBagConstraints.NONE, new Insets(10,0,20,15), 0, 0);
+        add(cancel, cancConst);
 
-
+        //ToDo: have container set size and location
+        setSize(getPreferredSize());
+        setLocation(135, 100);
     }
 
     public void actionPerformed(ActionEvent event) {
-        //ToDo: implement actions
+        Object component = event.getSource();
+        if (component.equals(cancel)) {
+            controller.addFundsCancelRequest();
+        } else if (component.equals(submit)) {
+            Double amount = 0.0;
+            try {
+                amount = Double.parseDouble(fundsEnterText.getText().trim());
+                controller.addFundsSubmitRequest(amount);
+            } catch (NumberFormatException e) {
+                //ToDo: inform user of incorrect amount
+                System.out.println(e);
+            }
+        }
     }
 }

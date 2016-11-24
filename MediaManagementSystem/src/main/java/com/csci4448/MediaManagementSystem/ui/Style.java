@@ -22,6 +22,10 @@ public enum Style {
     REVIEW_USER (UIFont.FONT_15, UIColor.DEFAULT_MEDIUM, UIColor.DEFAULT_DARK),
     REVIEW_STARS (UIFont.FONT_12, UIColor.GRAY_STAR, UIColor.GOLD_STAR),
 
+    CONFIRM_MESSAGE (UIFont.FONT_20, UIColor.DEFAULT_DARK),
+    CONFIRM_OK (UIFont.FONT_18, UIColor.DEFAULT_MEDIUM, UIColor.GREED_CONFIRM),
+    CONFIRM_CANCEL (UIFont.FONT_18, UIColor.DEFAULT_MEDIUM, UIColor.RED_CANCEL),
+
     ;
     private final UIFont defaultFont;
     private final UIColor primaryColor;

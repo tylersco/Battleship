@@ -1,6 +1,8 @@
 package com.csci4448.MediaManagementSystem.ui.components;
 
 import com.csci4448.MediaManagementSystem.controller.MainController;
+import com.csci4448.MediaManagementSystem.ui.Style;
+import com.csci4448.MediaManagementSystem.ui.TextComponentFactory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,34 +19,27 @@ public class ConfirmationWindow extends JPanel implements ActionListener {
     private TextButton confirm;
     private TextButton cancel;
 
-    private Color defaultColor = new Color(75, 75, 75, 255);
-    private Color enteredColor = new Color(75, 75, 75);
-
     public ConfirmationWindow(MainController controller, String confirmation) {
         this.controller = controller;
 
-        setLayout(null);
+        setLayout(new GridBagLayout());
         setBackground(new Color(250, 250, 250));
-        setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, new Color(228, 228, 228)));
+        setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, new Color(205, 205, 205)));
 
-        //ToDo: fix formatting, size, and colors
+        confirmationText = TextComponentFactory.textPane(confirmation, Style.CONFIRM_MESSAGE);
+        GridBagConstraints textConst = new GridBagConstraints(0, 0, 2, 1, 1, 0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(20,20,0,20), 0, 0);
+        add(confirmationText, textConst);
 
-        confirmationText = new TextPane(confirmation, new Font("Helvetice Neue", Font.PLAIN, 17), defaultColor);
-        confirmationText.setSize(confirmationText.getPreferredSize());
-        confirmationText.setLocation(5, 5);
-        add(confirmationText);
+        confirm = TextComponentFactory.smallButton(this, "OK", Style.CONFIRM_OK);
+        GridBagConstraints confConst = new GridBagConstraints(1, 1, 1, 1, .5, 0, GridBagConstraints.LINE_START, GridBagConstraints.NONE, new Insets(10,10,20,0), 0, 0);
+        add(confirm, confConst);
 
-        confirm = new TextButton(this, "Confirm", new Font("Helvetice Neue", Font.PLAIN, 15), defaultColor, enteredColor);
-        confirm.setSize(confirm.getPreferredSize());
-        confirm.setLocation(630, 275);
-        add(confirm);
+        cancel = TextComponentFactory.smallButton(this, "Cancel", Style.CONFIRM_CANCEL);
+        GridBagConstraints cancConst = new GridBagConstraints(0, 1, 1, 1, .5, 0, GridBagConstraints.LINE_END, GridBagConstraints.NONE, new Insets(10,0,20,10), 0, 0);
+        add(cancel, cancConst);
 
-        cancel = new TextButton(this, "Cancel", new Font("Helvetice Neue", Font.PLAIN, 15), defaultColor, enteredColor);
-        cancel.setSize(cancel.getPreferredSize());
-        cancel.setLocation(550, 275);
-        add(cancel);
-
-        setSize(680, 300);
+        //ToDo: have container set size and location
+        setSize(getPreferredSize());
         setLocation(135, 100);
 
     }

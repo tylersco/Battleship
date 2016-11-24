@@ -121,12 +121,25 @@ public class MainController {
     }
 
     public void addFundsRequest() {
-        AddFundsPanel funds = new AddFundsPanel(this);
-        display.setState(funds);
+        DisplayState state = display.getActiveState();
+        if (state instanceof MainContentPanel) {
+            ((MainContentPanel) state).setPopUpWindow(new AddFundsPanel(this));
+        }
+    }
+
+    public void addFundsCancelRequest() {
+        DisplayState state = display.getActiveState();
+        if (state instanceof MainContentPanel) {
+            ((MainContentPanel) state).removePopUpWindow();
+        }
     }
 
     public void addFundsSubmitRequest(double amount) {
-        // ToDo: Implement this
+        //ToDo: add funds to user
+        DisplayState state = display.getActiveState();
+        if (state instanceof MainContentPanel) {
+            ((MainContentPanel) state).removePopUpWindow();
+        }
     }
 
     public void individualMediaRequest(int mediaId) {
