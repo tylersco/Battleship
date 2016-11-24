@@ -80,12 +80,10 @@ public class MediaDAOImpl
         if (title == null || title.equals(""))
             return mediaID;
 
-        // ToDo: Ensure that type and genre are valid
-
-        if (type == null || type.equals(""))
+        if (type == null || type.equals("") || !SystemInventory.getSystemInventory().isValidType(type))
             return mediaID;
 
-        if (genre == null || genre.equals(""))
+        if (genre == null || genre.equals("") || !SystemInventory.getSystemInventory().isValidGenre(type, genre))
             return mediaID;
 
         if (price < 0)
@@ -148,12 +146,10 @@ public class MediaDAOImpl
         if (title == null || title.equals(""))
             return -1;
 
-        // ToDo: Ensure that type and genre are valid
-
-        if (type == null || type.equals(""))
+        if (type == null || type.equals("") || !SystemInventory.getSystemInventory().isValidType(type))
             return -1;
 
-        if (genre == null || genre.equals(""))
+        if (genre == null || genre.equals("") || !SystemInventory.getSystemInventory().isValidGenre(type, genre))
             return -1;
 
         if (price < 0)
@@ -335,7 +331,6 @@ public class MediaDAOImpl
         -3 if system error
          */
 
-        // ToDo: Implement this
         UserDAO userDAO = new UserDAOImpl();
         User user = userDAO.getUser(username);
         Media media = getMedia(mediaID);

@@ -160,7 +160,7 @@ public class MainController {
         else
             mediaAction = "Buy $" + activeMedia.getPrice();
 
-        IndividualMediaPanel indMedia = new IndividualMediaPanel(this);
+        IndividualMediaPanel indMedia = new IndividualMediaPanel(this, mediaAction);
 
         indMedia.populateMedia(MediaInfo.createFromMedia(activeMedia));
 
@@ -209,7 +209,7 @@ public class MainController {
             display.getActiveState().setErrorWindow(new ErrorWindow(this, "System Error", "ok"));
         } else if (res == -3) {
             //Throw error to UI saying that the media is not correct purchasable type
-            display.getActiveState().setErrorWindow(new ErrorWindow(this, "Invalid purchase", "ok"));
+            display.getActiveState().setErrorWindow(new ErrorWindow(this, "Media has invalid purchase type", "ok"));
         } else if (res == -2) {
             //Throw error to UI saying that the media is out of stock
             display.getActiveState().setErrorWindow(new ErrorWindow(this, "Currently out of stock", "ok"));
@@ -226,10 +226,10 @@ public class MainController {
             display.getActiveState().setErrorWindow(new ErrorWindow(this, "System Error", "ok"));
         } else if (res == -2) {
             //Throw error to UI saying that the media is not correct purchasable type
-            display.getActiveState().setErrorWindow(new ErrorWindow(this, "Invalid purchase", "ok"));
+            display.getActiveState().setErrorWindow(new ErrorWindow(this, "Media has invalid return type", "ok"));
         } else if (res == -1) {
             //Throw error to UI saying that the media is not currently owned/rented by the user
-            display.getActiveState().setErrorWindow(new ErrorWindow(this, "Item can not be found in your inventory", "ok"));
+            display.getActiveState().setErrorWindow(new ErrorWindow(this, "Item can not be found in your personal inventory", "ok"));
         }
     }
 

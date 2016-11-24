@@ -27,10 +27,9 @@ public class IndividualMediaPanel extends MainContentPanel {
     private TextPane genreText;
     private TextPane reviewsLabel;
 
-    private TextButton buyButton;
-    private TextButton rentButton;
+    private TextButton actionButton;
 
-    public IndividualMediaPanel(MainController controller) {
+    public IndividualMediaPanel(MainController controller, String mediaAction) {
         super(controller);
 
         JLayeredPane content = getContent();
@@ -66,17 +65,11 @@ public class IndividualMediaPanel extends MainContentPanel {
         descriptionText.setLocation(400, 130);
         content.add(descriptionText);
 
-        rentButton = TextComponentFactory.smallButton(this, "Rent", Style.INDMEDIA_BUTTON);
-        rentButton.setSize(125, 25);
-        rentButton.setLocation(15, 485);
-        rentButton.setBackground(Color.GREEN);
-        content.add(rentButton);
-
-        buyButton = TextComponentFactory.smallButton(this, "Buy", Style.INDMEDIA_BUTTON);
-        buyButton.setSize(125, 25);
-        buyButton.setLocation(155, 485);
-        buyButton.setBackground(Color.RED);
-        content.add(buyButton);
+        actionButton = TextComponentFactory.smallButton(this, mediaAction, Style.INDMEDIA_BUTTON);
+        actionButton.setSize(125, 25);
+        actionButton.setLocation(15, 485);
+        actionButton.setBackground(Color.GREEN);
+        content.add(actionButton);
 
         reviewsLabel = TextComponentFactory.textPane("User Reviews", Style.INDMEDIA_REVIEWSLABEL);
         reviewsLabel.setSize(reviewsLabel.getPreferredSize());
