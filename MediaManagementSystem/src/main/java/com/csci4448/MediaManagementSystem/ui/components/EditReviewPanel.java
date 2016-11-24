@@ -1,8 +1,8 @@
 package com.csci4448.MediaManagementSystem.ui.components;
 
 import com.csci4448.MediaManagementSystem.controller.MainController;
-import com.csci4448.MediaManagementSystem.ui.Style;
-import com.csci4448.MediaManagementSystem.ui.TextComponentFactory;
+import com.csci4448.MediaManagementSystem.ui.design.Style;
+import com.csci4448.MediaManagementSystem.ui.design.TextComponentFactory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -46,8 +46,8 @@ public class EditReviewPanel extends JPanel implements ActionListener {
         cancel.setLocation(520, 255);
         add(cancel);
 
-        setSize(680, 300);
-        setLocation(135, 100);
+        //ToDo: use a layout instead
+        setPreferredSize(new Dimension(680, 300));
 
 
         for (int i = 0; i < 5; i++) {

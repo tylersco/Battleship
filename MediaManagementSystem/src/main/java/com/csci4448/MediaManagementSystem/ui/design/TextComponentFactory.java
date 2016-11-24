@@ -1,4 +1,4 @@
-package com.csci4448.MediaManagementSystem.ui;
+package com.csci4448.MediaManagementSystem.ui.design;
 
 import com.csci4448.MediaManagementSystem.ui.components.EnterTextField;
 import com.csci4448.MediaManagementSystem.ui.components.TextButton;

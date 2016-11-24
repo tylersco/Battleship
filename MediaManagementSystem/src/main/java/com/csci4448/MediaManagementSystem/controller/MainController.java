@@ -9,7 +9,7 @@ import com.csci4448.MediaManagementSystem.model.review.Review;
 import com.csci4448.MediaManagementSystem.model.user.UserDAO;
 import com.csci4448.MediaManagementSystem.model.user.UserDAOImpl;
 import com.csci4448.MediaManagementSystem.model.user.User;
-import com.csci4448.MediaManagementSystem.ui.*;
+import com.csci4448.MediaManagementSystem.ui.states.*;
 import com.csci4448.MediaManagementSystem.ui.components.*;
 import com.csci4448.MediaManagementSystem.model.media.SystemInventory;
 
@@ -199,7 +199,7 @@ public class MainController {
         //This is how you add a confirmation window. To remove it, do the same thing but call removePopUpWindow instead
         DisplayState state = display.getActiveState();
         if (state instanceof IndividualMediaPanel) {
-            ((MainContentPanel) state).setPopUpWindow(new ConfirmationWindow(this, "Are you sure you want to " + mediaAction + " this?"));
+            ((MainContentPanel) state).setPopUpWindow(new ConfirmationWindow(this, "Are you sure you want to " + mediaAction + " this?", "Yes", "No"));
         }
     }
 

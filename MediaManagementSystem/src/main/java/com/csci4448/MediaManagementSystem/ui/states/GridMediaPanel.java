@@ -1,10 +1,10 @@
-package com.csci4448.MediaManagementSystem.ui;
+package com.csci4448.MediaManagementSystem.ui.states;
 
 import com.csci4448.MediaManagementSystem.controller.MainController;
 import com.csci4448.MediaManagementSystem.ui.components.MediaListing;
+import com.csci4448.MediaManagementSystem.ui.states.MainContentPanel;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class GridMediaPanel extends MainContentPanel {
 

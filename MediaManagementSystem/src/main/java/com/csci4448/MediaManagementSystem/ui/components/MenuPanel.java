@@ -1,8 +1,8 @@
-package com.csci4448.MediaManagementSystem.ui;
+package com.csci4448.MediaManagementSystem.ui.components;
 
 import com.csci4448.MediaManagementSystem.controller.MainController;
-import com.csci4448.MediaManagementSystem.ui.components.SearchBar;
-import com.csci4448.MediaManagementSystem.ui.components.TextButton;
+import com.csci4448.MediaManagementSystem.ui.design.TextComponentFactory;
+import com.csci4448.MediaManagementSystem.ui.design.Style;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,10 +18,6 @@ public class MenuPanel extends JPanel implements ActionListener {
     private SearchBar searchBar;
     private TextButton fundsButton;
     private TextButton accountButton;
-
-    private Font defaultFont = new Font("Helvetice Neue", Font.PLAIN, 14);
-    private Color darkColor = new Color(75, 75, 75);
-    private Color lightColor = new Color(75, 75, 75, 140);
 
     public MenuPanel(MainController controller) {
         this.controller = controller;

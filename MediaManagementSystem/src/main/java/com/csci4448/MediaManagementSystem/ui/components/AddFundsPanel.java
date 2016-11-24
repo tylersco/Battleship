@@ -1,9 +1,8 @@
-package com.csci4448.MediaManagementSystem.ui;
+package com.csci4448.MediaManagementSystem.ui.components;
 
 import com.csci4448.MediaManagementSystem.controller.MainController;
-import com.csci4448.MediaManagementSystem.ui.components.EnterTextField;
-import com.csci4448.MediaManagementSystem.ui.components.TextButton;
-import com.csci4448.MediaManagementSystem.ui.components.TextPane;
+import com.csci4448.MediaManagementSystem.ui.design.TextComponentFactory;
+import com.csci4448.MediaManagementSystem.ui.design.Style;
 
 import javax.swing.*;
 import java.awt.*;
@@ -41,10 +40,6 @@ public class AddFundsPanel extends JPanel implements ActionListener {
         cancel = TextComponentFactory.smallButton(this, "Cancel", Style.CONFIRM_CANCEL);
         GridBagConstraints cancConst = new GridBagConstraints(1, 1, 1, 1, .5, 0, GridBagConstraints.LINE_END, GridBagConstraints.NONE, new Insets(10,0,20,15), 0, 0);
         add(cancel, cancConst);
-
-        //ToDo: have container set size and location
-        setSize(getPreferredSize());
-        setLocation(135, 100);
     }
 
     public void actionPerformed(ActionEvent event) {
@@ -52,7 +47,7 @@ public class AddFundsPanel extends JPanel implements ActionListener {
         if (component.equals(cancel)) {
             controller.addFundsCancelRequest();
         } else if (component.equals(submit)) {
-            Double amount = 0.0;
+            Double amount;
             try {
                 amount = Double.parseDouble(fundsEnterText.getText().trim());
                 controller.addFundsSubmitRequest(amount);

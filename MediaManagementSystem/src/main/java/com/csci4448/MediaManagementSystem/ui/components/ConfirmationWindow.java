@@ -1,8 +1,8 @@
 package com.csci4448.MediaManagementSystem.ui.components;
 
 import com.csci4448.MediaManagementSystem.controller.MainController;
-import com.csci4448.MediaManagementSystem.ui.Style;
-import com.csci4448.MediaManagementSystem.ui.TextComponentFactory;
+import com.csci4448.MediaManagementSystem.ui.design.Style;
+import com.csci4448.MediaManagementSystem.ui.design.TextComponentFactory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,7 +19,7 @@ public class ConfirmationWindow extends JPanel implements ActionListener {
     private TextButton confirm;
     private TextButton cancel;
 
-    public ConfirmationWindow(MainController controller, String confirmation) {
+    public ConfirmationWindow(MainController controller, String confirmation, String confirmMsg, String cancelMsg) {
         this.controller = controller;
 
         setLayout(new GridBagLayout());
@@ -30,17 +30,13 @@ public class ConfirmationWindow extends JPanel implements ActionListener {
         GridBagConstraints textConst = new GridBagConstraints(0, 0, 2, 1, 1, 0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(20,20,0,20), 0, 0);
         add(confirmationText, textConst);
 
-        confirm = TextComponentFactory.smallButton(this, "OK", Style.CONFIRM_OK);
+        confirm = TextComponentFactory.smallButton(this, confirmMsg, Style.CONFIRM_OK);
         GridBagConstraints confConst = new GridBagConstraints(1, 1, 1, 1, .5, 0, GridBagConstraints.LINE_START, GridBagConstraints.NONE, new Insets(10,10,20,0), 0, 0);
         add(confirm, confConst);
 
-        cancel = TextComponentFactory.smallButton(this, "Cancel", Style.CONFIRM_CANCEL);
+        cancel = TextComponentFactory.smallButton(this, cancelMsg, Style.CONFIRM_CANCEL);
         GridBagConstraints cancConst = new GridBagConstraints(0, 1, 1, 1, .5, 0, GridBagConstraints.LINE_END, GridBagConstraints.NONE, new Insets(10,0,20,10), 0, 0);
         add(cancel, cancConst);
-
-        //ToDo: have container set size and location
-        setSize(getPreferredSize());
-        setLocation(135, 100);
 
     }
 

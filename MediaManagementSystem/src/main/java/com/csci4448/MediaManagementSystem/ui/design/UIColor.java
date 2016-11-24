@@ -1,4 +1,4 @@
-package com.csci4448.MediaManagementSystem.ui;
+package com.csci4448.MediaManagementSystem.ui.design;
 
 import java.awt.*;
 

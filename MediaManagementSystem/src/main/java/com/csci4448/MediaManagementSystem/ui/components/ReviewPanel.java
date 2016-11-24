@@ -1,7 +1,7 @@
 package com.csci4448.MediaManagementSystem.ui.components;
 
-import com.csci4448.MediaManagementSystem.ui.Style;
-import com.csci4448.MediaManagementSystem.ui.TextComponentFactory;
+import com.csci4448.MediaManagementSystem.ui.design.Style;
+import com.csci4448.MediaManagementSystem.ui.design.TextComponentFactory;
 
 import javax.swing.*;
 import java.awt.*;

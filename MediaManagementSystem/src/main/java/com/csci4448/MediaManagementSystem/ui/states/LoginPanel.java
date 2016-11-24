@@ -1,6 +1,8 @@
-package com.csci4448.MediaManagementSystem.ui;
+package com.csci4448.MediaManagementSystem.ui.states;
 
 import com.csci4448.MediaManagementSystem.controller.MainController;
+import com.csci4448.MediaManagementSystem.ui.design.Style;
+import com.csci4448.MediaManagementSystem.ui.design.TextComponentFactory;
 import com.csci4448.MediaManagementSystem.ui.components.EnterTextField;
 import com.csci4448.MediaManagementSystem.ui.components.TextButton;
 
@@ -9,7 +11,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class LoginPanel extends JPanel implements ActionListener, DisplayState{
+public class LoginPanel extends JPanel implements ActionListener, DisplayState {
 
     private MainController controller;
 

@@ -1,6 +1,7 @@
-package com.csci4448.MediaManagementSystem.ui;
+package com.csci4448.MediaManagementSystem.ui.states;
 
 import com.csci4448.MediaManagementSystem.controller.MainController;
+import com.csci4448.MediaManagementSystem.ui.components.MenuPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -79,6 +80,9 @@ public abstract class MainContentPanel extends JLayeredPane implements DisplaySt
     public void setPopUpWindow(JComponent popUpWindow) {
         if (this.popUpWindow == null) {
             this.popUpWindow = popUpWindow;
+            Dimension windowSize = popUpWindow.getPreferredSize();
+            popUpWindow.setSize(windowSize);
+            popUpWindow.setLocation((getWidth() - (int)windowSize.getWidth())/2, 150);
             add(this.popUpWindow, new Integer(3));
         }
     }
