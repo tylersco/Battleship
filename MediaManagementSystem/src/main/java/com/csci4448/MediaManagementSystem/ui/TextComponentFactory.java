@@ -2,6 +2,7 @@ package com.csci4448.MediaManagementSystem.ui;
 
 import com.csci4448.MediaManagementSystem.ui.components.EnterTextField;
 import com.csci4448.MediaManagementSystem.ui.components.TextButton;
+import com.csci4448.MediaManagementSystem.ui.components.TextPane;
 
 import javax.swing.*;
 import java.awt.*;
@@ -49,6 +50,21 @@ public class TextComponentFactory {
         field.setSize(width, height);
         field.setPreferredSize(new Dimension(width, height));
         return field;
+    }
+
+    public static TextPane textPane(String text, Style style) {
+        TextPane pane = new TextPane(text, style.getDefaultFont(), style.getPrimaryColor());
+        setSizeWrap(pane);
+        return pane;
+    }
+
+    public static TextPane textPaneEdit(String text, Style style, int width, int height) {
+        TextPane pane = new TextPane(text, style.getDefaultFont(), style.getPrimaryColor());
+        pane.setLineWrap(true);
+        pane.setEditable(true);
+        pane.setSize(width, height);
+        pane.setPreferredSize(new Dimension(width, height));
+        return pane;
     }
 
     private static void setSizeWrap(JComponent component) {

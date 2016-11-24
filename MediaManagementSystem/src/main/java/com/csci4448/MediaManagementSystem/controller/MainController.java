@@ -228,7 +228,14 @@ public class MainController {
     public void reviewMediaRequest(int mediaId) {
         DisplayState state = display.getActiveState();
         if (state instanceof MainContentPanel) {
-            ((MainContentPanel) state).setPopUpWindow(new EditReviewPanel(this));
+            ((MainContentPanel) state).setPopUpWindow(new EditReviewPanel(this,  mediaId));
+        }
+    }
+
+    public void reviewMediaCancelRequest() {
+        DisplayState state = display.getActiveState();
+        if (state instanceof MainContentPanel) {
+            ((MainContentPanel) state).removePopUpWindow();
         }
     }
 
@@ -237,6 +244,7 @@ public class MainController {
         DisplayState state = display.getActiveState();
         if (state instanceof MainContentPanel) {
             ((MainContentPanel) state).removePopUpWindow();
+            individualMediaRequest(mediaId);
         }
     }
 

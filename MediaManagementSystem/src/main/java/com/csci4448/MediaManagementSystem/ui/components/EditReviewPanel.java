@@ -1,7 +1,8 @@
 package com.csci4448.MediaManagementSystem.ui.components;
 
 import com.csci4448.MediaManagementSystem.controller.MainController;
-import com.csci4448.MediaManagementSystem.ui.IndividualMediaPanel;
+import com.csci4448.MediaManagementSystem.ui.Style;
+import com.csci4448.MediaManagementSystem.ui.TextComponentFactory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,48 +12,38 @@ import java.util.ArrayList;
 
 public class EditReviewPanel extends JPanel implements ActionListener {
 
-    MainController controller;
+    private MainController controller;
+    private int mediaId;
+    private int selectedStar = -1;
 
-    private TextArea reviewTextField;
-    private TextArea reviewTitle;
+    private TextPane reviewTextField;
+    private TextPane reviewTitle;
     private ArrayList<TextButton> stars = new ArrayList<TextButton>();
     private TextButton submit;
     private TextButton cancel;
 
-    private Color defaultColor = new Color(75, 75, 75, 255);
-    private Color enteredColor = new Color(75, 75, 75);
-
-    private Font fontStar = new Font("Helvetice Neue", Font.PLAIN, 15);
-    private Color defaultColorStar = new Color(149, 149, 149);
-    private Color selectedColorStar = new Color(253, 216, 75);
-
-    public EditReviewPanel(MainController controller) {
+    public EditReviewPanel(MainController controller, int mediaId) {
         this.controller = controller;
+        this.mediaId = mediaId;
 
         setLayout(null);
         setBackground(new Color(250, 250, 250));
-        setBorder(BorderFactory.createMatteBorder(0, 1, 1, 1, new Color(228, 228, 228)));
+        setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, new Color(228, 228, 228)));
 
-        reviewTitle = new TextArea("Add Review", new Font("Helvetice Neue", Font.PLAIN, 17), defaultColor);
-        reviewTitle.setSize(reviewTitle.getPreferredSize());
+        reviewTitle = TextComponentFactory.textPane("Add Review", Style.REVIEW_HEADER);
         reviewTitle.setLocation(5, 5);
         add(reviewTitle);
 
-        reviewTextField = new TextArea("Enter Review", new Font("Helvetice Neue", Font.PLAIN, 15), new Color(75, 75, 75, 200));
-        reviewTextField.setLineWrap(true);
-        reviewTextField.setEditable(true);
-        reviewTextField.setSize(650, 200);
+        reviewTextField = TextComponentFactory.textPaneEdit("Enter your review here", Style.REVIEW_BODY, 650, 150);
         reviewTextField.setLocation(15, 60);
         add(reviewTextField);
 
-        submit = new TextButton(this, "Submit", new Font("Helvetice Neue", Font.PLAIN, 15), defaultColor, enteredColor);
-        submit.setSize(submit.getPreferredSize());
-        submit.setLocation(630, 275);
+        submit = TextComponentFactory.smallButton(this, "Submit", Style.REVIEW_SUB);
+        submit.setLocation(600, 255);
         add(submit);
 
-        cancel = new TextButton(this, "Cancel", new Font("Helvetice Neue", Font.PLAIN, 15), defaultColor, enteredColor);
-        cancel.setSize(cancel.getPreferredSize());
-        cancel.setLocation(550, 275);
+        cancel = TextComponentFactory.smallButton(this, "Cancel", Style.REVIEW_CANCEL);
+        cancel.setLocation(520, 255);
         add(cancel);
 
         setSize(680, 300);
@@ -60,26 +51,40 @@ public class EditReviewPanel extends JPanel implements ActionListener {
 
 
         for (int i = 0; i < 5; i++) {
-            TextButton star = new TextButton(this, "★", fontStar, defaultColorStar, selectedColorStar, selectedColorStar);
-            Dimension d = star.getPreferredSize();
-            star.setSize(d);
-            star.setLocation((int)d.getWidth() * i + 15, 35);
+            TextButton star = TextComponentFactory.smallButton(this, "★", Style.STAR_RATING);
+            star.setLocation((int)star.getWidth() * i + 15, 35);
             add(star);
             stars.add(star);
         }
 
     }
 
-    public void setSize(int width, int height) {
-        super.setSize(width, height);
-    }
-
     public void actionPerformed(ActionEvent event) {
         Object component = event.getSource();
         if (component.equals(cancel)) {
-            controller.reviewMediaSubmitRequest(1, "hi", 5);
+            controller.reviewMediaCancelRequest();
         } else if (component.equals(submit)) {
-            //controller.reviewMediaSubmitRequest();
+            String review = reviewTextField.getText().trim();
+            if (review.equals("Enter your review here") || review.equals("")) {
+                //ToDo: error need to input a review
+            } else if (selectedStar < 0 || selectedStar > 4) {
+                //ToDo: error with star rating
+            } else {
+                controller.reviewMediaSubmitRequest(mediaId, review, selectedStar + 1);
+            }
+        } else {
+            for (int i = 0; i < 5; i++) {
+                if (component.equals(stars.get(i))) {
+                    selectedStar = i;
+                    break;
+                }
+            }
+            for (int i = 0; i <= selectedStar; i++) {
+                stars.get(i).setIsSelected(true);
+            }
+            for (int i = 4; i > selectedStar; i--) {
+                stars.get(i).setIsSelected(false);
+            }
         }
     }
 }

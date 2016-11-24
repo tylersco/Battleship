@@ -11,7 +11,10 @@ public enum UIColor {
     BLUE_LIGHT (70, 177, 249),
     BLUE_DARK (55, 137, 199),
 
-    RED_CANCEL (249, 72, 67);
+    RED_CANCEL (249, 72, 67),
+
+    GRAY_STAR (149, 149, 149),
+    GOLD_STAR (253, 216, 75);
 
     private final Color color;
 

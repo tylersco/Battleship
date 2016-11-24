@@ -1,9 +1,8 @@
 package com.csci4448.MediaManagementSystem.ui;
 
 import com.csci4448.MediaManagementSystem.controller.MainController;
-import com.csci4448.MediaManagementSystem.model.media.Media;
 import com.csci4448.MediaManagementSystem.ui.components.*;
-import com.csci4448.MediaManagementSystem.ui.components.TextArea;
+import com.csci4448.MediaManagementSystem.ui.components.TextPane;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,8 +20,8 @@ public class IndividualMediaPanel extends MainContentPanel implements ActionList
     private Color selectedColor = new Color(75, 75, 75);
 
     private MediaImage image;
-    private TextArea titleText;
-    private TextArea descriptionText;
+    private TextPane titleText;
+    private TextPane descriptionText;
     private TextButton addReviewButton;
     private TextButton actionButton;
 
@@ -40,7 +39,7 @@ public class IndividualMediaPanel extends MainContentPanel implements ActionList
 
         JLayeredPane content = getContent();
 
-        titleText = new TextArea(title, new Font("Helvetice Neue", Font.PLAIN, 35), new Color(75, 75, 75));
+        titleText = new TextPane(title, new Font("Helvetice Neue", Font.PLAIN, 35), new Color(75, 75, 75));
         titleText.setSize(500, (int)titleText.getPreferredSize().getHeight());
         titleText.setLocation(375, 25);
         content.add(titleText);
@@ -50,7 +49,7 @@ public class IndividualMediaPanel extends MainContentPanel implements ActionList
         image.setLocation(15, 15);
         content.add(image, 0);
 
-        descriptionText = new TextArea(description, new Font("Helvetice Neue", Font.PLAIN, 18), new Color(75, 75, 75, 200));
+        descriptionText = new TextPane(description, new Font("Helvetice Neue", Font.PLAIN, 18), new Color(75, 75, 75, 200));
         descriptionText.setLineWrap(true);
         descriptionText.setSize(350, 250);
         descriptionText.setLocation(400, 85);
@@ -97,7 +96,6 @@ public class IndividualMediaPanel extends MainContentPanel implements ActionList
         for (int i = 0; i < reviews.size(); i++) {
             ReviewPanel review = reviews.get(i);
             review.setSize(900, 65);
-            //ToDo: add margin
             review.setLocation(15, 525 + (i * 65) + (i * 5));
             content.add(review);
         }

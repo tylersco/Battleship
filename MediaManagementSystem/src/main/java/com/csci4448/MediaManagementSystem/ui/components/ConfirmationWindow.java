@@ -1,14 +1,11 @@
 package com.csci4448.MediaManagementSystem.ui.components;
 
 import com.csci4448.MediaManagementSystem.controller.MainController;
-import com.csci4448.MediaManagementSystem.ui.IndividualMediaPanel;
-import com.csci4448.MediaManagementSystem.ui.MainContentPanel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 public class ConfirmationWindow extends JPanel implements ActionListener {
 
@@ -16,7 +13,7 @@ public class ConfirmationWindow extends JPanel implements ActionListener {
 
     private boolean isConfirmed = false;
 
-    private TextArea confirmationText;
+    private TextPane confirmationText;
     private TextButton confirm;
     private TextButton cancel;
 
@@ -32,7 +29,7 @@ public class ConfirmationWindow extends JPanel implements ActionListener {
 
         //ToDo: fix formatting, size, and colors
 
-        confirmationText = new TextArea(confirmation, new Font("Helvetice Neue", Font.PLAIN, 17), defaultColor);
+        confirmationText = new TextPane(confirmation, new Font("Helvetice Neue", Font.PLAIN, 17), defaultColor);
         confirmationText.setSize(confirmationText.getPreferredSize());
         confirmationText.setLocation(5, 5);
         add(confirmationText);
