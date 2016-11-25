@@ -259,6 +259,8 @@ public class MainController {
                 int res = SystemInventory.getSystemInventory().buyMedia(activeUser.getUsername(), activeMedia.getMediaID());
                 buyOrRentRequestErrorHandle(res);
             }
+            refreshActiveUser();
+            refreshActiveMedia();
             libraryRequest();
         }
     }
@@ -292,6 +294,8 @@ public class MainController {
 
     public void reviewMediaSubmitRequest(int mediaId, String reviewText, int rating) {
         reviewDAO.addReview(reviewText, rating, activeUser.getUserID(), mediaId);
+        refreshActiveUser();
+        refreshActiveMedia();
 
         DisplayState state = display.getActiveState();
         if (state instanceof MainContentPanel) {
