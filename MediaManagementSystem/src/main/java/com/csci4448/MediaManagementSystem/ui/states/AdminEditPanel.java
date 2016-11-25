@@ -4,6 +4,7 @@ import com.csci4448.MediaManagementSystem.controller.MainController;
 import com.csci4448.MediaManagementSystem.model.media.MediaInfo;
 import com.csci4448.MediaManagementSystem.ui.components.BorderedButton;
 import com.csci4448.MediaManagementSystem.ui.components.EnterTextField;
+import com.csci4448.MediaManagementSystem.ui.components.TextButton;
 import com.csci4448.MediaManagementSystem.ui.components.TextPane;
 import com.csci4448.MediaManagementSystem.ui.design.Style;
 import com.csci4448.MediaManagementSystem.ui.design.TextComponentFactory;
@@ -27,9 +28,13 @@ public class AdminEditPanel extends MainContentPanel {
 
     private TextPane titleLabel;
     private TextPane descriptionLabel;
+    private TextPane typeLabel;
+    private TextPane genreLabel;
 
     private EnterTextField titleText;
     private EnterTextField descriptionText;
+    private TextButton movieChoice, bookChoice, musicChoice, tvChoice, audioChoice;
+    private EnterTextField genreText;
 
     private boolean unsavedChanges = false;
 
@@ -72,7 +77,53 @@ public class AdminEditPanel extends MainContentPanel {
         descriptionLabel.setLocation(15, 120);
         content.add(descriptionLabel);
 
-        content.setSize(935, 550);
+        typeLabel = TextComponentFactory.textPane("Type:", Style.ADMIN_LABEL);
+        typeLabel.setSize(typeLabel.getPreferredSize());
+        typeLabel.setLocation(15, 220);
+        content.add(typeLabel);
+
+        genreLabel = TextComponentFactory.textPane("Genre:", Style.ADMIN_LABEL);
+        genreLabel.setSize(genreLabel.getPreferredSize());
+        genreLabel.setLocation(15, 260);
+        content.add(genreLabel);
+
+        titleText = TextComponentFactory.enterText(this, "", Style.ADMIN_TEXT);
+        titleText.setSize(725, 30);
+        titleText.setLocation(175, 80);
+        content.add(titleText);
+
+        descriptionText = TextComponentFactory.enterText(this, "", Style.ADMIN_TEXT);
+        descriptionText.setSize(725, 90);
+        descriptionText.setLocation(175, 120);
+        content.add(descriptionText);
+
+        movieChoice = TextComponentFactory.smallButton(this, "Movie", Style.ADMIN_BUTTON);
+        bookChoice = TextComponentFactory.smallButton(this, "Book", Style.ADMIN_BUTTON);
+        musicChoice = TextComponentFactory.smallButton(this, "Music", Style.ADMIN_BUTTON);
+        tvChoice = TextComponentFactory.smallButton(this, "TV Show", Style.ADMIN_BUTTON);
+        audioChoice = TextComponentFactory.smallButton(this, "Audio Book", Style.ADMIN_BUTTON);
+        movieChoice.setSize(movieChoice.getPreferredSize());
+        movieChoice.setLocation(175, 220);
+        bookChoice.setSize(bookChoice.getPreferredSize());
+        bookChoice.setLocation(250, 220);
+        musicChoice.setSize(musicChoice.getPreferredSize());
+        musicChoice.setLocation(325, 220);
+        tvChoice.setSize(tvChoice.getPreferredSize());
+        tvChoice.setLocation(400, 220);
+        audioChoice.setSize(audioChoice.getPreferredSize());
+        audioChoice.setLocation(505, 220);
+        content.add(movieChoice);
+        content.add(bookChoice);
+        content.add(musicChoice);
+        content.add(tvChoice);
+        content.add(audioChoice);
+
+        genreText = TextComponentFactory.enterText(this, "", Style.ADMIN_TEXT);
+        genreText.setSize(225, 30);
+        genreText.setLocation(175, 260);
+        content.add(genreText);
+
+        content.setSize(935, 520);
         updateContentSize();
     }
 
