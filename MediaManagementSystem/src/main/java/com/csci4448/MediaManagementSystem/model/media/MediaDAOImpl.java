@@ -276,11 +276,8 @@ public class MediaDAOImpl
             return -2;
         }
 
-        // ToDo: Change calls and don't use DAO's. Since we are already in a DAO this can cause integrity problems in DB.
-        // Look at rent media for an example
-
         // subtract the price of media from user's account
-        user.decreaseAccountBalance(username, media.getPrice());
+        userAccount.setAccountBalance(userAccount.getAccountBalance() - media.getPrice());
 
         // add the media to the user's account
         userAccount.addPersonalMedia(media);
@@ -291,7 +288,10 @@ public class MediaDAOImpl
         // add user to the list of current users of media
         media.addUserOwner(userAccount);
 
-        // ToDo: Update media record and user record after changes are made
+
+        update(media);
+        user.update(userAccount);
+
 
         return 0;
     }
