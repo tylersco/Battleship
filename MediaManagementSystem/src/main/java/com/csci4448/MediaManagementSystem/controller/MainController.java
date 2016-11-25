@@ -12,7 +12,6 @@ import com.csci4448.MediaManagementSystem.ui.components.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class MainController {
 
@@ -134,6 +133,8 @@ public class MainController {
     public void addFundsSubmitRequest(int amount) {
         userDAO.increaseAccountBalance(activeUser.getUsername(), amount);
 
+        // ToDo: When increasing the account balance, the value in the database is updated, but the UI doesn't show updated value
+        // Somehow need to perform some sort of "refresh" to get the updated account balance
         DisplayState state = display.getActiveState();
         if (state instanceof MainContentPanel) {
             ((MainContentPanel) state).removePopUpWindow();
@@ -266,17 +267,8 @@ public class MainController {
     }
 
     public void reviewMediaRequest(int mediaId) {
-        //ToDo: potentially move to the model as a method
-        boolean userAlreadyReviewedMedia = false;
-        Set<Review> reviews = activeMedia.getReviews();
-        for (Review r : reviews) {
-            if (r.getUser().getUserID() == activeUser.getUserID()) {
-                userAlreadyReviewedMedia = true;
-                break;
-            }
-        }
 
-        if (userAlreadyReviewedMedia) {
+        if (reviewDAO.userAlreadyReviewed(activeUser.getUsername(), mediaId)) {
             display.getActiveState().setErrorWindow(new ErrorWindow(this, "You have already reviewed this item", "ok"));
         } else {
             DisplayState state = display.getActiveState();
