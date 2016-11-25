@@ -15,39 +15,6 @@ public class MediaDAOImpl
         extends GenericDAOImpl<Media, Integer>
         implements MediaDAO {
 
-    public boolean incrementInventoryCount(int mediaID) {
-        /*
-        Increment the inventory count of a media.
-
-        Returns false if unsuccessful, true if successful
-         */
-
-        Media media = getMedia(mediaID);
-        media.setInventoryCount(media.getInventoryCount() + 1);
-        return update(media);
-
-    }
-
-    public int decrementInventoryCount(int mediaID) {
-        /*
-        Decrement the inventory count of a media.
-
-        Returns -2 if inventory count is 0, -1 if unsuccessful, 0 if successful
-         */
-
-        Media media = getMedia(mediaID);
-
-        int currentInventoryCount = media.getInventoryCount();
-
-        if (currentInventoryCount == 0)
-            return -2;
-
-        media.setInventoryCount(media.getInventoryCount() + 1);
-        if (update(media))
-            return 0;
-        return -1;
-    }
-
     public Media getMedia(int mediaID) {
         /*
         Query the Media table for a specific media.

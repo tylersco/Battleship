@@ -85,11 +85,21 @@ public class MainController {
         GridMediaPanel store = new GridMediaPanel(this, 215, 327, 15, 35);
         store.getMenuPanel().getStoreButton().setIsSelected(true);
 
+        List<Media> ownedMedia = userDAO.getPersonalInventory(activeUser.getUsername());
         List<Media> mediaRecords = SystemInventory.getSystemInventory().getAllMedia();
 
-        for(Media media: mediaRecords) {
-            MediaListing listing = new MediaListing(this, media.getMediaID(), media.getImage(), media.getTitle(), media.getPrice());
-            store.add(listing);
+        for (Media media : mediaRecords) {
+            boolean found = false;
+            for (Media mediaOwn : ownedMedia) {
+                if (mediaOwn.getMediaID() == media.getMediaID())
+                    found = true;
+            }
+
+            if (!found) {
+                MediaListing listing = new MediaListing(this, media.getMediaID(), media.getImage(), media.getTitle(), media.getPrice());
+                store.add(listing);
+            }
+
         }
 
         display.setState(store);
