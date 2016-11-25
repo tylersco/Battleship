@@ -92,7 +92,7 @@ public class MenuPanel extends JPanel implements ActionListener {
         } else if (component.equals(libraryButton)) {
             controller.libraryRequest();
         } else if (component.equals(adminButton)) {
-            controller.adminRequest();
+            controller.adminRequest(null);
         } else if (component.equals(fundsButton)) {
             controller.addFundsRequest();
         } else if (component.equals(accountButton)) {

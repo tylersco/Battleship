@@ -112,10 +112,10 @@ public class MainController {
         display.setState(library);
     }
 
-    // TODO: Allow passing in an existing media to edit or delete
-    public void adminRequest() {
-        // ToDo: Implement this
-        AdminEditPanel admin = new AdminEditPanel(this);
+    // Passing in a non-null MediaInfo sets the panel up for editing existing media.
+    // Passing in a null MediaInfo sets up the panel with a blank template for new media.
+    public void adminRequest(MediaInfo info) {
+        AdminEditPanel admin = new AdminEditPanel(this, info);
         admin.getMenuPanel().getAdminButton().setIsSelected(true);
 
         display.setState(admin);

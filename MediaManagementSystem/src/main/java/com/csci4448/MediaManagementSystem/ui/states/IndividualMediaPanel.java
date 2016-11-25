@@ -38,6 +38,8 @@ public class IndividualMediaPanel extends MainContentPanel {
     private BorderedButton rentButton;
     private BorderedButton editButton;
 
+    private MediaInfo savedMediaInfo = null;
+
     public IndividualMediaPanel(MainController controller) {
         super(controller);
 
@@ -110,6 +112,7 @@ public class IndividualMediaPanel extends MainContentPanel {
     }
 
     public void populateMedia(MediaInfo info) {
+        savedMediaInfo = info;
         titleText.setText(info.getTitle());
         descriptionText.setText(info.getDescription());
         image.setImagePath(info.getImage());
@@ -135,7 +138,7 @@ public class IndividualMediaPanel extends MainContentPanel {
         Object component = event.getSource();
 
         if (component.equals(editButton)) {
-            getController().adminRequest();
+            getController().adminRequest(null);
         }
     }
 }
