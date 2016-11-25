@@ -15,6 +15,7 @@ public class MenuPanel extends JPanel implements ActionListener {
 
     private TextButton storeButton;
     private TextButton libraryButton;
+    private TextButton adminButton;
     private SearchBar searchBar;
     private TextButton fundsButton;
     private TextButton accountButton;
@@ -37,6 +38,12 @@ public class MenuPanel extends JPanel implements ActionListener {
         GridBagConstraints libConst = new GridBagConstraints(1, 0, 1, 2, 1, .5, GridBagConstraints.LINE_START, GridBagConstraints.NONE, new Insets(0,25,0,0), 0, 0);
         add(libraryButton, libConst);
 
+        adminButton = TextComponentFactory.largeButton(this, "Admin", Style.MENU_MAIN);
+        GridBagConstraints adminConst = new GridBagConstraints(2, 0, 1, 2, 2, .5, GridBagConstraints.LINE_END, GridBagConstraints.NONE, new Insets(0,0,0,0), 0, 0);
+        add(adminButton, adminConst);
+        if (!controller.isAdmin())
+            adminButton.setVisible(false);
+
         accountButton = TextComponentFactory.smallButton(this, controller.getUser().getUsername(), Style.MENU_SUB);
         GridBagConstraints accConst = new GridBagConstraints(3, 1, 1, 1, .25, .5, GridBagConstraints.LINE_END, GridBagConstraints.NONE, new Insets(0,0,0,20), 0, 0);
         add(accountButton, accConst);
@@ -58,6 +65,10 @@ public class MenuPanel extends JPanel implements ActionListener {
         return libraryButton;
     }
 
+    public TextButton getAdminButton() {
+        return adminButton;
+    }
+
     public void removeSearchBar() {
         remove(searchBar);
         //ToDo: account/funds buttons locations
@@ -75,6 +86,8 @@ public class MenuPanel extends JPanel implements ActionListener {
             controller.storeRequest();
         } else if (component.equals(libraryButton)) {
             controller.libraryRequest();
+        } else if (component.equals(adminButton)) {
+            controller.adminRequest(null);
         } else if (component.equals(fundsButton)) {
             controller.addFundsRequest();
         } else if (component.equals(accountButton)) {

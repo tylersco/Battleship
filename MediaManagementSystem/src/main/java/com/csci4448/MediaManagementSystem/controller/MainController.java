@@ -103,7 +103,7 @@ public class MainController {
 
         List<Media> personalInventory = userDAO.getPersonalInventory(activeUser.getUsername());
 
-        for(Media media: personalInventory) {
+        for (Media media: personalInventory) {
             //ToDo: modify MediaListing so it displays owned/rented instead of price
             MediaListing listing = new MediaListing(this, media.getMediaID(), media.getImage(), media.getTitle(), media.getPrice());
             library.add(listing);
@@ -111,9 +111,13 @@ public class MainController {
         display.setState(library);
     }
 
-    public void adminRequest() {
-        // ToDo: Implement this
-        /* display.setState(new IndividualMediaPanel(this, null)); */
+    // Passing in a non-null MediaInfo sets the panel up for editing existing media.
+    // Passing in a null MediaInfo sets up the panel with a blank template for new media.
+    public void adminRequest(MediaInfo info) {
+        AdminEditPanel admin = new AdminEditPanel(this, info);
+        admin.getMenuPanel().getAdminButton().setIsSelected(true);
+
+        display.setState(admin);
     }
 
     public void addFundsRequest() {

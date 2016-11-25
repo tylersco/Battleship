@@ -2,12 +2,10 @@ package com.csci4448.MediaManagementSystem.ui.states;
 
 import com.csci4448.MediaManagementSystem.controller.MainController;
 import com.csci4448.MediaManagementSystem.model.media.MediaInfo;
-import com.csci4448.MediaManagementSystem.ui.components.MediaImage;
-import com.csci4448.MediaManagementSystem.ui.components.ReviewPanel;
-import com.csci4448.MediaManagementSystem.ui.components.TextButton;
-import com.csci4448.MediaManagementSystem.ui.components.TextPane;
+import com.csci4448.MediaManagementSystem.ui.components.*;
 import com.csci4448.MediaManagementSystem.ui.design.Style;
 import com.csci4448.MediaManagementSystem.ui.design.TextComponentFactory;
+import com.csci4448.MediaManagementSystem.ui.design.UIFont;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,6 +17,14 @@ public class IndividualMediaPanel extends MainContentPanel {
     private static final String DEFAULT_IMAGE_PATH = "src/main/resources/test.png";
     private static final MediaInfo DEFAULT_MEDIA_INFO = MediaInfo.createDefault();
 
+    // TODO: Move this to its own location
+    private static final Color TEXT_COLOR = Color.DARK_GRAY;
+    private static final Color BORDER_COLOR = Color.DARK_GRAY;
+    private static final Color ACTION_BUTTON_DEFAULT_COLOR = Color.GRAY;
+    private static final Color ACTION_BUTTON_ENTERED_COLOR = Color.LIGHT_GRAY;
+    private static final Color EDIT_BUTTON_DEFAULT_COLOR = Color.ORANGE;
+    private static final Color EDIT_BUTTON_ENTERED_COLOR = Color.YELLOW;
+
     private MediaImage image;
     private TextPane titleText;
     private TextPane descriptionText;
@@ -27,7 +33,11 @@ public class IndividualMediaPanel extends MainContentPanel {
     private TextPane genreText;
     private TextPane reviewsLabel;
 
-    private TextButton actionButton;
+    private BorderedButton buyButton;
+    private BorderedButton rentButton;
+    private BorderedButton editButton;
+
+    private MediaInfo savedMediaInfo = null;
 
     public IndividualMediaPanel(MainController controller, String mediaAction) {
         super(controller);
@@ -65,11 +75,31 @@ public class IndividualMediaPanel extends MainContentPanel {
         descriptionText.setLocation(400, 130);
         content.add(descriptionText);
 
-        actionButton = TextComponentFactory.smallButton(this, mediaAction, Style.INDMEDIA_BUTTON);
-        actionButton.setSize(125, 25);
-        actionButton.setLocation(15, 485);
-        actionButton.setBackground(Color.GREEN);
-        content.add(actionButton);
+        rentButton = new BorderedButton(this, "Rent", UIFont.FONT_20B.getFont(),
+                TEXT_COLOR, TEXT_COLOR, TEXT_COLOR,
+                ACTION_BUTTON_DEFAULT_COLOR, ACTION_BUTTON_ENTERED_COLOR, ACTION_BUTTON_DEFAULT_COLOR,
+                BORDER_COLOR, BORDER_COLOR, BORDER_COLOR);
+        rentButton.setSize(75, 25);
+        rentButton.setLocation(15, 480);
+        content.add(rentButton);
+
+        buyButton = new BorderedButton(this, "Buy", UIFont.FONT_20B.getFont(),
+                TEXT_COLOR, TEXT_COLOR, TEXT_COLOR,
+                ACTION_BUTTON_DEFAULT_COLOR, ACTION_BUTTON_ENTERED_COLOR, ACTION_BUTTON_DEFAULT_COLOR,
+                BORDER_COLOR, BORDER_COLOR, BORDER_COLOR);
+        buyButton.setSize(75, 25);
+        buyButton.setLocation(105, 480);
+        content.add(buyButton);
+
+        editButton = new BorderedButton(this, "Edit", UIFont.FONT_20B.getFont(),
+                TEXT_COLOR, TEXT_COLOR, TEXT_COLOR,
+                EDIT_BUTTON_DEFAULT_COLOR, EDIT_BUTTON_ENTERED_COLOR, EDIT_BUTTON_DEFAULT_COLOR,
+                BORDER_COLOR, BORDER_COLOR, BORDER_COLOR);
+        editButton.setSize(75, 25);
+        editButton.setLocation(195, 480);
+        content.add(editButton);
+        if (!getController().isAdmin())
+            editButton.setVisible(false);
 
         reviewsLabel = TextComponentFactory.textPane("User Reviews", Style.INDMEDIA_REVIEWSLABEL);
         reviewsLabel.setSize(reviewsLabel.getPreferredSize());
@@ -81,6 +111,7 @@ public class IndividualMediaPanel extends MainContentPanel {
     }
 
     public void populateMedia(MediaInfo info) {
+        savedMediaInfo = info;
         titleText.setText(info.getTitle());
         descriptionText.setText(info.getDescription());
         image.setImagePath(info.getImage());
@@ -103,6 +134,10 @@ public class IndividualMediaPanel extends MainContentPanel {
 
     @Override
     public void actionPerformed(ActionEvent event) {
+        Object component = event.getSource();
 
+        if (component.equals(editButton)) {
+            getController().adminRequest(null);
+        }
     }
 }
