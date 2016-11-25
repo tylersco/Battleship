@@ -13,4 +13,7 @@ public interface MediaDAO {
     List<Media> searchMedia(String searchText);
     int rentMedia(String username, int mediaID);
     int buyMedia(String username, int mediaID);
+    int sellMedia(String username, int mediaID);
+    int returnMedia(String username, int mediaID);
+
 }

@@ -8,6 +8,8 @@ import com.csci4448.MediaManagementSystem.model.user.User;
 import com.csci4448.MediaManagementSystem.model.user.UserDAO;
 import com.csci4448.MediaManagementSystem.model.user.UserDAOImpl;
 
+import java.util.Set;
+
 public class ReviewDAOImpl
         extends GenericDAOImpl<Review, Integer>
         implements ReviewDAO {
@@ -67,6 +69,28 @@ public class ReviewDAOImpl
          */
 
         return retrieve(reviewID);
+    }
+
+    public boolean userAlreadyReviewed(String username, int mediaID) {
+
+        MediaDAO mediaDAO = new MediaDAOImpl();
+        UserDAO userDAO = new UserDAOImpl();
+
+        Media media = mediaDAO.getMedia(mediaID);
+        User user = userDAO.getUser(username);
+
+        if (user == null || media == null)
+            return false;
+
+        Set<Review> reviews = media.getReviews();
+        for (Review r : reviews) {
+            if (r.getUser().getUserID() == user.getUserID()) {
+                return true;
+            }
+        }
+
+        return false;
+
     }
 
 }

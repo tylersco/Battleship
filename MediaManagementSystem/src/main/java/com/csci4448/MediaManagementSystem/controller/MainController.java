@@ -43,12 +43,12 @@ public class MainController {
             if (user != null)
                 activeUser = user;
             else {
-                //ToDo: Database error, couldn't retrieve user, throw error in UI
+                display.getActiveState().setErrorWindow(new ErrorWindow(this, "Server Unavailable", "ok"));
             }
             storeRequest();
         }
         else {
-            //Todo: Pass error message to UI saying that either username or password was incorrect
+            display.getActiveState().setErrorWindow(new ErrorWindow(this, "Invalid Information", "ok"));
 
         }
 
@@ -61,19 +61,19 @@ public class MainController {
     public void createAccountSubmitRequest(String firstName, String lastName, String username, String email, String password) {
 
         if (userDAO.userExists(username, password)) {
-            //ToDo: Send error message in UI that user already exists with that username
+            display.getActiveState().setErrorWindow(new ErrorWindow(this, "Username already taken", "ok"));
         }
         else {
             int res = userDAO.addUser(username, password, email, firstName, lastName);
             if (res == -1) {
-                //ToDo: Error creating user, send error message to UI
+                display.getActiveState().setErrorWindow(new ErrorWindow(this, "Server Error (Creating User)", "ok"));
             }
             else {
                 User user = userDAO.getUser(res);
                 if (user != null)
                     activeUser = user;
                 else {
-                    //ToDo: Database error, couldn't retrieve user, throw error in UI
+                    display.getActiveState().setErrorWindow(new ErrorWindow(this, "Server Unavailable", "ok"));
                 }
                 storeRequest();
             }
@@ -93,7 +93,6 @@ public class MainController {
         }
 
         display.setState(store);
-
     }
 
     public void libraryRequest() {
@@ -135,19 +134,22 @@ public class MainController {
         }
     }
 
-    public void addFundsSubmitRequest(double amount) {
-        //ToDo: add funds to user
+    public void addFundsSubmitRequest(int amount) {
+        userDAO.increaseAccountBalance(activeUser.getUsername(), amount);
+        refreshActiveUser();
+
         DisplayState state = display.getActiveState();
         if (state instanceof MainContentPanel) {
             ((MainContentPanel) state).removePopUpWindow();
         }
+        storeRequest();
     }
 
     public void individualMediaRequest(int mediaId) {
         Media media = mediaDAO.getMedia(mediaId);
 
         if (media == null) {
-            //ToDo: Database error, couldn't fetch media, throw error in UI
+            display.getActiveState().setErrorWindow(new ErrorWindow(this, "Media Unavailable", "ok"));
             return;
         }
 
@@ -163,7 +165,7 @@ public class MainController {
         else
             mediaAction = "Buy $" + activeMedia.getPrice();
 
-        IndividualMediaPanel indMedia = new IndividualMediaPanel(this);
+        IndividualMediaPanel indMedia = new IndividualMediaPanel(this, mediaAction);
 
         indMedia.populateMedia(MediaInfo.createFromMedia(activeMedia));
 
@@ -183,7 +185,7 @@ public class MainController {
         Media media = mediaDAO.getMedia(mediaId);
 
         if (media == null) {
-            // ToDo: Database error, couldn't fetch media, throw error in UI
+            display.getActiveState().setErrorWindow(new ErrorWindow(this, "Media Unavailable", "ok"));
             return;
         }
 
@@ -208,19 +210,36 @@ public class MainController {
 
     private void buyOrRentRequestErrorHandle(int res) {
         if (res == -4) {
-            // ToDo: Throw error to UI saying that there was a system error
+            //Throw error to UI saying that there was a system error
+            display.getActiveState().setErrorWindow(new ErrorWindow(this, "System Error", "ok"));
         } else if (res == -3) {
-            // ToDo: Throw error to UI saying that the media is not rentable
+            //Throw error to UI saying that the media is not correct purchasable type
+            display.getActiveState().setErrorWindow(new ErrorWindow(this, "Media has invalid purchase type", "ok"));
         } else if (res == -2) {
-            // ToDo: Throw error to UI saying that the media is out of stock
+            //Throw error to UI saying that the media is out of stock
+            display.getActiveState().setErrorWindow(new ErrorWindow(this, "Currently out of stock", "ok"));
             // This may change if we implement the waitlist functionality
         } else if (res == -1) {
-            // ToDo: Throw error to UI saying that the user doesn't have enough money in account balance
+            //Throw error to UI saying that the user doesn't have enough money in account balance
+            display.getActiveState().setErrorWindow(new ErrorWindow(this, "Insufficient account balance", "ok"));
+        }
+    }
+
+    private void sellOrReturnRequestErrorHandle(int res) {
+        if (res == -3) {
+            //Throw error to UI saying that there was a system error
+            display.getActiveState().setErrorWindow(new ErrorWindow(this, "System Error", "ok"));
+        } else if (res == -2) {
+            //Throw error to UI saying that the media is not correct purchasable type
+            display.getActiveState().setErrorWindow(new ErrorWindow(this, "Media has invalid return type", "ok"));
+        } else if (res == -1) {
+            //Throw error to UI saying that the media is not currently owned/rented by the user
+            display.getActiveState().setErrorWindow(new ErrorWindow(this, "Item can not be found in your personal inventory", "ok"));
         }
     }
 
     public void confirmationRequest(boolean isConfirmed) {
-        //ToDo: handle return from confirmation.  true means the user confirmed, false means the user didn't(canceled)
+
         if (!isConfirmed) {
             DisplayState state = display.getActiveState();
             if (state instanceof IndividualMediaPanel) {
@@ -228,12 +247,14 @@ public class MainController {
             }
         } else {
             if (activeMedia.getIsRentable() && activeUser.getPersonalInventory().contains(activeMedia)) {
-                // ToDo: Implement return media in system inventory
+                int res = SystemInventory.getSystemInventory().returnMedia(activeUser.getUsername(), activeMedia.getMediaID());
+                sellOrReturnRequestErrorHandle(res);
             } else if (activeMedia.getIsRentable()) {
                 int res = SystemInventory.getSystemInventory().rentMedia(activeUser.getUsername(), activeMedia.getMediaID());
                 buyOrRentRequestErrorHandle(res);
             } else if (!activeMedia.getIsRentable() && activeUser.getPersonalInventory().contains(activeMedia)) {
-                // ToDo: Implement sell media in system inventory
+                int res = SystemInventory.getSystemInventory().sellMedia(activeUser.getUsername(), activeMedia.getMediaID());
+                sellOrReturnRequestErrorHandle(res);
             } else {
                 int res = SystemInventory.getSystemInventory().buyMedia(activeUser.getUsername(), activeMedia.getMediaID());
                 buyOrRentRequestErrorHandle(res);
@@ -241,10 +262,23 @@ public class MainController {
         }
     }
 
+    public void errorThrowRequest(String msg, String close) {
+        display.getActiveState().setErrorWindow(new ErrorWindow(this, msg, close));
+    }
+
+    public void errorHandledRequest() {
+        display.getActiveState().setErrorWindow(null);
+    }
+
     public void reviewMediaRequest(int mediaId) {
-        DisplayState state = display.getActiveState();
-        if (state instanceof MainContentPanel) {
-            ((MainContentPanel) state).setPopUpWindow(new EditReviewPanel(this,  mediaId));
+
+        if (reviewDAO.userAlreadyReviewed(activeUser.getUsername(), mediaId)) {
+            display.getActiveState().setErrorWindow(new ErrorWindow(this, "You have already reviewed this item", "ok"));
+        } else {
+            DisplayState state = display.getActiveState();
+            if (state instanceof MainContentPanel) {
+                ((MainContentPanel) state).setPopUpWindow(new EditReviewPanel(this, mediaId));
+            }
         }
     }
 
@@ -256,7 +290,8 @@ public class MainController {
     }
 
     public void reviewMediaSubmitRequest(int mediaId, String reviewText, int rating) {
-        //ToDo: add review to media and db
+        reviewDAO.addReview(reviewText, rating, activeUser.getUserID(), mediaId);
+
         DisplayState state = display.getActiveState();
         if (state instanceof MainContentPanel) {
             ((MainContentPanel) state).removePopUpWindow();
@@ -264,12 +299,16 @@ public class MainController {
         }
     }
 
-    public UserDAO getUserDAO() {
-        return userDAO;
+    public User getUser() {
+        return activeUser;
     }
 
     public boolean hasActiveUser() {
         return activeUser != null;
+    }
+
+    public void refreshActiveUser() {
+        activeUser = userDAO.getUser(activeUser.getUsername());
     }
 
     public boolean isAdmin() {
@@ -284,12 +323,20 @@ public class MainController {
         return activeMedia != null;
     }
 
+    public void refreshActiveMedia() {
+        activeMedia = mediaDAO.getMedia(activeMedia.getMediaID());
+    }
+
     public ReviewDAO getReviewDAO() {
         return reviewDAO;
     }
 
     public boolean hasActiveReview() {
         return activeReview != null;
+    }
+
+    public void refreshActiveReview() {
+        activeReview = reviewDAO.getReview(activeReview.getReviewID());
     }
 
 }

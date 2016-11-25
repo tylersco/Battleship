@@ -27,6 +27,7 @@ public class MediaInfo {
         this.sellPrice = _sellPrice;
         this.inventoryCount = _invCount;
         this.isRentable = _isRentable;
+
     }
 
     public int getMediaID() { return mediaID; }

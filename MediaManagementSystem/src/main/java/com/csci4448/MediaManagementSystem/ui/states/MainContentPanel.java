@@ -1,6 +1,7 @@
 package com.csci4448.MediaManagementSystem.ui.states;
 
 import com.csci4448.MediaManagementSystem.controller.MainController;
+import com.csci4448.MediaManagementSystem.ui.components.ErrorWindow;
 import com.csci4448.MediaManagementSystem.ui.components.MenuPanel;
 
 import javax.swing.*;
@@ -14,14 +15,16 @@ public abstract class MainContentPanel extends JLayeredPane implements DisplaySt
 
     private MainController controller;
 
+    private MenuPanel menuPanel;
     private JScrollPane scrollView;
     private JPanel scrollLayout;
-    private MenuPanel menuPanel;
     private JLayeredPane content;
     private JComponent popUpWindow = null;
+    private ErrorWindow errorWindow = null;
 
     public MainContentPanel(MainController controller) {
         this.controller = controller;
+        setLocation(0, 0);
         setLayout(null);
         addComponentListener(new ComponentAdapter() {
             public void componentResized(ComponentEvent e) {
@@ -101,13 +104,29 @@ public abstract class MainContentPanel extends JLayeredPane implements DisplaySt
         display.setMinimumSize(new Dimension(950, 425));
         display.setResizable(true);
         display.setLocationRelativeTo(null);
+    }
 
-        display.add(this);
-        display.setVisible(true);
+    public JComponent getStateView() {
+        return this;
+    }
+
+    public void setErrorWindow(ErrorWindow errorWindow) {
+        if (this.errorWindow != null) {
+            remove(this.errorWindow);
+            this.errorWindow = null;
+            validate();
+            repaint();
+        }
+        if (errorWindow != null) {
+            this.errorWindow = errorWindow;
+            Dimension windowSize = errorWindow.getPreferredSize();
+            errorWindow.setSize(windowSize);
+            errorWindow.setLocation((getWidth() - (int) windowSize.getWidth()) / 2, 200);
+            add(errorWindow, new Integer(4));
+        }
     }
 
     public void onDeactivate(MainController controller, Display display) {
-        display.remove(this);
     }
 
 

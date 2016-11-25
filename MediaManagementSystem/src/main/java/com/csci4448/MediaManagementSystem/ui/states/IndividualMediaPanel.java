@@ -5,7 +5,6 @@ import com.csci4448.MediaManagementSystem.model.media.MediaInfo;
 import com.csci4448.MediaManagementSystem.ui.components.*;
 import com.csci4448.MediaManagementSystem.ui.design.Style;
 import com.csci4448.MediaManagementSystem.ui.design.TextComponentFactory;
-import com.csci4448.MediaManagementSystem.ui.design.UIColor;
 import com.csci4448.MediaManagementSystem.ui.design.UIFont;
 
 import javax.swing.*;
@@ -40,7 +39,7 @@ public class IndividualMediaPanel extends MainContentPanel {
 
     private MediaInfo savedMediaInfo = null;
 
-    public IndividualMediaPanel(MainController controller) {
+    public IndividualMediaPanel(MainController controller, String mediaAction) {
         super(controller);
 
         JLayeredPane content = getContent();

@@ -47,6 +47,7 @@ public abstract class GenericDAOImpl<T, ID extends Serializable>
             transaction = session.beginTransaction();
             // Save the new record
             id = (ID) session.save(newRecord);
+            session.flush();
             transaction.commit();
         } catch (HibernateException ex) {
             if (transaction != null)
@@ -74,6 +75,7 @@ public abstract class GenericDAOImpl<T, ID extends Serializable>
             transaction = session.beginTransaction();
             // Update the record
             session.update(record);
+            session.flush();
             transaction.commit();
         } catch (HibernateException ex) {
             if (transaction != null)
@@ -131,6 +133,7 @@ public abstract class GenericDAOImpl<T, ID extends Serializable>
             transaction = session.beginTransaction();
             // Get the record based on the ID
             record = (T) session.get(daoType, id);
+            session.flush();
             transaction.commit();
         } catch (HibernateException ex) {
             if (transaction != null)
@@ -161,6 +164,7 @@ public abstract class GenericDAOImpl<T, ID extends Serializable>
             // Get the list of all records
             Query query = session.createQuery("from " + daoType.getName());
             records = query.list();
+            session.flush();
             transaction.commit();
         } catch (HibernateException ex) {
             if (transaction != null)

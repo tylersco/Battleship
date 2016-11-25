@@ -1,5 +1,7 @@
 package com.csci4448.MediaManagementSystem.ui.components;
 
+import com.csci4448.MediaManagementSystem.ui.design.UIColor;
+
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -116,6 +118,11 @@ public class EnterTextField extends JLayeredPane {
         background.setSize(width, height);
         underlaidText.setSize(width-6, height);
         userInput.setSize(width-6, height);
+    }
+
+    public void errorText(String text) {
+        underlaidText.setText(text);
+        underlaidText.setForeground(new Color(249, 72, 67, 180));
     }
 
     public boolean isEditable() { return userInput.isEditable(); }

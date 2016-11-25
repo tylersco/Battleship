@@ -44,11 +44,11 @@ public class MenuPanel extends JPanel implements ActionListener {
         if (!controller.isAdmin())
             adminButton.setVisible(false);
 
-        accountButton = TextComponentFactory.smallButton(this, "Account", Style.MENU_SUB);
+        accountButton = TextComponentFactory.smallButton(this, controller.getUser().getUsername(), Style.MENU_SUB);
         GridBagConstraints accConst = new GridBagConstraints(3, 1, 1, 1, .25, .5, GridBagConstraints.LINE_END, GridBagConstraints.NONE, new Insets(0,0,0,20), 0, 0);
         add(accountButton, accConst);
 
-        fundsButton = TextComponentFactory.smallButton(this, "$0.00", Style.MENU_SUB);
+        fundsButton = TextComponentFactory.smallButton(this, "$" + controller.getUser().getAccountBalance() + ".00", Style.MENU_SUB);
         GridBagConstraints fundConst = new GridBagConstraints(4, 1, 1, 1, .25, .5, GridBagConstraints.LINE_START, GridBagConstraints.NONE, new Insets(0,0,0,0), 0, 0);
         add(fundsButton, fundConst);
 
@@ -77,11 +77,6 @@ public class MenuPanel extends JPanel implements ActionListener {
     public void addSearchBar() {
         add(searchBar);
         //ToDo: account/funds buttons locations
-    }
-
-    public void setFunds(int amount) {
-        fundsButton.setText(Integer.toString(amount));
-        //ToDo: resize/location of fundsButton
     }
 
     //ToDo: needs to be reworked for new state format
