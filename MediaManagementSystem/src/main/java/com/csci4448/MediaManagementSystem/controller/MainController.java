@@ -96,7 +96,7 @@ public class MainController {
             }
 
             if (!found) {
-                MediaListing listing = new MediaListing(this, media.getMediaID(), media.getImage(), media.getTitle(), media.getPrice());
+                MediaListing listing = new MediaListing(this, media.getMediaID(), media.getImage(), media.getTitle(), "$ " + media.getPrice());
                 store.add(listing);
             }
 
@@ -114,11 +114,20 @@ public class MainController {
         List<Media> personalInventory = userDAO.getPersonalInventory(activeUser.getUsername());
 
         for (Media media: personalInventory) {
-            //ToDo: modify MediaListing so it displays owned/rented instead of price
-            MediaListing listing = new MediaListing(this, media.getMediaID(), media.getImage(), media.getTitle(), media.getPrice());
+            String info;
+            if (media.getIsRentable()) {
+                info = "Rented";
+            } else {
+                info = "Owned";
+            }
+            MediaListing listing = new MediaListing(this, media.getMediaID(), media.getImage(), media.getTitle(), info);
             library.add(listing);
         }
         display.setState(library);
+    }
+
+    public void searchSubmitRequest(String search) {
+        //ToDo: implement this
     }
 
     // Passing in a non-null MediaInfo sets the panel up for editing existing media.

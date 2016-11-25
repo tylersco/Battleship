@@ -25,7 +25,7 @@ public class IndividualMediaPanel extends MainContentPanel {
     private static final Color EDIT_DEFAULT = new Color(241, 79, 39);
     private static final Color EDIT_ENTERED = new Color(241, 117, 88);
     private static final Color ADDREVIEW_DEFAULT = new Color(92, 135, 63);
-    private static final Color ADDREVIEW_ENTERED = new Color(103, 135, 85);
+    private static final Color ADDREVIEW_ENTERED = new Color(122, 155, 102);
 
     private MediaImage image;
     private TextPane titleText;

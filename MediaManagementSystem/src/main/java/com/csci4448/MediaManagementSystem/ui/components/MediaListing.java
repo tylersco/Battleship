@@ -29,7 +29,7 @@ public class MediaListing extends JPanel implements ActionListener {
     private Color defaultColor = new Color(75, 75, 75, 180);
     private Color enteredColor = new Color(75, 75, 75);
 
-    public MediaListing(MainController controller, int mediaId, String imagePath, String title, int price) {
+    public MediaListing(MainController controller, int mediaId, String imagePath, String title, String info) {
         this.controller = controller;
         this.mediaId = mediaId;
 
@@ -43,7 +43,7 @@ public class MediaListing extends JPanel implements ActionListener {
 
         titleButton = new TextButton(this, title, new Font("Helvetice Neue", Font.PLAIN, 20), defaultColor, enteredColor);
         add(titleButton);
-        priceButton = new TextButton(this, "$" + price, new Font("Helvetice Neue", Font.PLAIN, 14), defaultColor, enteredColor);
+        priceButton = new TextButton(this, info, new Font("Helvetice Neue", Font.PLAIN, 14), defaultColor, enteredColor);
         add(priceButton);
 
         addMouseListener(new MouseAdapter() {

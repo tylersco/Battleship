@@ -7,12 +7,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class ReviewPanel extends JPanel implements ActionListener {
 
     private TextPane reviewText;
     private TextButton userText;
-    private TextPane ratingText;
+    private ArrayList<TextPane> stars = new ArrayList<TextPane>();
 
     private int leftMargin = 5;
     private int rightMargin = 5;
@@ -33,12 +34,16 @@ public class ReviewPanel extends JPanel implements ActionListener {
         reviewText.setLocation(400, 85);
         add(reviewText);
 
-        //ToDo: display the number of starts not a number
-        ratingText = new TextPane(Integer.toString(rating), new Font("Helvetice Neue", Font.PLAIN, 13), new Color(75, 75, 75, 200));
-        ratingText.setLineWrap(true);
-        ratingText.setSize(350, 250);
-        ratingText.setLocation(400, 85);
-        add(ratingText);
+        for (int i = 0; i < rating; i++) {
+            TextPane star = TextComponentFactory.textPane("★", Style.REVIEW_STAR2);
+            add(star);
+            stars.add(star);
+        }
+        for (int i = 5; i > rating; i--) {
+            TextPane star = TextComponentFactory.textPane("★", Style.REVIEW_STAR1);
+            add(star);
+            stars.add(star);
+        }
 
     }
 
@@ -51,8 +56,10 @@ public class ReviewPanel extends JPanel implements ActionListener {
         userText.setSize(size);
         userText.setLocation(leftMargin, topMargin);
 
-        ratingText.setSize(userTextHeight, 20);
-        ratingText.setLocation(leftMargin + userTextWidth + 10, topMargin);
+        for (int i = 0; i < stars.size(); i++) {
+            TextPane star = stars.get(i);
+            star.setLocation(leftMargin + userTextWidth + 10 + (int)star.getWidth() * i, topMargin);
+        }
 
         reviewText.setSize(width - leftMargin - rightMargin, height - userTextHeight - topMargin - bottomMargin);
         reviewText.setLocation(leftMargin, topMargin + userTextHeight);
