@@ -132,13 +132,13 @@ public class MainController {
 
     public void addFundsSubmitRequest(int amount) {
         userDAO.increaseAccountBalance(activeUser.getUsername(), amount);
+        refreshActiveUser();
 
-        // ToDo: When increasing the account balance, the value in the database is updated, but the UI doesn't show updated value
-        // Somehow need to perform some sort of "refresh" to get the updated account balance
         DisplayState state = display.getActiveState();
         if (state instanceof MainContentPanel) {
             ((MainContentPanel) state).removePopUpWindow();
         }
+        storeRequest();
     }
 
     public void individualMediaRequest(int mediaId) {
@@ -303,6 +303,10 @@ public class MainController {
         return activeUser != null;
     }
 
+    public void refreshActiveUser() {
+        activeUser = userDAO.getUser(activeUser.getUsername());
+    }
+
     public boolean isAdmin() {
         return activeUser != null && activeUser.getIsAdmin();
     }
@@ -315,12 +319,20 @@ public class MainController {
         return activeMedia != null;
     }
 
+    public void refreshActiveMedia() {
+        activeMedia = mediaDAO.getMedia(activeMedia.getMediaID());
+    }
+
     public ReviewDAO getReviewDAO() {
         return reviewDAO;
     }
 
     public boolean hasActiveReview() {
         return activeReview != null;
+    }
+
+    public void refreshActiveReview() {
+        activeReview = reviewDAO.getReview(activeReview.getReviewID());
     }
 
 }
