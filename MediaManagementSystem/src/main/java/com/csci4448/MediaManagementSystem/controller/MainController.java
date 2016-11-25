@@ -259,6 +259,7 @@ public class MainController {
                 int res = SystemInventory.getSystemInventory().buyMedia(activeUser.getUsername(), activeMedia.getMediaID());
                 buyOrRentRequestErrorHandle(res);
             }
+            libraryRequest();
         }
     }
 

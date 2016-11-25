@@ -49,7 +49,7 @@ public class BorderedButton extends JTextField {
         setOpaque(true);
         setBackground(backDefaultColor);
         // TODO: Make a default border that looks good
-        setBorder(BorderFactory.createMatteBorder(2, 5, 2, 2, borderDefaultColor));
+        setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, borderDefaultColor));
         setHorizontalAlignment(JTextField.CENTER);
         addMouseListener();
     }
@@ -64,11 +64,11 @@ public class BorderedButton extends JTextField {
         if (!isSelected && selected) {
             setForeground(selectedColor);
             setBackground(backSelectedColor);
-            setBorder(BorderFactory.createMatteBorder(2, 5, 2, 2, borderSelectedColor));
+            setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, borderSelectedColor));
         } else if (!selected && isSelected) {
             setForeground(defaultColor);
             setBackground(backDefaultColor);
-            setBorder(BorderFactory.createMatteBorder(2, 5, 2, 2, borderDefaultColor));
+            setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, borderDefaultColor));
         }
         this.isSelected = selected;
     }
@@ -80,7 +80,7 @@ public class BorderedButton extends JTextField {
                 if (!isSelected) {
                     setForeground(enteredColor);
                     setBackground(backEnteredColor);
-                    setBorder(BorderFactory.createMatteBorder(2, 5, 2, 2, borderEnteredColor));
+                    setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, borderEnteredColor));
                 }
             }
             @Override
@@ -88,7 +88,7 @@ public class BorderedButton extends JTextField {
                 if (!isSelected) {
                     setForeground(defaultColor);
                     setBackground(backDefaultColor);
-                    setBorder(BorderFactory.createMatteBorder(2, 5, 2, 2, borderDefaultColor));
+                    setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, borderDefaultColor));
                 }
             }
             @Override
