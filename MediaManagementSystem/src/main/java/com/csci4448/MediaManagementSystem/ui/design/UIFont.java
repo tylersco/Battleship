@@ -8,6 +8,7 @@ public enum UIFont {
     FONT_25  (25),
     FONT_22  (22),
     FONT_22I (22, Font.ITALIC),
+    FONT_22B (22, Font.BOLD),
     FONT_20  (20),
     FONT_20B (20, Font.BOLD),
     FONT_18  (18),
@@ -17,7 +18,8 @@ public enum UIFont {
     FONT_14  (14),
     FONT_12  (12),
     FONT_11  (11),
-    FONT_10  (10),;
+    FONT_10  (10),
+    ;
 
 
     private String defaultFontName = "Helvetice Neue";

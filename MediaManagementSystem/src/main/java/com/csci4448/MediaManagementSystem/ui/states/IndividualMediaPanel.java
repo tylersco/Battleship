@@ -39,7 +39,7 @@ public class IndividualMediaPanel extends MainContentPanel {
 
     private MediaInfo savedMediaInfo = null;
 
-    public IndividualMediaPanel(MainController controller, String mediaAction) {
+    public IndividualMediaPanel(MainController controller) {
         super(controller);
 
         JLayeredPane content = getContent();
