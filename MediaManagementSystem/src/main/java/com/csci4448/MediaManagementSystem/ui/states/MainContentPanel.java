@@ -106,6 +106,7 @@ public abstract class MainContentPanel extends JLayeredPane implements DisplaySt
     }
 
     public void onDeactivate(MainController controller, Display display) {
+        display.setMinimumSize(null);
     }
 
 

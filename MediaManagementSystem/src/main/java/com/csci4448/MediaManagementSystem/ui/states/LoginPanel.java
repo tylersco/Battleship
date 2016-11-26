@@ -91,7 +91,6 @@ public class LoginPanel extends JLayeredPane implements ActionListener, DisplayS
     }
 
     public void setPopUpWindow(JComponent popUpWindow) {
-        System.out.println("here");
         if (this.popUpWindow != null) {
             remove(this.popUpWindow);
             this.popUpWindow = null;
@@ -108,7 +107,6 @@ public class LoginPanel extends JLayeredPane implements ActionListener, DisplayS
     }
 
     public void onDeactivate(MainController controller, Display display) {
-
     }
 
 }

@@ -7,6 +7,7 @@ import com.csci4448.MediaManagementSystem.model.review.Review;
 import com.csci4448.MediaManagementSystem.model.user.UserDAO;
 import com.csci4448.MediaManagementSystem.model.user.UserDAOImpl;
 import com.csci4448.MediaManagementSystem.model.user.User;
+import com.csci4448.MediaManagementSystem.ui.design.Confirmation;
 import com.csci4448.MediaManagementSystem.ui.states.*;
 import com.csci4448.MediaManagementSystem.ui.components.*;
 
@@ -52,6 +53,10 @@ public class MainController {
 
         }
 
+    }
+
+    public void logoutRequest() {
+        display.getActiveState().setPopUpWindow(new ConfirmationWindow(this, Confirmation.LOGOUT));
     }
 
     public void createAccountRequest() {
@@ -143,14 +148,14 @@ public class MainController {
     public void addFundsRequest() {
         DisplayState state = display.getActiveState();
         if (state instanceof MainContentPanel) {
-            ((MainContentPanel) state).setPopUpWindow(new AddFundsPanel(this));
+            state.setPopUpWindow(new AddFundsPanel(this));
         }
     }
 
     public void addFundsCancelRequest() {
         DisplayState state = display.getActiveState();
         if (state instanceof MainContentPanel) {
-            ((MainContentPanel) state).setPopUpWindow(null);
+            state.setPopUpWindow(null);
         }
     }
 
@@ -162,7 +167,7 @@ public class MainController {
 
         DisplayState state = display.getActiveState();
         if (state instanceof MainContentPanel) {
-            ((MainContentPanel) state).setPopUpWindow(null);
+            state.setPopUpWindow(null);
         }
         storeRequest();
     }
@@ -213,20 +218,19 @@ public class MainController {
 
         activeMedia = media;
 
-        String mediaAction = "";
+        Confirmation confirmationType;
         if (activeMedia.getIsRentable() && activeUser.getPersonalInventory().contains(activeMedia))
-            mediaAction = "return";
+            confirmationType = Confirmation.RETURNMEDIA;
         else if (activeMedia.getIsRentable())
-            mediaAction = "rent";
+            confirmationType = Confirmation.RENTMEDIA;
         else if (!activeMedia.getIsRentable() && activeUser.getPersonalInventory().contains(activeMedia))
-            mediaAction = "sell";
+            confirmationType = Confirmation.SELLMEDIA;
         else
-            mediaAction = "buy";
+            confirmationType = Confirmation.BUYMEDIA;
 
-        //This is how you add a confirmation window. To remove it, do the same thing but call removePopUpWindow instead
         DisplayState state = display.getActiveState();
         if (state instanceof IndividualMediaPanel) {
-            ((MainContentPanel) state).setPopUpWindow(new ConfirmationWindow(this, "Are you sure you want to " + mediaAction + " this?", "Yes", "No"));
+            state.setPopUpWindow(new ConfirmationWindow(this, confirmationType));
         }
     }
 
@@ -260,30 +264,36 @@ public class MainController {
         }
     }
 
-    public void confirmationRequest(boolean isConfirmed) {
+    public void confirmationRequest(boolean isConfirmed, Confirmation confirmationType) {
 
         if (!isConfirmed) {
             DisplayState state = display.getActiveState();
             if (state instanceof IndividualMediaPanel) {
-                ((MainContentPanel) state).setPopUpWindow(null);
+                state.setPopUpWindow(null);
             }
         } else {
-            if (activeMedia.getIsRentable() && activeUser.getPersonalInventory().contains(activeMedia)) {
-                int res = SystemInventory.getSystemInventory().returnMedia(activeUser.getUsername(), activeMedia.getMediaID());
-                sellOrReturnRequestErrorHandle(res);
-            } else if (activeMedia.getIsRentable()) {
-                int res = SystemInventory.getSystemInventory().rentMedia(activeUser.getUsername(), activeMedia.getMediaID());
-                buyOrRentRequestErrorHandle(res);
-            } else if (!activeMedia.getIsRentable() && activeUser.getPersonalInventory().contains(activeMedia)) {
-                int res = SystemInventory.getSystemInventory().sellMedia(activeUser.getUsername(), activeMedia.getMediaID());
-                sellOrReturnRequestErrorHandle(res);
-            } else {
-                int res = SystemInventory.getSystemInventory().buyMedia(activeUser.getUsername(), activeMedia.getMediaID());
-                buyOrRentRequestErrorHandle(res);
+            if (confirmationType == Confirmation.RETURNMEDIA || confirmationType == Confirmation.RENTMEDIA || confirmationType == Confirmation.SELLMEDIA || confirmationType == Confirmation.BUYMEDIA) {
+                if (activeMedia.getIsRentable() && activeUser.getPersonalInventory().contains(activeMedia)) {
+                    int res = SystemInventory.getSystemInventory().returnMedia(activeUser.getUsername(), activeMedia.getMediaID());
+                    sellOrReturnRequestErrorHandle(res);
+                } else if (activeMedia.getIsRentable()) {
+                    int res = SystemInventory.getSystemInventory().rentMedia(activeUser.getUsername(), activeMedia.getMediaID());
+                    buyOrRentRequestErrorHandle(res);
+                } else if (!activeMedia.getIsRentable() && activeUser.getPersonalInventory().contains(activeMedia)) {
+                    int res = SystemInventory.getSystemInventory().sellMedia(activeUser.getUsername(), activeMedia.getMediaID());
+                    sellOrReturnRequestErrorHandle(res);
+                } else {
+                    int res = SystemInventory.getSystemInventory().buyMedia(activeUser.getUsername(), activeMedia.getMediaID());
+                    buyOrRentRequestErrorHandle(res);
+                }
+                refreshActiveUser();
+                refreshActiveMedia();
+                libraryRequest();
+            } else if (confirmationType == Confirmation.LOGOUT) {
+                activeUser = null;
+                activeMedia = null;
+                loginRequest();
             }
-            refreshActiveUser();
-            refreshActiveMedia();
-            libraryRequest();
         }
     }
 
@@ -302,7 +312,7 @@ public class MainController {
         } else {
             DisplayState state = display.getActiveState();
             if (state instanceof MainContentPanel) {
-                ((MainContentPanel) state).setPopUpWindow(new EditReviewPanel(this, mediaId));
+                state.setPopUpWindow(new EditReviewPanel(this, mediaId));
             }
         }
     }
@@ -310,7 +320,7 @@ public class MainController {
     public void reviewMediaCancelRequest() {
         DisplayState state = display.getActiveState();
         if (state instanceof MainContentPanel) {
-            ((MainContentPanel) state).setPopUpWindow(null);
+            state.setPopUpWindow(null);
         }
     }
 
@@ -321,7 +331,7 @@ public class MainController {
 
         DisplayState state = display.getActiveState();
         if (state instanceof MainContentPanel) {
-            ((MainContentPanel) state).setPopUpWindow(null);
+            state.setPopUpWindow(null);
             individualMediaRequest(mediaId);
         }
     }
