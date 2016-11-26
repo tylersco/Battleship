@@ -174,6 +174,7 @@ public class MediaDAOImpl
         Media media = retrieve(mediaID);
         List<User> allUsers = userDAO.getAll();
 
+        // ToDo: Fix the database integrity problem here
         for (User user: allUsers)
             user.removePersonalMedia(media);
 
@@ -321,11 +322,32 @@ public class MediaDAOImpl
         if (media.getIsRentable())
             return -2;
 
-        if (!user.getPersonalInventory().contains(media))
+        boolean owned = false;
+
+        for (Media ownedMedia : user.getPersonalInventory()) {
+            if (ownedMedia.getMediaID() == media.getMediaID()) {
+                owned = true;
+                break;
+            }
+        }
+
+        if (!owned)
             return -1;
 
-        user.removePersonalMedia(media);
-        media.removeCurrentUser(user);
+        for (Media ownedMedia : user.getPersonalInventory()) {
+            if (ownedMedia.getMediaID() == media.getMediaID()) {
+                user.removePersonalMedia(ownedMedia);
+                break;
+            }
+        }
+
+        for (User currentUser : media.getCurrentUsers()) {
+            if (currentUser.getUsername().equals(user.getUsername())) {
+                media.removeCurrentUser(currentUser);
+                break;
+            }
+        }
+
         media.setInventoryCount(media.getInventoryCount() + 1);
         user.setAccountBalance(user.getAccountBalance() + media.getSellPrice());
 
@@ -355,11 +377,32 @@ public class MediaDAOImpl
         if (!media.getIsRentable())
             return -2;
 
-        if (!user.getPersonalInventory().contains(media))
+        boolean owned = false;
+
+        for (Media ownedMedia : user.getPersonalInventory()) {
+            if (ownedMedia.getMediaID() == media.getMediaID()) {
+                owned = true;
+                break;
+            }
+        }
+
+        if (!owned)
             return -1;
 
-        user.removePersonalMedia(media);
-        media.removeCurrentUser(user);
+        for (Media ownedMedia : user.getPersonalInventory()) {
+            if (ownedMedia.getMediaID() == media.getMediaID()) {
+                user.removePersonalMedia(ownedMedia);
+                break;
+            }
+        }
+
+        for (User currentUser : media.getCurrentUsers()) {
+            if (currentUser.getUsername().equals(user.getUsername())) {
+                media.removeCurrentUser(currentUser);
+                break;
+            }
+        }
+
         media.setInventoryCount(media.getInventoryCount() + 1);
 
         update(media);

@@ -120,7 +120,7 @@ public class IndividualMediaPanel extends MainContentPanel {
         typeText.setText(info.getType());
         genreText.setText(info.getGenre());
 
-        actionButton.setText(info.getIsRentable() ? "Rent" : "Buy");
+        actionButton.setText(info.getMediaAction());
     }
 
     public void populateReviews(ArrayList<ReviewPanel> rs) {

@@ -105,7 +105,6 @@ public class MainController {
                 store.add(listing);
             }
 
-
         }
 
         display.setState(store);
@@ -182,19 +181,23 @@ public class MainController {
 
         activeMedia = media;
 
+        boolean owned = isMediaOwned();
+
         String mediaAction = "";
-        if (activeMedia.getIsRentable() && activeUser.getPersonalInventory().contains(activeMedia))
+        if (activeMedia.getIsRentable() && owned)
             mediaAction = "Return Media";
         else if (activeMedia.getIsRentable())
             mediaAction = "Rent $" + media.getPrice();
-        else if (!activeMedia.getIsRentable() && activeUser.getPersonalInventory().contains(activeMedia))
+        else if (!activeMedia.getIsRentable() && owned)
             mediaAction = "Sell $" + activeMedia.getSellPrice();
         else
             mediaAction = "Buy $" + activeMedia.getPrice();
 
         IndividualMediaPanel indMedia = new IndividualMediaPanel(this);
 
-        indMedia.populateMedia(MediaInfo.createFromMedia(activeMedia));
+        MediaInfo mediaInfo = MediaInfo.createFromMedia(activeMedia);
+        mediaInfo.setMediaAction(mediaAction);
+        indMedia.populateMedia(mediaInfo);
 
         List<Review> reviews = new ArrayList<Review>(activeMedia.getReviews());
         ArrayList<ReviewPanel> rs = new ArrayList<ReviewPanel>();
@@ -218,12 +221,14 @@ public class MainController {
 
         activeMedia = media;
 
+        boolean owned = isMediaOwned();
+
         Confirmation confirmationType;
-        if (activeMedia.getIsRentable() && activeUser.getPersonalInventory().contains(activeMedia))
+        if (activeMedia.getIsRentable() && owned)
             confirmationType = Confirmation.RETURNMEDIA;
         else if (activeMedia.getIsRentable())
             confirmationType = Confirmation.RENTMEDIA;
-        else if (!activeMedia.getIsRentable() && activeUser.getPersonalInventory().contains(activeMedia))
+        else if (!activeMedia.getIsRentable() && owned)
             confirmationType = Confirmation.SELLMEDIA;
         else
             confirmationType = Confirmation.BUYMEDIA;
@@ -268,18 +273,23 @@ public class MainController {
 
         if (!isConfirmed) {
             DisplayState state = display.getActiveState();
-            if (state instanceof IndividualMediaPanel) {
-                state.setPopUpWindow(null);
-            }
+            // ToDo: The logout confirmation window wouldn't let the user choose the cancel option
+            // ToDo: This is the change made to fix this issue. Somebody confirm that this is what we want
+            //if (state instanceof IndividualMediaPanel) {
+            //    state.setPopUpWindow(null);
+            //}
+            state.setPopUpWindow(null);
         } else {
+
             if (confirmationType == Confirmation.RETURNMEDIA || confirmationType == Confirmation.RENTMEDIA || confirmationType == Confirmation.SELLMEDIA || confirmationType == Confirmation.BUYMEDIA) {
-                if (activeMedia.getIsRentable() && activeUser.getPersonalInventory().contains(activeMedia)) {
+                boolean owned = isMediaOwned();
+                if (activeMedia.getIsRentable() && owned) {
                     int res = SystemInventory.getSystemInventory().returnMedia(activeUser.getUsername(), activeMedia.getMediaID());
                     sellOrReturnRequestErrorHandle(res);
                 } else if (activeMedia.getIsRentable()) {
                     int res = SystemInventory.getSystemInventory().rentMedia(activeUser.getUsername(), activeMedia.getMediaID());
                     buyOrRentRequestErrorHandle(res);
-                } else if (!activeMedia.getIsRentable() && activeUser.getPersonalInventory().contains(activeMedia)) {
+                } else if (!activeMedia.getIsRentable() && owned) {
                     int res = SystemInventory.getSystemInventory().sellMedia(activeUser.getUsername(), activeMedia.getMediaID());
                     sellOrReturnRequestErrorHandle(res);
                 } else {
@@ -336,6 +346,15 @@ public class MainController {
         }
     }
 
+    private boolean isMediaOwned() {
+        for (Media userMedia : activeUser.getPersonalInventory()) {
+            if (userMedia.getMediaID() == activeMedia.getMediaID()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public User getUser() {
         return activeUser;
     }
@@ -354,6 +373,10 @@ public class MainController {
 
     public MediaDAO getMediaDAO() {
         return mediaDAO;
+    }
+
+    public Media getMedia() {
+        return activeMedia;
     }
 
     public boolean hasActiveMedia() {

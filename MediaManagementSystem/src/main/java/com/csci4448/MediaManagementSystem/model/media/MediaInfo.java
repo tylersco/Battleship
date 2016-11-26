@@ -14,6 +14,7 @@ public class MediaInfo {
     private int sellPrice;
     private int inventoryCount;
     private boolean isRentable;
+    private String mediaAction;
 
     private MediaInfo(int _id, String _title, String _desc, String _image, String _type, String _genre, int _price,
                   int _sellPrice, int _invCount, boolean _isRentable) {
@@ -27,6 +28,7 @@ public class MediaInfo {
         this.sellPrice = _sellPrice;
         this.inventoryCount = _invCount;
         this.isRentable = _isRentable;
+        this.mediaAction = "";
 
     }
 
@@ -40,6 +42,14 @@ public class MediaInfo {
     public int getSellPrice() { return sellPrice; }
     public int getInventoryCount() { return inventoryCount; }
     public boolean getIsRentable() { return isRentable; }
+
+    public String getMediaAction() {
+        return mediaAction;
+    }
+
+    public void setMediaAction(String action) {
+        mediaAction = action;
+    }
 
     public static MediaInfo createFromMedia(Media media) {
         return new MediaInfo(media.getMediaID(), media.getTitle(), media.getDescription(), media.getImage(),
