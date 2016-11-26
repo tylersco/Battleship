@@ -17,7 +17,7 @@ public class LoginPanel extends JLayeredPane implements ActionListener, DisplayS
     private MainController controller;
 
     private JPanel content;
-    private ErrorWindow errorWindow;
+    private JComponent popUpWindow;
 
     private EnterTextField username;
     private EnterTextField password;
@@ -90,19 +90,20 @@ public class LoginPanel extends JLayeredPane implements ActionListener, DisplayS
         return this;
     }
 
-    public void setErrorWindow(ErrorWindow errorWindow) {
-        if (this.errorWindow != null) {
-            remove(this.errorWindow);
-            this.errorWindow = null;
+    public void setPopUpWindow(JComponent popUpWindow) {
+        System.out.println("here");
+        if (this.popUpWindow != null) {
+            remove(this.popUpWindow);
+            this.popUpWindow = null;
             validate();
             repaint();
         }
-        if (errorWindow != null) {
-            this.errorWindow = errorWindow;
-            Dimension windowSize = errorWindow.getPreferredSize();
-            errorWindow.setSize(windowSize);
-            errorWindow.setLocation((getWidth() - (int)windowSize.getWidth())/2, 70);
-            add(errorWindow, new Integer(3));
+        if (popUpWindow != null) {
+            this.popUpWindow = popUpWindow;
+            Dimension windowSize = this.popUpWindow.getPreferredSize();
+            this.popUpWindow.setSize(windowSize);
+            this.popUpWindow.setLocation((getWidth() - (int)windowSize.getWidth())/2, 70);
+            add(this.popUpWindow, new Integer(3));
         }
     }
 

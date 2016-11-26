@@ -16,19 +16,7 @@ public class TextPane extends JTextArea {
         setOpaque(false);
         setBackground(null);
         setWrapStyleWord(true);
-
     }
 
 
-
-    /*
-    public void setEditable(boolean setEditable) {
-        super.setEditable(setEditable);
-        //setHighlighter(setEditable);
-        setLineWrap(setEditable);
-        setWrapStyleWord(setEditable);
-        DefaultCaret caret = (DefaultCaret)getCaret();
-        caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
-    }
-    */
 }

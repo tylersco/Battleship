@@ -110,7 +110,7 @@ public class MenuPanel extends JPanel implements ActionListener {
         } else if (component.equals(accountButton)) {
             //controller.accountAccessRequest();
         } else if (component.equals(searchBar)) {
-            controller.searchSubmitRequest(event.getActionCommand());
+            controller.searchRequest(event.getActionCommand());
         }
     }
 }
