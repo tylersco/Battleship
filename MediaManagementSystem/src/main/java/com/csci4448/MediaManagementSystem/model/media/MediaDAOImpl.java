@@ -44,9 +44,14 @@ public class MediaDAOImpl
         // Create new media
         Media media = new Media();
 
+
         if (title == null || title.equals(""))
             return mediaID;
 
+        /* Valid types:
+            Movie: Drama, Crime, Action, Thriller, Comedy
+            Book: Biography, Business, Fiction
+         */
         if (type == null || type.equals("") || !SystemInventory.getSystemInventory().isValidType(type))
             return mediaID;
 

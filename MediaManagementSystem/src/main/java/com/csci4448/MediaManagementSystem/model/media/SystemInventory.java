@@ -83,12 +83,8 @@ public class SystemInventory {
          0 if success
           */
 
-        int returnVal;
         MediaDAO mediaDAO = new MediaDAOImpl();
-
-        returnVal = mediaDAO.buyMedia(username, mediaID);
-
-        return returnVal;
+        return mediaDAO.buyMedia(username, mediaID);
 
     }
 
