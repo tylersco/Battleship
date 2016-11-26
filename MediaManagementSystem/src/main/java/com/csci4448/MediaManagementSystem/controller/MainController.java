@@ -155,9 +155,7 @@ public class MainController {
 
     public void addFundsSubmitRequest(int amount) {
 
-        User user = userDAO.getUser(activeUser.getUserID());
-
-        user.setAccountBalance(user.getAccountBalance() + amount);
+        userDAO.increaseAccountBalance(activeUser.getUsername(), amount);
 
         refreshActiveUser();
 
