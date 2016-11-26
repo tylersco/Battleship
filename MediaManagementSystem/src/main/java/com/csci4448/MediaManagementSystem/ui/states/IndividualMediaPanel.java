@@ -15,7 +15,6 @@ import java.util.*;
 public class IndividualMediaPanel extends MainContentPanel {
 
     private static final String DEFAULT_IMAGE_PATH = "src/main/resources/test.png";
-    private static final MediaInfo DEFAULT_MEDIA_INFO = MediaInfo.createDefault();
 
     // TODO: Move this to its own location
     private static final Color TEXT_DEFAULT = new Color(237, 237, 237);
@@ -41,12 +40,12 @@ public class IndividualMediaPanel extends MainContentPanel {
 
     private MediaInfo savedMediaInfo = null;
 
-    public IndividualMediaPanel(MainController controller, String mediaAction) {
+    public IndividualMediaPanel(MainController controller) {
         super(controller);
 
         JLayeredPane content = getContent();
 
-        titleText = TextComponentFactory.textPane(DEFAULT_MEDIA_INFO.getTitle(), Style.INDMEDIA_TITLE);
+        titleText = TextComponentFactory.textPane("<TITLE>", Style.INDMEDIA_TITLE);
         titleText.setSize(500, (int)titleText.getPreferredSize().getHeight());
         titleText.setLocation(375, 25);
         content.add(titleText);
@@ -56,7 +55,7 @@ public class IndividualMediaPanel extends MainContentPanel {
         image.setLocation(15, 15);
         content.add(image);
 
-        typeText = TextComponentFactory.textPane(DEFAULT_MEDIA_INFO.getType(), Style.INDMEDIA_LARGELABEL);
+        typeText = TextComponentFactory.textPane("<TYPE>", Style.INDMEDIA_LARGELABEL);
         typeText.setSize(500, (int)typeText.getPreferredSize().getHeight());
         typeText.setLocation(380, 65);
         content.add(typeText);
@@ -66,18 +65,18 @@ public class IndividualMediaPanel extends MainContentPanel {
         genreLabel.setLocation(380, 92);
         content.add(genreLabel);
 
-        genreText = TextComponentFactory.textPane(DEFAULT_MEDIA_INFO.getGenre(), Style.INDMEDIA_SMALLLABEL);
+        genreText = TextComponentFactory.textPane("<GENRE>", Style.INDMEDIA_SMALLLABEL);
         genreText.setSize(500, (int)genreText.getPreferredSize().getHeight());
         genreText.setLocation((int)genreLabel.getPreferredSize().getWidth() + 390, 92);
         content.add(genreText);
 
-        descriptionText = TextComponentFactory.textPane(DEFAULT_MEDIA_INFO.getDescription(), Style.INDMEDIA_DESCRIPTION);
+        descriptionText = TextComponentFactory.textPane("<DESCRIPTION>", Style.INDMEDIA_DESCRIPTION);
         descriptionText.setLineWrap(true);
         descriptionText.setSize(350, 250);
         descriptionText.setLocation(400, 130);
         content.add(descriptionText);
 
-        actionButton = new BorderedButton(this, mediaAction, UIFont.FONT_20B.getFont(),
+        actionButton = new BorderedButton(this, "<ACTION>", UIFont.FONT_20B.getFont(),
                 TEXT_DEFAULT, TEXT_DEFAULT, TEXT_DEFAULT,
                 ACTION_DEFAULT, ACTION_ENTERED, ACTION_DEFAULT,
                 ACTION_DEFAULT, BORDER_HIGHLIGHT, ACTION_DEFAULT);
@@ -120,6 +119,8 @@ public class IndividualMediaPanel extends MainContentPanel {
         image.loadMediaImage(325, 456);
         typeText.setText(info.getType());
         genreText.setText(info.getGenre());
+
+        actionButton.setText(info.getIsRentable() ? "Rent" : "Buy");
     }
 
     public void populateReviews(ArrayList<ReviewPanel> rs) {
@@ -139,7 +140,7 @@ public class IndividualMediaPanel extends MainContentPanel {
         Object component = event.getSource();
 
         if (component.equals(editButton)) {
-            getController().adminRequest(null);
+            getController().adminRequest(savedMediaInfo);
         } else if (component.equals(actionButton)) {
             getController().individualMediaActionRequest(savedMediaInfo.getMediaID());
         } else if (component.equals(addReviewButton)) {

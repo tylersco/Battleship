@@ -73,6 +73,10 @@ public class BorderedButton extends JTextField {
         this.isSelected = selected;
     }
 
+    public boolean getIsSelected() {
+        return isSelected;
+    }
+
     public void addMouseListener() {
         super.addMouseListener(new MouseAdapter() {
             @Override

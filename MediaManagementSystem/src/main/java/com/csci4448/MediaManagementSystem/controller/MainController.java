@@ -188,7 +188,7 @@ public class MainController {
         else
             mediaAction = "Buy $" + activeMedia.getPrice();
 
-        IndividualMediaPanel indMedia = new IndividualMediaPanel(this, mediaAction);
+        IndividualMediaPanel indMedia = new IndividualMediaPanel(this);
 
         indMedia.populateMedia(MediaInfo.createFromMedia(activeMedia));
 
