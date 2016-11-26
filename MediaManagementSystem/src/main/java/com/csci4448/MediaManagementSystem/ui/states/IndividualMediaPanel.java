@@ -15,7 +15,6 @@ import java.util.*;
 public class IndividualMediaPanel extends MainContentPanel {
 
     private static final String DEFAULT_IMAGE_PATH = "src/main/resources/test.png";
-    private static final MediaInfo DEFAULT_MEDIA_INFO = MediaInfo.createDefault();
 
     // TODO: Move this to its own location
     private static final Color TEXT_COLOR = Color.DARK_GRAY;
@@ -44,7 +43,7 @@ public class IndividualMediaPanel extends MainContentPanel {
 
         JLayeredPane content = getContent();
 
-        titleText = TextComponentFactory.textPane(DEFAULT_MEDIA_INFO.getTitle(), Style.INDMEDIA_TITLE);
+        titleText = TextComponentFactory.textPane("<TITLE>", Style.INDMEDIA_TITLE);
         titleText.setSize(500, (int)titleText.getPreferredSize().getHeight());
         titleText.setLocation(375, 25);
         content.add(titleText);
@@ -54,7 +53,7 @@ public class IndividualMediaPanel extends MainContentPanel {
         image.setLocation(15, 15);
         content.add(image);
 
-        typeText = TextComponentFactory.textPane(DEFAULT_MEDIA_INFO.getType(), Style.INDMEDIA_LARGELABEL);
+        typeText = TextComponentFactory.textPane("<TYPE>", Style.INDMEDIA_LARGELABEL);
         typeText.setSize(500, (int)typeText.getPreferredSize().getHeight());
         typeText.setLocation(380, 65);
         content.add(typeText);
@@ -64,12 +63,12 @@ public class IndividualMediaPanel extends MainContentPanel {
         genreLabel.setLocation(380, 92);
         content.add(genreLabel);
 
-        genreText = TextComponentFactory.textPane(DEFAULT_MEDIA_INFO.getGenre(), Style.INDMEDIA_SMALLLABEL);
+        genreText = TextComponentFactory.textPane("<GENRE>", Style.INDMEDIA_SMALLLABEL);
         genreText.setSize(500, (int)genreText.getPreferredSize().getHeight());
         genreText.setLocation((int)genreLabel.getPreferredSize().getWidth() + 390, 92);
         content.add(genreText);
 
-        descriptionText = TextComponentFactory.textPane(DEFAULT_MEDIA_INFO.getDescription(), Style.INDMEDIA_DESCRIPTION);
+        descriptionText = TextComponentFactory.textPane("<DESCRIPTION>", Style.INDMEDIA_DESCRIPTION);
         descriptionText.setLineWrap(true);
         descriptionText.setSize(350, 250);
         descriptionText.setLocation(400, 130);

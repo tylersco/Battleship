@@ -67,6 +67,8 @@ public class EnterTextField extends JLayeredPane {
         return userInput.getText();
     }
 
+    public void setText(String txt) { userInput.setText(txt); }
+
     public void setBackground(Color color) {
         if (color == null) {
             remove(background);

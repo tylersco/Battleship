@@ -57,6 +57,10 @@ public class TextButton extends JTextField {
 
     }
 
+    public boolean getIsSelected() {
+        return isSelected;
+    }
+
     public void addMouseListener() {
         super.addMouseListener(new MouseAdapter() {
             @Override

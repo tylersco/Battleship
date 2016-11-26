@@ -52,8 +52,4 @@ public class MediaInfo {
                                            boolean _isRentable) {
         return new MediaInfo(_id, _title, _desc, _image, _type, _genre, _price, _sellPrice, _invCount, _isRentable);
     }
-
-    public static MediaInfo createDefault() {
-        return createFromMedia(Media.getDefaultMedia());
-    }
 }

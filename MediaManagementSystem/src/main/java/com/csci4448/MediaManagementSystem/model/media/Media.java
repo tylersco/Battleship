@@ -4,6 +4,8 @@ import com.csci4448.MediaManagementSystem.model.review.Review;
 import com.csci4448.MediaManagementSystem.model.user.User;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,20 +13,13 @@ import java.util.Set;
 @Table(name = "MEDIA")
 public class Media {
 
-    // This is temporary until Sean is done with internal testing
-    public static Media getDefaultMedia() {
-        Media med = new Media();
-        med.mediaID = 999999;
-        med.title = "Test Media";
-        med.description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do...";
-        med.type = "Book";
-        med.image = "src/main/resources/test.png";
-        med.genre = "Everything";
-        med.price = 1;
-        med.sellPrice = 1;
-        med.inventoryCount = 99;
-        med.isRentable = true;
-        return med;
+    public static String[] getValidTypes() {
+        return new String[] { "Movie", "Book", "Music", "TV Show", "Audio Book" };
+    }
+
+    public static boolean isValidType(String type) {
+        final String[] types = getValidTypes();
+        return Arrays.asList(types).contains(type);
     }
 
     @Id

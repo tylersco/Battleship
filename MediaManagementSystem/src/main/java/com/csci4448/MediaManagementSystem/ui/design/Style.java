@@ -37,7 +37,7 @@ public enum Style {
 
     ADMIN_LABEL (UIFont.FONT_22B, UIColor.DEFAULT_DARK),
     ADMIN_TEXT (UIFont.FONT_20, UIColor.DEFAULT_DARK),
-    ADMIN_BUTTON (UIFont.FONT_20, UIColor.DEFAULT_LIGHT, UIColor.DEFAULT_DARK),
+    ADMIN_BUTTON (UIFont.FONT_20, UIColor.DEFAULT_LIGHT, UIColor.DEFAULT_DARK, UIColor.DEFAULT_DARK),
 
     ;
     private final UIFont defaultFont;

@@ -1,6 +1,7 @@
 package com.csci4448.MediaManagementSystem.ui.states;
 
 import com.csci4448.MediaManagementSystem.controller.MainController;
+import com.csci4448.MediaManagementSystem.model.media.Media;
 import com.csci4448.MediaManagementSystem.model.media.MediaInfo;
 import com.csci4448.MediaManagementSystem.ui.components.BorderedButton;
 import com.csci4448.MediaManagementSystem.ui.components.EnterTextField;
@@ -36,12 +37,13 @@ public class AdminEditPanel extends MainContentPanel {
     private TextButton movieChoice, bookChoice, musicChoice, tvChoice, audioChoice;
     private EnterTextField genreText;
 
-    private boolean unsavedChanges = false;
+    private MediaInfo savedMediaInfo = null;
 
     public AdminEditPanel(MainController controller, MediaInfo info) {
         super(controller);
 
         JLayeredPane content = getContent();
+        savedMediaInfo = info;
 
         saveButton = new BorderedButton(this, "Save Changes", UIFont.FONT_20B.getFont(),
                 TEXT_COLOR, TEXT_COLOR, TEXT_COLOR,
@@ -117,6 +119,7 @@ public class AdminEditPanel extends MainContentPanel {
         content.add(musicChoice);
         content.add(tvChoice);
         content.add(audioChoice);
+        movieChoice.setIsSelected(true);
 
         genreText = TextComponentFactory.enterText(this, "", Style.ADMIN_TEXT);
         genreText.setSize(225, 30);
@@ -129,6 +132,49 @@ public class AdminEditPanel extends MainContentPanel {
 
     @Override
     public void actionPerformed(ActionEvent event) {
+        Object component = event.getSource();
+    }
 
+    private void setFields(String title, String desc, String type, String genre) {
+        titleText.setText(title);
+        descriptionText.setText(desc);
+        setSelectedMediaType(type);
+        genreText.setText(genre);
+    }
+
+    public void setSelectedMediaType(String type) {
+        if (!Media.isValidType(type)) {
+            // TODO: Report the error to the user
+            System.out.println("The type '" + type + "' is not a valid media type.");
+            return;
+        }
+
+        movieChoice.setIsSelected("Movie".equals(type));
+        bookChoice.setIsSelected("Book".equals(type));
+        musicChoice.setIsSelected("Music".equals(type));
+        tvChoice.setIsSelected("TV Show".equals(type));
+        audioChoice.setIsSelected("Audio Book".equals(type));
+    }
+
+    public String getSelectedMediaType() {
+        if (movieChoice.getIsSelected()) {
+            return "Movie";
+        } else if (bookChoice.getIsSelected()) {
+            return "Book";
+        } else if (musicChoice.getIsSelected()) {
+            return "Music";
+        } else if (tvChoice.getIsSelected()) {
+            return "TV Show";
+        } else if (audioChoice.getIsSelected()) {
+            return "Audio Book";
+        } else {
+            // TODO: Report this very unlikely error
+            System.out.println("There was no valid selection for media type.");
+            return "";
+        }
+    }
+
+    public boolean getIsEditingExistingMedia() {
+        return savedMediaInfo != null;
     }
 }
