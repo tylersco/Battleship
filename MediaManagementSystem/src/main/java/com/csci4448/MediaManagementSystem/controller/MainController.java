@@ -239,34 +239,44 @@ public class MainController {
         }
     }
 
-    private void buyOrRentRequestErrorHandle(int res) {
+    private boolean buyOrRentRequestErrorHandle(int res) {
         if (res == -4) {
             //Throw error to UI saying that there was a system error
             display.getActiveState().setPopUpWindow(new ErrorWindow(this, "System Error", "ok"));
+            return true;
         } else if (res == -3) {
             //Throw error to UI saying that the media is not correct purchasable type
             display.getActiveState().setPopUpWindow(new ErrorWindow(this, "Media has invalid purchase type", "ok"));
+            return true;
         } else if (res == -2) {
             //Throw error to UI saying that the media is out of stock
             display.getActiveState().setPopUpWindow(new ErrorWindow(this, "Currently out of stock", "ok"));
+            return true;
             // This may change if we implement the waitlist functionality
         } else if (res == -1) {
             //Throw error to UI saying that the user doesn't have enough money in account balance
             display.getActiveState().setPopUpWindow(new ErrorWindow(this, "Insufficient account balance", "ok"));
+            return true;
         }
+        return false;
     }
 
-    private void sellOrReturnRequestErrorHandle(int res) {
+    private boolean sellOrReturnRequestErrorHandle(int res) {
+        System.out.println(res);
         if (res == -3) {
             //Throw error to UI saying that there was a system error
             display.getActiveState().setPopUpWindow(new ErrorWindow(this, "System Error", "ok"));
+            return true;
         } else if (res == -2) {
             //Throw error to UI saying that the media is not correct purchasable type
             display.getActiveState().setPopUpWindow(new ErrorWindow(this, "Media has invalid return type", "ok"));
+            return true;
         } else if (res == -1) {
             //Throw error to UI saying that the media is not currently owned/rented by the user
             display.getActiveState().setPopUpWindow(new ErrorWindow(this, "Item can not be found in your personal inventory", "ok"));
+            return true;
         }
+        return false;
     }
 
     public void confirmationRequest(boolean isConfirmed, Confirmation confirmationType) {
@@ -283,22 +293,25 @@ public class MainController {
 
             if (confirmationType == Confirmation.RETURNMEDIA || confirmationType == Confirmation.RENTMEDIA || confirmationType == Confirmation.SELLMEDIA || confirmationType == Confirmation.BUYMEDIA) {
                 boolean owned = isMediaOwned();
+                boolean errorOccured = false;
                 if (activeMedia.getIsRentable() && owned) {
                     int res = SystemInventory.getSystemInventory().returnMedia(activeUser.getUsername(), activeMedia.getMediaID());
-                    sellOrReturnRequestErrorHandle(res);
+                    errorOccured = sellOrReturnRequestErrorHandle(res);
                 } else if (activeMedia.getIsRentable()) {
                     int res = SystemInventory.getSystemInventory().rentMedia(activeUser.getUsername(), activeMedia.getMediaID());
-                    buyOrRentRequestErrorHandle(res);
+                    errorOccured = buyOrRentRequestErrorHandle(res);
                 } else if (!activeMedia.getIsRentable() && owned) {
                     int res = SystemInventory.getSystemInventory().sellMedia(activeUser.getUsername(), activeMedia.getMediaID());
-                    sellOrReturnRequestErrorHandle(res);
+                    errorOccured = sellOrReturnRequestErrorHandle(res);
                 } else {
                     int res = SystemInventory.getSystemInventory().buyMedia(activeUser.getUsername(), activeMedia.getMediaID());
-                    buyOrRentRequestErrorHandle(res);
+                    errorOccured = buyOrRentRequestErrorHandle(res);
                 }
-                refreshActiveUser();
-                refreshActiveMedia();
-                libraryRequest();
+                if (!errorOccured) {
+                    refreshActiveUser();
+                    refreshActiveMedia();
+                    libraryRequest();
+                }
             } else if (confirmationType == Confirmation.LOGOUT) {
                 activeUser = null;
                 activeMedia = null;

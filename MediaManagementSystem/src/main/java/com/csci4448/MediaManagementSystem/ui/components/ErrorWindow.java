@@ -21,7 +21,7 @@ public class ErrorWindow extends JPanel implements ActionListener {
 
         setLayout(new GridBagLayout());
         setBackground(new Color(250, 250, 250));
-        setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, new Color(172, 42, 42)));
+        setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, new Color(172, 71, 71)));
 
         errorText = TextComponentFactory.textPane(errorMsg, Style.ERROR_MESSAGE);
         GridBagConstraints textConst = new GridBagConstraints(0, 0, 1, 1, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(20,20,0,20), 0, 0);
