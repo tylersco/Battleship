@@ -43,12 +43,12 @@ public class MainController {
             if (user != null)
                 activeUser = user;
             else {
-                display.getActiveState().setErrorWindow(new ErrorWindow(this, "Server Unavailable", "ok"));
+                display.getActiveState().setPopUpWindow(new ErrorWindow(this, "Server Unavailable", "ok"));
             }
             storeRequest();
         }
         else {
-            display.getActiveState().setErrorWindow(new ErrorWindow(this, "Invalid Information", "ok"));
+            display.getActiveState().setPopUpWindow(new ErrorWindow(this, "Invalid Information", "ok"));
 
         }
 
@@ -61,19 +61,19 @@ public class MainController {
     public void createAccountSubmitRequest(String firstName, String lastName, String username, String email, String password) {
 
         if (userDAO.userExists(username, password)) {
-            display.getActiveState().setErrorWindow(new ErrorWindow(this, "Username already taken", "ok"));
+            display.getActiveState().setPopUpWindow(new ErrorWindow(this, "Username already taken", "ok"));
         }
         else {
             int res = userDAO.addUser(username, password, email, firstName, lastName);
             if (res == -1) {
-                display.getActiveState().setErrorWindow(new ErrorWindow(this, "Server Error (Creating User)", "ok"));
+                display.getActiveState().setPopUpWindow(new ErrorWindow(this, "Server Error (Creating User)", "ok"));
             }
             else {
                 User user = userDAO.getUser(res);
                 if (user != null)
                     activeUser = user;
                 else {
-                    display.getActiveState().setErrorWindow(new ErrorWindow(this, "Server Unavailable", "ok"));
+                    display.getActiveState().setPopUpWindow(new ErrorWindow(this, "Server Unavailable", "ok"));
                 }
                 storeRequest();
             }
@@ -99,6 +99,7 @@ public class MainController {
                 MediaListing listing = new MediaListing(this, media.getMediaID(), media.getImage(), media.getTitle(), "$ " + media.getPrice());
                 store.add(listing);
             }
+
 
         }
 
@@ -126,7 +127,7 @@ public class MainController {
         display.setState(library);
     }
 
-    public void searchSubmitRequest(String search) {
+    public void searchRequest(String search) {
         //ToDo: implement this
     }
 
@@ -149,7 +150,7 @@ public class MainController {
     public void addFundsCancelRequest() {
         DisplayState state = display.getActiveState();
         if (state instanceof MainContentPanel) {
-            ((MainContentPanel) state).removePopUpWindow();
+            ((MainContentPanel) state).setPopUpWindow(null);
         }
     }
 
@@ -163,7 +164,7 @@ public class MainController {
 
         DisplayState state = display.getActiveState();
         if (state instanceof MainContentPanel) {
-            ((MainContentPanel) state).removePopUpWindow();
+            ((MainContentPanel) state).setPopUpWindow(null);
         }
         storeRequest();
     }
@@ -172,7 +173,7 @@ public class MainController {
         Media media = mediaDAO.getMedia(mediaId);
 
         if (media == null) {
-            display.getActiveState().setErrorWindow(new ErrorWindow(this, "Media Unavailable", "ok"));
+            display.getActiveState().setPopUpWindow(new ErrorWindow(this, "Media Unavailable", "ok"));
             return;
         }
 
@@ -208,7 +209,7 @@ public class MainController {
         Media media = mediaDAO.getMedia(mediaId);
 
         if (media == null) {
-            display.getActiveState().setErrorWindow(new ErrorWindow(this, "Media Unavailable", "ok"));
+            display.getActiveState().setPopUpWindow(new ErrorWindow(this, "Media Unavailable", "ok"));
             return;
         }
 
@@ -234,30 +235,30 @@ public class MainController {
     private void buyOrRentRequestErrorHandle(int res) {
         if (res == -4) {
             //Throw error to UI saying that there was a system error
-            display.getActiveState().setErrorWindow(new ErrorWindow(this, "System Error", "ok"));
+            display.getActiveState().setPopUpWindow(new ErrorWindow(this, "System Error", "ok"));
         } else if (res == -3) {
             //Throw error to UI saying that the media is not correct purchasable type
-            display.getActiveState().setErrorWindow(new ErrorWindow(this, "Media has invalid purchase type", "ok"));
+            display.getActiveState().setPopUpWindow(new ErrorWindow(this, "Media has invalid purchase type", "ok"));
         } else if (res == -2) {
             //Throw error to UI saying that the media is out of stock
-            display.getActiveState().setErrorWindow(new ErrorWindow(this, "Currently out of stock", "ok"));
+            display.getActiveState().setPopUpWindow(new ErrorWindow(this, "Currently out of stock", "ok"));
             // This may change if we implement the waitlist functionality
         } else if (res == -1) {
             //Throw error to UI saying that the user doesn't have enough money in account balance
-            display.getActiveState().setErrorWindow(new ErrorWindow(this, "Insufficient account balance", "ok"));
+            display.getActiveState().setPopUpWindow(new ErrorWindow(this, "Insufficient account balance", "ok"));
         }
     }
 
     private void sellOrReturnRequestErrorHandle(int res) {
         if (res == -3) {
             //Throw error to UI saying that there was a system error
-            display.getActiveState().setErrorWindow(new ErrorWindow(this, "System Error", "ok"));
+            display.getActiveState().setPopUpWindow(new ErrorWindow(this, "System Error", "ok"));
         } else if (res == -2) {
             //Throw error to UI saying that the media is not correct purchasable type
-            display.getActiveState().setErrorWindow(new ErrorWindow(this, "Media has invalid return type", "ok"));
+            display.getActiveState().setPopUpWindow(new ErrorWindow(this, "Media has invalid return type", "ok"));
         } else if (res == -1) {
             //Throw error to UI saying that the media is not currently owned/rented by the user
-            display.getActiveState().setErrorWindow(new ErrorWindow(this, "Item can not be found in your personal inventory", "ok"));
+            display.getActiveState().setPopUpWindow(new ErrorWindow(this, "Item can not be found in your personal inventory", "ok"));
         }
     }
 
@@ -266,7 +267,7 @@ public class MainController {
         if (!isConfirmed) {
             DisplayState state = display.getActiveState();
             if (state instanceof IndividualMediaPanel) {
-                ((MainContentPanel) state).removePopUpWindow();
+                ((MainContentPanel) state).setPopUpWindow(null);
             }
         } else {
             if (activeMedia.getIsRentable() && activeUser.getPersonalInventory().contains(activeMedia)) {
@@ -289,17 +290,17 @@ public class MainController {
     }
 
     public void errorThrowRequest(String msg, String close) {
-        display.getActiveState().setErrorWindow(new ErrorWindow(this, msg, close));
+        display.getActiveState().setPopUpWindow(new ErrorWindow(this, msg, close));
     }
 
     public void errorHandledRequest() {
-        display.getActiveState().setErrorWindow(null);
+        display.getActiveState().setPopUpWindow(null);
     }
 
     public void reviewMediaRequest(int mediaId) {
 
         if (reviewDAO.userAlreadyReviewed(activeUser.getUsername(), mediaId)) {
-            display.getActiveState().setErrorWindow(new ErrorWindow(this, "You have already reviewed this item", "ok"));
+            display.getActiveState().setPopUpWindow(new ErrorWindow(this, "You have already reviewed this item", "ok"));
         } else {
             DisplayState state = display.getActiveState();
             if (state instanceof MainContentPanel) {
@@ -311,7 +312,7 @@ public class MainController {
     public void reviewMediaCancelRequest() {
         DisplayState state = display.getActiveState();
         if (state instanceof MainContentPanel) {
-            ((MainContentPanel) state).removePopUpWindow();
+            ((MainContentPanel) state).setPopUpWindow(null);
         }
     }
 
@@ -322,7 +323,7 @@ public class MainController {
 
         DisplayState state = display.getActiveState();
         if (state instanceof MainContentPanel) {
-            ((MainContentPanel) state).removePopUpWindow();
+            ((MainContentPanel) state).setPopUpWindow(null);
             individualMediaRequest(mediaId);
         }
     }

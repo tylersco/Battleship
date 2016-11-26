@@ -14,7 +14,7 @@ public interface DisplayState {
     JComponent getStateView();
 
     //
-    void setErrorWindow(ErrorWindow errorWindow);
+    void setPopUpWindow(JComponent errorWindow);
 
     // Called when the state is no longer the active state
     void onDeactivate(MainController controller, Display display);

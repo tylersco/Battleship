@@ -62,6 +62,8 @@ public class TextComponentFactory {
         TextPane pane = new TextPane(text, style.getDefaultFont(), style.getPrimaryColor());
         pane.setLineWrap(true);
         pane.setEditable(true);
+        pane.setOpaque(true);
+        pane.setBackground(new Color(223, 223, 223));
         pane.setSize(width, height);
         pane.setPreferredSize(new Dimension(width, height));
         return pane;

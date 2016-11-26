@@ -17,7 +17,7 @@ public class CreateAccountPanel extends JLayeredPane implements ActionListener, 
     private MainController controller;
 
     private JPanel content;
-    private ErrorWindow errorWindow;
+    private JComponent popUpWindow;
 
     private EnterTextField firstName;
     private EnterTextField lastName;
@@ -135,19 +135,19 @@ public class CreateAccountPanel extends JLayeredPane implements ActionListener, 
         return this;
     }
 
-    public void setErrorWindow(ErrorWindow errorWindow) {
-        if (this.errorWindow != null) {
-            remove(this.errorWindow);
-            this.errorWindow = null;
+    public void setPopUpWindow(JComponent popUpWindow) {
+        if (this.popUpWindow != null) {
+            remove(this.popUpWindow);
+            this.popUpWindow = null;
             validate();
             repaint();
         }
-        if (errorWindow != null) {
-            this.errorWindow = errorWindow;
-            Dimension windowSize = errorWindow.getPreferredSize();
-            errorWindow.setSize(windowSize);
-            errorWindow.setLocation((getWidth() - (int)windowSize.getWidth())/2, 150);
-            add(errorWindow, new Integer(2));
+        if (popUpWindow != null) {
+            this.popUpWindow = popUpWindow;
+            Dimension windowSize = this.popUpWindow.getPreferredSize();
+            this.popUpWindow.setSize(windowSize);
+            this.popUpWindow.setLocation((getWidth() - (int)windowSize.getWidth())/2, 150);
+            add(this.popUpWindow, new Integer(2));
         }
     }
 

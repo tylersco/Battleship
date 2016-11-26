@@ -20,7 +20,6 @@ public abstract class MainContentPanel extends JLayeredPane implements DisplaySt
     private JPanel scrollLayout;
     private JLayeredPane content;
     private JComponent popUpWindow = null;
-    private ErrorWindow errorWindow = null;
 
     public MainContentPanel(MainController controller) {
         this.controller = controller;
@@ -79,25 +78,6 @@ public abstract class MainContentPanel extends JLayeredPane implements DisplaySt
         scrollLayout.setPreferredSize(new Dimension(935,height));
     }
 
-    public void setPopUpWindow(JComponent popUpWindow) {
-        if (this.popUpWindow == null) {
-            this.popUpWindow = popUpWindow;
-            Dimension windowSize = popUpWindow.getPreferredSize();
-            popUpWindow.setSize(windowSize);
-            popUpWindow.setLocation((getWidth() - (int)windowSize.getWidth())/2, 150);
-            add(this.popUpWindow, new Integer(3));
-        }
-    }
-
-    public void removePopUpWindow() {
-        if (popUpWindow != null) {
-            remove(popUpWindow);
-            popUpWindow = null;
-            validate();
-            repaint();
-        }
-    }
-
     public void onActivate(MainController controller, Display display) {
         display.setSize(950, 650);
         display.setMinimumSize(new Dimension(950, 425));
@@ -109,19 +89,19 @@ public abstract class MainContentPanel extends JLayeredPane implements DisplaySt
         return this;
     }
 
-    public void setErrorWindow(ErrorWindow errorWindow) {
-        if (this.errorWindow != null) {
-            remove(this.errorWindow);
-            this.errorWindow = null;
+    public void setPopUpWindow(JComponent window) {
+        if (popUpWindow != null) {
+            remove(popUpWindow);
+            popUpWindow = null;
             validate();
             repaint();
         }
-        if (errorWindow != null) {
-            this.errorWindow = errorWindow;
-            Dimension windowSize = errorWindow.getPreferredSize();
-            errorWindow.setSize(windowSize);
-            errorWindow.setLocation((getWidth() - (int) windowSize.getWidth()) / 2, 200);
-            add(errorWindow, new Integer(4));
+        if (window != null) {
+            popUpWindow = window;
+            Dimension windowSize = popUpWindow.getPreferredSize();
+            popUpWindow.setSize(windowSize);
+            popUpWindow.setLocation((getWidth() - (int) windowSize.getWidth()) / 2, 200);
+            add(popUpWindow, new Integer(4));
         }
     }
 
