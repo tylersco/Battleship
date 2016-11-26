@@ -15,6 +15,42 @@ public class UserDAOImpl
         implements UserDAO {
 
 
+    public boolean increaseAccountBalance(String username, int _amount) {
+        /*
+        Increase the user's account balance by amount.
+
+        Returns false if unsuccessful, true if successful
+         */
+
+        User user = getUser(username);
+
+        if (_amount <= 0)
+            return false;
+
+        user.setAccountBalance(user.getAccountBalance() + _amount);
+        return update(user);
+    }
+
+    public boolean decreaseAccountBalance(String username, int _amount) {
+        /*
+        Decrease the user's account balance by amount.
+
+        Returns false if unsuccessful, true if successful
+        */
+
+        User user = getUser(username);
+
+        if (_amount <= 0)
+            return false;
+
+        int currentBalance = user.getAccountBalance();
+        if (currentBalance - _amount < 0)
+            return false;
+
+        user.setAccountBalance(currentBalance - _amount);
+        return update(user);
+    }
+
     public int addUser(String username, String password, String email, String firstName, String lastName) {
         /*
         Add a user to the User table.
