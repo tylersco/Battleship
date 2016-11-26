@@ -136,7 +136,7 @@ public class IndividualMediaPanel extends MainContentPanel {
         Object component = event.getSource();
 
         if (component.equals(editButton)) {
-            getController().adminRequest(null);
+            getController().adminRequest(savedMediaInfo);
         }
     }
 }

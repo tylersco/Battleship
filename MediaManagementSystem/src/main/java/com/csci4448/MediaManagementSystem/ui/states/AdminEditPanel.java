@@ -128,11 +128,71 @@ public class AdminEditPanel extends MainContentPanel {
 
         content.setSize(935, 520);
         updateContentSize();
+
+        if (info != null) {
+            setFields(info.getTitle(), info.getDescription(), info.getType(), info.getGenre());
+        }
     }
 
     @Override
     public void actionPerformed(ActionEvent event) {
         Object component = event.getSource();
+
+        // Section for media control buttons
+        if (component.equals(newButton)) {
+            if (hasUnsavedChanges()) {
+                // TODO: Ask the user if they want to discard changes
+                System.out.println("ADMIN: Discarding changes to media.");
+            }
+            System.out.println("ADMIN: Setting up a new media to create.");
+            savedMediaInfo = null;
+            setFields("", "", "Movie", "");
+        } else if (component.equals(saveButton)) {
+            if (!hasUnsavedChanges()) {
+                // TODO: Report to the user that there are no changes to save
+                System.out.println("ADMIN: There are no changes to the media to save.");
+                return;
+            }
+
+            if (isEditingExistingMedia()) {
+                System.out.println("ADMIN: Saving changes to existing media.");
+                // TODO: Save the changes to the existing media
+                // TODO: Report the results of the media update
+            } else {
+                System.out.println("ADMIN: Saving new media.");
+                // TODO: Create a new media with the given information
+                // TODO: Report the results of the new media creation
+            }
+        } else if (component.equals(cancelButton)) {
+            if (!hasUnsavedChanges()) {
+                // TODO: Report to the user that there are no changes to cancel
+                System.out.println("ADMIN: There are no changes to the media to cancel.");
+                return;
+            }
+
+            setFields(savedMediaInfo.getTitle(), savedMediaInfo.getDescription(), savedMediaInfo.getType(), savedMediaInfo.getGenre());
+        }
+
+
+        // Section for media type options
+        else if (component.equals(movieChoice)) {
+            setSelectedMediaType("Movie");
+        } else if (component.equals(bookChoice)) {
+            setSelectedMediaType("Book");
+        } else if (component.equals(musicChoice)) {
+            setSelectedMediaType("Music");
+        } else if (component.equals(tvChoice)) {
+            setSelectedMediaType("TV Show");
+        } else if (component.equals(audioChoice)) {
+            setSelectedMediaType("Audio Book");
+        }
+    }
+
+    public boolean hasUnsavedChanges () {
+        return (!titleText.getText().equals(isEditingExistingMedia() ? savedMediaInfo.getTitle() : "")) ||
+                (!descriptionText.getText().equals(isEditingExistingMedia() ? savedMediaInfo.getDescription() : "")) ||
+                (!getSelectedMediaType().equals(isEditingExistingMedia() ? savedMediaInfo.getType() : getSelectedMediaType())) ||
+                (!genreText.getText().equals(isEditingExistingMedia() ? savedMediaInfo.getGenre() : ""));
     }
 
     private void setFields(String title, String desc, String type, String genre) {
@@ -174,7 +234,7 @@ public class AdminEditPanel extends MainContentPanel {
         }
     }
 
-    public boolean getIsEditingExistingMedia() {
+    public boolean isEditingExistingMedia() {
         return savedMediaInfo != null;
     }
 }
