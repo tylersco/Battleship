@@ -32,11 +32,15 @@ public class AdminEditPanel extends MainContentPanel {
     private TextPane descriptionLabel;
     private TextPane typeLabel;
     private TextPane genreLabel;
+    private TextPane priceLabel;
+    private TextPane sellPriceLabel;
 
     private EnterTextField titleText;
     private EnterTextField descriptionText;
     private TextButton movieChoice, bookChoice, musicChoice, tvChoice, audioChoice;
     private EnterTextField genreText;
+    private EnterTextField priceText;
+    private EnterTextField sellPriceText;
 
     private MediaInfo savedMediaInfo = null;
 
@@ -90,6 +94,16 @@ public class AdminEditPanel extends MainContentPanel {
         genreLabel.setLocation(15, 260);
         content.add(genreLabel);
 
+        priceLabel = TextComponentFactory.textPane("Price:", Style.ADMIN_LABEL);
+        priceLabel.setSize(priceLabel.getPreferredSize());
+        priceLabel.setLocation(15, 300);
+        content.add(priceLabel);
+
+        sellPriceLabel = TextComponentFactory.textPane("Sell Price:", Style.ADMIN_LABEL);
+        sellPriceLabel.setSize(sellPriceLabel.getPreferredSize());
+        sellPriceLabel.setLocation(15, 340);
+        content.add(sellPriceLabel);
+
         titleText = TextComponentFactory.enterText(this, "", Style.ADMIN_TEXT);
         titleText.setSize(725, 30);
         titleText.setLocation(175, 80);
@@ -127,11 +141,21 @@ public class AdminEditPanel extends MainContentPanel {
         genreText.setLocation(175, 260);
         content.add(genreText);
 
+        priceText = TextComponentFactory.enterText(this, "", Style.ADMIN_TEXT);
+        priceText.setSize(50, 30);
+        priceText.setLocation(175, 300);
+        content.add(priceText);
+
+        sellPriceText = TextComponentFactory.enterText(this, "", Style.ADMIN_TEXT);
+        sellPriceText.setSize(50, 30);
+        sellPriceText.setLocation(175, 340);
+        content.add(sellPriceText);
+
         content.setSize(935, 520);
         updateContentSize();
 
         if (info != null) {
-            setFields(info.getTitle(), info.getDescription(), info.getType(), info.getGenre());
+            setFields(info.getTitle(), info.getDescription(), info.getType(), info.getGenre(), info.getPrice(), info.getSellPrice());
         }
     }
 
@@ -147,7 +171,7 @@ public class AdminEditPanel extends MainContentPanel {
             }
             System.out.println("ADMIN: Setting up a new media to create.");
             savedMediaInfo = null;
-            setFields("", "", "Movie", "");
+            setFields("", "", "Movie", "", 0, 0);
         } else if (component.equals(saveButton)) {
             if (!hasUnsavedChanges()) {
                 // TODO: Report to the user that there are no changes to save
@@ -165,9 +189,12 @@ public class AdminEditPanel extends MainContentPanel {
                 // TODO: Report the results of the new media creation
             }
 
+            // TODO: Validate that the prices are valid integers
+
             savedMediaInfo = MediaInfo.createFromModified(savedMediaInfo, new HashMap<String, Object>() {{
                 put("title", titleText.getText()); put("description", descriptionText.getText());
                 put("type", getSelectedMediaType()); put("genre", genreText.getText());
+                put("price", Integer.parseInt(priceText.getText())); put("sellPrice", Integer.parseInt(sellPriceText.getText()));
             }});
         } else if (component.equals(cancelButton)) {
             if (!hasUnsavedChanges()) {
@@ -176,7 +203,8 @@ public class AdminEditPanel extends MainContentPanel {
                 return;
             }
 
-            setFields(savedMediaInfo.getTitle(), savedMediaInfo.getDescription(), savedMediaInfo.getType(), savedMediaInfo.getGenre());
+            setFields(savedMediaInfo.getTitle(), savedMediaInfo.getDescription(), savedMediaInfo.getType(), savedMediaInfo.getGenre(),
+                        savedMediaInfo.getPrice(), savedMediaInfo.getSellPrice());
         }
 
 
@@ -198,14 +226,18 @@ public class AdminEditPanel extends MainContentPanel {
         return (!titleText.getText().equals(isEditingExistingMedia() ? savedMediaInfo.getTitle() : "")) ||
                 (!descriptionText.getText().equals(isEditingExistingMedia() ? savedMediaInfo.getDescription() : "")) ||
                 (!getSelectedMediaType().equals(isEditingExistingMedia() ? savedMediaInfo.getType() : getSelectedMediaType())) ||
-                (!genreText.getText().equals(isEditingExistingMedia() ? savedMediaInfo.getGenre() : ""));
+                (!genreText.getText().equals(isEditingExistingMedia() ? savedMediaInfo.getGenre() : "")) ||
+                (!priceText.getText().equals(isEditingExistingMedia() ? "" + savedMediaInfo.getPrice() : "0")) ||
+                (!sellPriceText.getText().equals(isEditingExistingMedia() ? "" + savedMediaInfo.getSellPrice() : "0"));
     }
 
-    private void setFields(String title, String desc, String type, String genre) {
+    private void setFields(String title, String desc, String type, String genre, int price, int sellPrice) {
         titleText.setText(title);
         descriptionText.setText(desc);
         setSelectedMediaType(type);
         genreText.setText(genre);
+        priceText.setText("" + price);
+        sellPriceText.setText("" + sellPrice);
     }
 
     public void setSelectedMediaType(String type) {
