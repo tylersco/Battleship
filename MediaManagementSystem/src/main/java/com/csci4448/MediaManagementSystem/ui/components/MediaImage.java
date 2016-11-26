@@ -33,7 +33,7 @@ public class MediaImage extends JLabel {
             image = ImageIO.read(new File(imagePath));
             return image;
         } catch (IOException e) {
-            System.out.println("Error loading " + imagePath + " : " +  e.toString());
+            System.out.println("MediaError loading " + imagePath + " : " +  e.toString());
         }
         return null;
     }
