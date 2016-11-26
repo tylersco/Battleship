@@ -11,6 +11,7 @@ public enum UIFont {
     FONT_22B (22, Font.BOLD),
     FONT_20  (20),
     FONT_20B (20, Font.BOLD),
+    FONT_18B (20, Font.BOLD),
     FONT_18  (18),
     FONT_18I (18, Font.ITALIC),
     FONT_16  (16),

@@ -85,11 +85,21 @@ public class MainController {
         GridMediaPanel store = new GridMediaPanel(this, 215, 327, 15, 35);
         store.getMenuPanel().getStoreButton().setIsSelected(true);
 
+        List<Media> ownedMedia = userDAO.getPersonalInventory(activeUser.getUsername());
         List<Media> mediaRecords = SystemInventory.getSystemInventory().getAllMedia();
 
-        for(Media media: mediaRecords) {
-            MediaListing listing = new MediaListing(this, media.getMediaID(), media.getImage(), media.getTitle(), media.getPrice());
-            store.add(listing);
+        for (Media media : mediaRecords) {
+            boolean found = false;
+            for (Media mediaOwn : ownedMedia) {
+                if (mediaOwn.getMediaID() == media.getMediaID())
+                    found = true;
+            }
+
+            if (!found) {
+                MediaListing listing = new MediaListing(this, media.getMediaID(), media.getImage(), media.getTitle(), "$ " + media.getPrice());
+                store.add(listing);
+            }
+
         }
 
         display.setState(store);
@@ -104,11 +114,20 @@ public class MainController {
         List<Media> personalInventory = userDAO.getPersonalInventory(activeUser.getUsername());
 
         for (Media media: personalInventory) {
-            //ToDo: modify MediaListing so it displays owned/rented instead of price
-            MediaListing listing = new MediaListing(this, media.getMediaID(), media.getImage(), media.getTitle(), media.getPrice());
+            String info;
+            if (media.getIsRentable()) {
+                info = "Rented";
+            } else {
+                info = "Owned";
+            }
+            MediaListing listing = new MediaListing(this, media.getMediaID(), media.getImage(), media.getTitle(), info);
             library.add(listing);
         }
         display.setState(library);
+    }
+
+    public void searchSubmitRequest(String search) {
+        //ToDo: implement this
     }
 
     // Passing in a non-null MediaInfo sets the panel up for editing existing media.
@@ -135,7 +154,11 @@ public class MainController {
     }
 
     public void addFundsSubmitRequest(int amount) {
-        userDAO.increaseAccountBalance(activeUser.getUsername(), amount);
+
+        User user = userDAO.getUser(activeUser.getUserID());
+
+        user.setAccountBalance(user.getAccountBalance() + amount);
+
         refreshActiveUser();
 
         DisplayState state = display.getActiveState();
@@ -259,6 +282,9 @@ public class MainController {
                 int res = SystemInventory.getSystemInventory().buyMedia(activeUser.getUsername(), activeMedia.getMediaID());
                 buyOrRentRequestErrorHandle(res);
             }
+            refreshActiveUser();
+            refreshActiveMedia();
+            libraryRequest();
         }
     }
 
@@ -291,6 +317,8 @@ public class MainController {
 
     public void reviewMediaSubmitRequest(int mediaId, String reviewText, int rating) {
         reviewDAO.addReview(reviewText, rating, activeUser.getUserID(), mediaId);
+        refreshActiveUser();
+        refreshActiveMedia();
 
         DisplayState state = display.getActiveState();
         if (state instanceof MainContentPanel) {

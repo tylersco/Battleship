@@ -17,12 +17,14 @@ public class IndividualMediaPanel extends MainContentPanel {
     private static final String DEFAULT_IMAGE_PATH = "src/main/resources/test.png";
 
     // TODO: Move this to its own location
-    private static final Color TEXT_COLOR = Color.DARK_GRAY;
-    private static final Color BORDER_COLOR = Color.DARK_GRAY;
-    private static final Color ACTION_BUTTON_DEFAULT_COLOR = Color.GRAY;
-    private static final Color ACTION_BUTTON_ENTERED_COLOR = Color.LIGHT_GRAY;
-    private static final Color EDIT_BUTTON_DEFAULT_COLOR = Color.ORANGE;
-    private static final Color EDIT_BUTTON_ENTERED_COLOR = Color.YELLOW;
+    private static final Color TEXT_DEFAULT = new Color(237, 237, 237);
+    private static final Color BORDER_HIGHLIGHT = new Color(243, 243, 243);
+    private static final Color ACTION_DEFAULT = new Color(51, 155, 241);
+    private static final Color ACTION_ENTERED = new Color(74, 184, 241);
+    private static final Color EDIT_DEFAULT = new Color(241, 79, 39);
+    private static final Color EDIT_ENTERED = new Color(241, 117, 88);
+    private static final Color ADDREVIEW_DEFAULT = new Color(92, 135, 63);
+    private static final Color ADDREVIEW_ENTERED = new Color(122, 155, 102);
 
     private MediaImage image;
     private TextPane titleText;
@@ -32,9 +34,9 @@ public class IndividualMediaPanel extends MainContentPanel {
     private TextPane genreText;
     private TextPane reviewsLabel;
 
-    private BorderedButton buyButton;
-    private BorderedButton rentButton;
+    private BorderedButton actionButton;
     private BorderedButton editButton;
+    private BorderedButton addReviewButton;
 
     private MediaInfo savedMediaInfo = null;
 
@@ -74,31 +76,31 @@ public class IndividualMediaPanel extends MainContentPanel {
         descriptionText.setLocation(400, 130);
         content.add(descriptionText);
 
-        rentButton = new BorderedButton(this, "Rent", UIFont.FONT_20B.getFont(),
-                TEXT_COLOR, TEXT_COLOR, TEXT_COLOR,
-                ACTION_BUTTON_DEFAULT_COLOR, ACTION_BUTTON_ENTERED_COLOR, ACTION_BUTTON_DEFAULT_COLOR,
-                BORDER_COLOR, BORDER_COLOR, BORDER_COLOR);
-        rentButton.setSize(75, 25);
-        rentButton.setLocation(15, 480);
-        content.add(rentButton);
-
-        buyButton = new BorderedButton(this, "Buy", UIFont.FONT_20B.getFont(),
-                TEXT_COLOR, TEXT_COLOR, TEXT_COLOR,
-                ACTION_BUTTON_DEFAULT_COLOR, ACTION_BUTTON_ENTERED_COLOR, ACTION_BUTTON_DEFAULT_COLOR,
-                BORDER_COLOR, BORDER_COLOR, BORDER_COLOR);
-        buyButton.setSize(75, 25);
-        buyButton.setLocation(105, 480);
-        content.add(buyButton);
+        actionButton = new BorderedButton(this, "<ACTION>", UIFont.FONT_20B.getFont(),
+                TEXT_DEFAULT, TEXT_DEFAULT, TEXT_DEFAULT,
+                ACTION_DEFAULT, ACTION_ENTERED, ACTION_DEFAULT,
+                ACTION_DEFAULT, BORDER_HIGHLIGHT, ACTION_DEFAULT);
+        actionButton.setSize((int)actionButton.getPreferredSize().getWidth() + 25, 25);
+        actionButton.setLocation(20, 480);
+        content.add(actionButton);
 
         editButton = new BorderedButton(this, "Edit", UIFont.FONT_20B.getFont(),
-                TEXT_COLOR, TEXT_COLOR, TEXT_COLOR,
-                EDIT_BUTTON_DEFAULT_COLOR, EDIT_BUTTON_ENTERED_COLOR, EDIT_BUTTON_DEFAULT_COLOR,
-                BORDER_COLOR, BORDER_COLOR, BORDER_COLOR);
+                TEXT_DEFAULT, TEXT_DEFAULT, TEXT_DEFAULT,
+                EDIT_DEFAULT, EDIT_ENTERED, EDIT_DEFAULT,
+                EDIT_DEFAULT, BORDER_HIGHLIGHT, EDIT_DEFAULT);
         editButton.setSize(75, 25);
         editButton.setLocation(195, 480);
         content.add(editButton);
         if (!getController().isAdmin())
             editButton.setVisible(false);
+
+        addReviewButton = new BorderedButton(this, "Add Review +", UIFont.FONT_16.getFont(),
+                TEXT_DEFAULT, TEXT_DEFAULT, TEXT_DEFAULT,
+                ADDREVIEW_DEFAULT, ADDREVIEW_ENTERED, ADDREVIEW_DEFAULT,
+                ADDREVIEW_DEFAULT, BORDER_HIGHLIGHT, ADDREVIEW_DEFAULT);
+        addReviewButton.setSize((int)addReviewButton.getPreferredSize().getWidth() + 25, 20);
+        addReviewButton.setLocation(700, 550);
+        content.add(addReviewButton);
 
         reviewsLabel = TextComponentFactory.textPane("User Reviews", Style.INDMEDIA_REVIEWSLABEL);
         reviewsLabel.setSize(reviewsLabel.getPreferredSize());
@@ -117,6 +119,8 @@ public class IndividualMediaPanel extends MainContentPanel {
         image.loadMediaImage(325, 456);
         typeText.setText(info.getType());
         genreText.setText(info.getGenre());
+
+        actionButton.setText(info.getIsRentable() ? "Rent" : "Buy");
     }
 
     public void populateReviews(ArrayList<ReviewPanel> rs) {
@@ -137,6 +141,10 @@ public class IndividualMediaPanel extends MainContentPanel {
 
         if (component.equals(editButton)) {
             getController().adminRequest(savedMediaInfo);
+        } else if (component.equals(actionButton)) {
+            getController().individualMediaActionRequest(savedMediaInfo.getMediaID());
+        } else if (component.equals(addReviewButton)) {
+            getController().reviewMediaRequest(savedMediaInfo.getMediaID());
         }
     }
 }

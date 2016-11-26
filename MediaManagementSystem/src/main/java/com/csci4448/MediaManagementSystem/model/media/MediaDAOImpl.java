@@ -15,39 +15,6 @@ public class MediaDAOImpl
         extends GenericDAOImpl<Media, Integer>
         implements MediaDAO {
 
-    public boolean incrementInventoryCount(int mediaID) {
-        /*
-        Increment the inventory count of a media.
-
-        Returns false if unsuccessful, true if successful
-         */
-
-        Media media = getMedia(mediaID);
-        media.setInventoryCount(media.getInventoryCount() + 1);
-        return update(media);
-
-    }
-
-    public int decrementInventoryCount(int mediaID) {
-        /*
-        Decrement the inventory count of a media.
-
-        Returns -2 if inventory count is 0, -1 if unsuccessful, 0 if successful
-         */
-
-        Media media = getMedia(mediaID);
-
-        int currentInventoryCount = media.getInventoryCount();
-
-        if (currentInventoryCount == 0)
-            return -2;
-
-        media.setInventoryCount(media.getInventoryCount() + 1);
-        if (update(media))
-            return 0;
-        return -1;
-    }
-
     public Media getMedia(int mediaID) {
         /*
         Query the Media table for a specific media.
@@ -268,10 +235,13 @@ public class MediaDAOImpl
         if (user.getAccountBalance() < media.getPrice())
             return -1;
 
-        decrementInventoryCount(mediaID);
-        userDAO.decreaseAccountBalance(username, media.getPrice());
+        media.setInventoryCount(media.getInventoryCount() - 1);
+        user.setAccountBalance(user.getAccountBalance() - media.getPrice());
         user.addPersonalMedia(media);
         media.addUserOwner(user);
+
+        update(media);
+        userDAO.update(user);
 
         return 0;
 
@@ -307,7 +277,7 @@ public class MediaDAOImpl
         }
 
         // subtract the price of media from user's account
-        user.decreaseAccountBalance(username, media.getPrice());
+        userAccount.setAccountBalance(userAccount.getAccountBalance() - media.getPrice());
 
         // add the media to the user's account
         userAccount.addPersonalMedia(media);
@@ -317,6 +287,11 @@ public class MediaDAOImpl
 
         // add user to the list of current users of media
         media.addUserOwner(userAccount);
+
+
+        update(media);
+        user.update(userAccount);
+
 
         return 0;
     }
@@ -346,8 +321,11 @@ public class MediaDAOImpl
 
         user.removePersonalMedia(media);
         media.removeCurrentUser(user);
-        incrementInventoryCount(mediaID);
-        userDAO.increaseAccountBalance(username, media.getSellPrice());
+        media.setInventoryCount(media.getInventoryCount() + 1);
+        user.setAccountBalance(user.getAccountBalance() + media.getSellPrice());
+
+        update(media);
+        userDAO.update(user);
 
         return 0;
     }
@@ -377,7 +355,10 @@ public class MediaDAOImpl
 
         user.removePersonalMedia(media);
         media.removeCurrentUser(user);
-        incrementInventoryCount(mediaID);
+        media.setInventoryCount(media.getInventoryCount() + 1);
+
+        update(media);
+        userDAO.update(user);
 
         return 0;
     }

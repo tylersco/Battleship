@@ -22,9 +22,17 @@ public class DB_Test_Driver {
         int mediaID = mediaDAO.addMedia("admin", "Looper", "a really great movie", "movie", "thriller", 12, 20, 3, true);
         int reviewID = reviewDAO.addReview("Just a really great movie", 5, userID, mediaID);
 
-        // Test increase and decrease account balance methods
-        userDAO.increaseAccountBalance("cjr", 15);
-        userDAO.decreaseAccountBalance("cjr", 10);
+        User user = userDAO.getUser(userID);
+
+        // Test setAccountBalance method
+        user.setAccountBalance(15);
+
+        System.out.println("User account balance:");
+        System.out.println(user.getAccountBalance());
+
+        System.out.println("MediaID: ");
+        System.out.println(mediaID);
+
 
         // Get the media object we created and check that the review object is connected through the foreign key
         Media media = mediaDAO.getMedia(mediaID);
@@ -46,7 +54,6 @@ public class DB_Test_Driver {
         System.out.println();
 
         // Get the user object we created and check that the review object is connected
-        User user = userDAO.getUser(userID);
         reviews = user.getReviews();
 
         System.out.println("Reviews connected to user record:");

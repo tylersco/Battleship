@@ -41,7 +41,6 @@ public abstract class MainContentPanel extends JLayeredPane implements DisplaySt
             }
         });
 
-        //ToDo: apply user info to menu components
         menuPanel = new MenuPanel(controller);
         menuPanel.setLocation(0, 0);
         add(menuPanel, new Integer(2));
