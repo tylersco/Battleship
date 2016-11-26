@@ -111,7 +111,7 @@ public class IndividualMediaPanel extends MainContentPanel {
         updateContentSize();
     }
 
-    public void populateMedia(MediaInfo info) {
+    public void populateMedia(MediaInfo info, boolean owned) {
         savedMediaInfo = info;
         titleText.setText(info.getTitle());
         descriptionText.setText(info.getDescription());
@@ -120,7 +120,19 @@ public class IndividualMediaPanel extends MainContentPanel {
         typeText.setText(info.getType());
         genreText.setText(info.getGenre());
 
-        actionButton.setText(info.getMediaAction());
+        if (owned) {
+            if (info.getIsRentable()) {
+                actionButton.setText("Return");
+            } else {
+                actionButton.setText("Sell $" + info.getSellPrice());
+            }
+        } else {
+            if (info.getIsRentable()) {
+                actionButton.setText("Rent $" + info.getPrice());
+            } else {
+                actionButton.setText("Buy $" + info.getPrice());
+            }
+        }
     }
 
     public void populateReviews(ArrayList<ReviewPanel> rs) {

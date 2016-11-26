@@ -14,6 +14,7 @@ import com.csci4448.MediaManagementSystem.ui.design.UIFont;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.util.HashMap;
 
 public class AdminEditPanel extends MainContentPanel {
 
@@ -163,6 +164,11 @@ public class AdminEditPanel extends MainContentPanel {
                 // TODO: Create a new media with the given information
                 // TODO: Report the results of the new media creation
             }
+
+            savedMediaInfo = MediaInfo.createFromModified(savedMediaInfo, new HashMap<String, Object>() {{
+                put("title", titleText.getText()); put("description", descriptionText.getText());
+                put("type", getSelectedMediaType()); put("genre", genreText.getText());
+            }});
         } else if (component.equals(cancelButton)) {
             if (!hasUnsavedChanges()) {
                 // TODO: Report to the user that there are no changes to cancel

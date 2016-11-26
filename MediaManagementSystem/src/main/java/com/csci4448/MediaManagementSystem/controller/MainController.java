@@ -183,21 +183,10 @@ public class MainController {
 
         boolean owned = isMediaOwned();
 
-        String mediaAction = "";
-        if (activeMedia.getIsRentable() && owned)
-            mediaAction = "Return Media";
-        else if (activeMedia.getIsRentable())
-            mediaAction = "Rent $" + media.getPrice();
-        else if (!activeMedia.getIsRentable() && owned)
-            mediaAction = "Sell $" + activeMedia.getSellPrice();
-        else
-            mediaAction = "Buy $" + activeMedia.getPrice();
-
         IndividualMediaPanel indMedia = new IndividualMediaPanel(this);
 
         MediaInfo mediaInfo = MediaInfo.createFromMedia(activeMedia);
-        mediaInfo.setMediaAction(mediaAction);
-        indMedia.populateMedia(mediaInfo);
+        indMedia.populateMedia(mediaInfo, owned);
 
         List<Review> reviews = new ArrayList<Review>(activeMedia.getReviews());
         ArrayList<ReviewPanel> rs = new ArrayList<ReviewPanel>();
