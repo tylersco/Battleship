@@ -111,6 +111,29 @@ public class MainController {
         display.setState(store);
     }
 
+    public void storeRequest(List<Media> filteredMedia) {
+        GridMediaPanel store = new GridMediaPanel(this, 215, 327, 15, 35);
+        store.getMenuPanel().getStoreButton().setIsSelected(true);
+
+        List<Media> ownedMedia = userDAO.getPersonalInventory(activeUser.getUsername());
+
+        for (Media media : filteredMedia) {
+            boolean found = false;
+            for (Media mediaOwn : ownedMedia) {
+                if (mediaOwn.getMediaID() == media.getMediaID())
+                    found = true;
+            }
+
+            if (!found) {
+                MediaListing listing = new MediaListing(this, media.getMediaID(), media.getImage(), media.getTitle(), "$ " + media.getPrice());
+                store.add(listing);
+            }
+
+        }
+
+        display.setState(store);
+    }
+
     public void libraryRequest() {
         GridMediaPanel library = new GridMediaPanel(this, 215, 327, 15, 35);
         library.getMenuPanel().getLibraryButton().setIsSelected(true);
@@ -132,8 +155,45 @@ public class MainController {
         display.setState(library);
     }
 
+    public void libraryRequest(List<Media> filteredMedia) {
+        GridMediaPanel library = new GridMediaPanel(this, 215, 327, 15, 35);
+        library.getMenuPanel().getLibraryButton().setIsSelected(true);
+
+        UserDAOImpl userDAO = new UserDAOImpl();
+
+        List<Media> personalInventory = userDAO.getPersonalInventory(activeUser.getUsername());
+
+        for (Media filterMedia : filteredMedia) {
+            boolean found = false;
+            for (Media ownedMedia : personalInventory) {
+                if (filterMedia.getMediaID() == ownedMedia.getMediaID()) {
+                    found = true;
+                    break;
+                }
+            }
+            if (found) {
+                String info;
+                if (filterMedia.getIsRentable()) {
+                    info = "Rented";
+                } else {
+                    info = "Owned";
+                }
+                MediaListing listing = new MediaListing(this, filterMedia.getMediaID(), filterMedia.getImage(), filterMedia.getTitle(), info);
+                library.add(listing);
+            }
+        }
+
+        display.setState(library);
+    }
+
     public void searchRequest(String search) {
-        //ToDo: implement this
+        List<Media> filteredMedia = SystemInventory.getSystemInventory().searchInventory(search);
+        if (display.getActiveState() instanceof MainContentPanel) {
+            if (((MainContentPanel) display.getActiveState()).getMenuPanel().getStoreButton().getIsSelected())
+                storeRequest(filteredMedia);
+            if (((MainContentPanel) display.getActiveState()).getMenuPanel().getLibraryButton().getIsSelected())
+                libraryRequest(filteredMedia);
+        }
     }
 
     // Passing in a non-null MediaInfo sets the panel up for editing existing media.
