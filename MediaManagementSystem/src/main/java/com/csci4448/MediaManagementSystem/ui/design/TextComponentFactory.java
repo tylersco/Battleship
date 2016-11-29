@@ -6,7 +6,10 @@ import com.csci4448.MediaManagementSystem.ui.components.TextPane;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class TextComponentFactory {
 
@@ -58,14 +61,20 @@ public class TextComponentFactory {
         return pane;
     }
 
-    public static TextPane textPaneEdit(String text, Style style, int width, int height) {
-        TextPane pane = new TextPane(text, style.getDefaultFont(), style.getPrimaryColor());
+    public static TextPane textPaneEdit(final ActionListener container, String text, Style style, int width, int height) {
+        final TextPane pane = new TextPane(text, style.getDefaultFont(), style.getPrimaryColor());
         pane.setLineWrap(true);
         pane.setEditable(true);
         pane.setOpaque(true);
         pane.setBackground(new Color(223, 223, 223));
         pane.setSize(width, height);
         pane.setPreferredSize(new Dimension(width, height));
+        pane.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                container.actionPerformed(new ActionEvent(pane, 1, "Pressed"));
+            }
+        });
         return pane;
     }
 

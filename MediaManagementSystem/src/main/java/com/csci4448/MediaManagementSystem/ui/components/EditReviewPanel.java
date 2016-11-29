@@ -1,6 +1,7 @@
 package com.csci4448.MediaManagementSystem.ui.components;
 
 import com.csci4448.MediaManagementSystem.controller.MainController;
+import com.csci4448.MediaManagementSystem.ui.design.MediaError;
 import com.csci4448.MediaManagementSystem.ui.design.Style;
 import com.csci4448.MediaManagementSystem.ui.design.TextComponentFactory;
 
@@ -34,7 +35,7 @@ public class EditReviewPanel extends JPanel implements ActionListener {
         reviewTitle.setLocation(5, 5);
         add(reviewTitle);
 
-        reviewTextField = TextComponentFactory.textPaneEdit("Enter your review here", Style.REVIEW_BODY, 650, 150);
+        reviewTextField = TextComponentFactory.textPaneEdit(this, "Enter your review here", Style.REVIEW_BODY, 650, 150);
         reviewTextField.setLocation(15, 60);
         add(reviewTextField);
 
@@ -46,7 +47,6 @@ public class EditReviewPanel extends JPanel implements ActionListener {
         cancel.setLocation(520, 255);
         add(cancel);
 
-        //ToDo: use a layout instead
         setPreferredSize(new Dimension(680, 300));
 
 
@@ -64,13 +64,28 @@ public class EditReviewPanel extends JPanel implements ActionListener {
         if (component.equals(cancel)) {
             controller.reviewMediaCancelRequest();
         } else if (component.equals(submit)) {
+            boolean validInput = true;
+
             String review = reviewTextField.getText().trim();
-            if (review.equals("Enter your review here") || review.equals("")) {
-                //ToDo: error need to input a review
-            } else if (selectedStar < 0 || selectedStar > 4) {
-                //ToDo: error with star rating
-            } else {
-                controller.reviewMediaSubmitRequest(mediaId, review, selectedStar + 1);
+            if (review.equals("") || review.equals("Enter your review here")) {
+                validInput = false;
+                reviewTextField.setText("Enter your review here");
+                reviewTextField.setForeground(new Color(249, 72, 67, 180));
+            }
+
+            if (selectedStar < 0 || selectedStar > 4) {
+                validInput = false;
+                for (int i = 0; i < stars.size(); i++) {
+                    stars.get(i).setForeground(new Color(249, 72, 67, 126));
+                }
+            }
+
+            if (validInput) controller.reviewMediaSubmitRequest(mediaId, review, selectedStar + 1);
+
+        } else if (component.equals(reviewTextField)) {
+            if (reviewTextField.getText().trim().equals("Enter your review here")) {
+                reviewTextField.setForeground(new Color(75, 75, 75, 180));
+                reviewTextField.setText("");
             }
         } else {
             for (int i = 0; i < 5; i++) {

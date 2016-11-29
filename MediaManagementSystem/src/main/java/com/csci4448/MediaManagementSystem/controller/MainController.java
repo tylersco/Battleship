@@ -236,7 +236,7 @@ public class MainController {
         Media media = mediaDAO.getMedia(mediaId);
 
         if (media == null) {
-            display.getActiveState().setPopUpWindow(new ErrorWindow(this, MediaError.MEDIA_UNAVAILABLE));
+            display.getActiveState().setPopUpWindow(new ErrorWindow(this, MediaError.UNAVAILABLE));
             return;
         }
 
@@ -276,7 +276,7 @@ public class MainController {
         Media media = mediaDAO.getMedia(mediaId);
 
         if (media == null) {
-            display.getActiveState().setPopUpWindow(new ErrorWindow(this, MediaError.MEDIA_UNAVAILABLE));
+            display.getActiveState().setPopUpWindow(new ErrorWindow(this, MediaError.UNAVAILABLE));
             return;
         }
 
@@ -341,14 +341,8 @@ public class MainController {
     }
 
     public void confirmationRequest(boolean isConfirmed, Confirmation confirmationType) {
-
         if (!isConfirmed) {
             DisplayState state = display.getActiveState();
-            // ToDo: The logout confirmation window wouldn't let the user choose the cancel option
-            // ToDo: This is the change made to fix this issue. Somebody confirm that this is what we want
-            //if (state instanceof IndividualMediaPanel) {
-            //    state.setPopUpWindow(null);
-            //}
             state.setPopUpWindow(null);
         } else {
 

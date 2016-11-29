@@ -12,11 +12,12 @@ public enum MediaError {
     INVALID_PURCHASE_TYPE("Media has invalid purchase type", "ok"),
     OUT_OF_STOCK("Currently out of stock", "ok"),
     INSUFFICIENT_BALANCE("Insufficient account balance", "ok"),
-    MEDIA_UNAVAILABLE("Media Unavailable", "ok"),
+    UNAVAILABLE("Media Unavailable", "ok"),
     NOT_FOUND_IN_INVENTORY("Item can not be found in your personal inventory", "ok"),
     INVALID_RETURN_TYPE("Media has invalid return type", "ok"),
 
-    ALREADY_REVIEWED("You have already reviewed this item", "ok"),;
+    ALREADY_REVIEWED("Sorry, you have already reviewed this item", "ok"),
+    ;
 
     private String text;
     private String confirmText;
