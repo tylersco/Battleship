@@ -1,10 +1,8 @@
 package com.csci4448.MediaManagementSystem.ui.states;
 
 import com.csci4448.MediaManagementSystem.controller.*;
-import com.csci4448.MediaManagementSystem.ui.components.ErrorWindow;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class Display extends JFrame {
 

@@ -83,6 +83,7 @@ public class CreateAccountPanel extends JLayeredPane implements ActionListener, 
     }
 
     private void checkUserInput() {
+        new Color(76, 145, 176);
         boolean validInput = true;
         String usernameText = username.getText().trim();
         String password1Text = password1.getText().trim();

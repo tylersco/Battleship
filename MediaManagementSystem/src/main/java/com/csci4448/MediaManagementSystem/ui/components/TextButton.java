@@ -13,7 +13,6 @@ public class TextButton extends JTextField {
 
     private boolean isSelected = false;
 
-    private Font defaultFont;
     private Color defaultColor;
     private Color enteredColor;
     private Color selectedColor;
@@ -21,7 +20,6 @@ public class TextButton extends JTextField {
     public TextButton(ActionListener container, String text, Font defaultFont, Color defaultColor, Color enteredColor, Color selectedColor) {
         super(text);
         this.container = container;
-        this.defaultFont = defaultFont;
         this.defaultColor = defaultColor;
         this.enteredColor = enteredColor;
         this.selectedColor = selectedColor;

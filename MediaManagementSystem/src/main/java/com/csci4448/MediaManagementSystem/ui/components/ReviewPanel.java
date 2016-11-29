@@ -58,11 +58,11 @@ public class ReviewPanel extends JPanel implements ActionListener {
 
         for (int i = 0; i < stars.size(); i++) {
             TextPane star = stars.get(i);
-            star.setLocation(leftMargin + userTextWidth + 10 + (int)star.getWidth() * i, topMargin);
+            star.setLocation(leftMargin + userTextWidth + 10 + star.getWidth() * i, topMargin);
         }
 
-        reviewText.setSize(width - leftMargin - rightMargin, height - userTextHeight - topMargin - bottomMargin);
-        reviewText.setLocation(leftMargin, topMargin + userTextHeight);
+        reviewText.setSize(width - leftMargin - rightMargin - 3, height - userTextHeight - topMargin - bottomMargin);
+        reviewText.setLocation(leftMargin + 3, topMargin + userTextHeight);
 
     }
 
