@@ -455,16 +455,5 @@ public class MainController {
         activeMedia = mediaDAO.getMedia(activeMedia.getMediaID());
     }
 
-    public ReviewDAO getReviewDAO() {
-        return reviewDAO;
-    }
-
-    public boolean hasActiveReview() {
-        return activeReview != null;
-    }
-
-    public void refreshActiveReview() {
-        activeReview = reviewDAO.getReview(activeReview.getReviewID());
-    }
 
 }
