@@ -1,8 +1,8 @@
 package com.csci4448.MediaManagementSystem.ui.states;
 
 import com.csci4448.MediaManagementSystem.controller.MainController;
-import com.csci4448.MediaManagementSystem.model.media.Media;
 import com.csci4448.MediaManagementSystem.model.media.MediaInfo;
+import com.csci4448.MediaManagementSystem.model.media.SystemInventory;
 import com.csci4448.MediaManagementSystem.ui.components.BorderedButton;
 import com.csci4448.MediaManagementSystem.ui.components.EnterTextField;
 import com.csci4448.MediaManagementSystem.ui.components.TextButton;
@@ -203,7 +203,7 @@ public class AdminEditPanel extends MainContentPanel {
     }
 
     public void setSelectedMediaType(String type) {
-        if (!Media.isValidType(type)) {
+        if (!SystemInventory.getSystemInventory().isValidType(type)) {
             // TODO: Report the error to the user
             System.out.println("The type '" + type + "' is not a valid media type.");
             return;
