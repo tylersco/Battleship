@@ -3,10 +3,8 @@ package com.csci4448.MediaManagementSystem.ui.states;
 import com.csci4448.MediaManagementSystem.controller.MainController;
 import com.csci4448.MediaManagementSystem.model.media.Media;
 import com.csci4448.MediaManagementSystem.model.media.MediaInfo;
-import com.csci4448.MediaManagementSystem.ui.components.BorderedButton;
-import com.csci4448.MediaManagementSystem.ui.components.EnterTextField;
-import com.csci4448.MediaManagementSystem.ui.components.TextButton;
-import com.csci4448.MediaManagementSystem.ui.components.TextPane;
+import com.csci4448.MediaManagementSystem.ui.components.*;
+import com.csci4448.MediaManagementSystem.ui.design.Confirmation;
 import com.csci4448.MediaManagementSystem.ui.design.Style;
 import com.csci4448.MediaManagementSystem.ui.design.TextComponentFactory;
 import com.csci4448.MediaManagementSystem.ui.design.UIFont;
@@ -193,6 +191,7 @@ public class AdminEditPanel extends MainContentPanel {
         } else if (component.equals(saveButton)) {
             if (!hasUnsavedChanges()) {
                 // TODO: Report to the user that there are no changes to save
+                setPopUpWindow(new ConfirmationWindow(getController(), Confirmation.ADMINNOCHANGES));
                 System.out.println("ADMIN: There are no changes to the media to save.");
                 return;
             }

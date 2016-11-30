@@ -271,7 +271,7 @@ public class MainController {
 
     public void confirmationRequest(boolean isConfirmed, Confirmation confirmationType) {
 
-        if (!isConfirmed) {
+        if (confirmationType.isSingleOption() || !isConfirmed) {
             DisplayState state = display.getActiveState();
             // ToDo: The logout confirmation window wouldn't let the user choose the cancel option
             // ToDo: This is the change made to fix this issue. Somebody confirm that this is what we want
