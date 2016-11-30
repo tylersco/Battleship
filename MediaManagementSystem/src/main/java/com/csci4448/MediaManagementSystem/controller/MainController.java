@@ -89,7 +89,7 @@ public class MainController {
 
     public void storeRequest() {
         GridMediaPanel store = new GridMediaPanel(this, 215, 327, 15, 35);
-        store.getMenuPanel().getStoreButton().setIsSelected(true);
+        store.getMenuPanel().storeSelected();
 
         List<Media> ownedMedia = userDAO.getPersonalInventory(activeUser.getUsername());
         List<Media> mediaRecords = SystemInventory.getSystemInventory().getAllMedia();
@@ -113,7 +113,7 @@ public class MainController {
 
     public void storeRequest(List<Media> filteredMedia) {
         GridMediaPanel store = new GridMediaPanel(this, 215, 327, 15, 35);
-        store.getMenuPanel().getStoreButton().setIsSelected(true);
+        store.getMenuPanel().storeSelected();
 
         List<Media> ownedMedia = userDAO.getPersonalInventory(activeUser.getUsername());
 
@@ -136,7 +136,7 @@ public class MainController {
 
     public void libraryRequest() {
         GridMediaPanel library = new GridMediaPanel(this, 215, 327, 15, 35);
-        library.getMenuPanel().getLibraryButton().setIsSelected(true);
+        library.getMenuPanel().librarySelected();
 
         UserDAOImpl userDAO = new UserDAOImpl();
 
@@ -157,7 +157,7 @@ public class MainController {
 
     public void libraryRequest(List<Media> filteredMedia) {
         GridMediaPanel library = new GridMediaPanel(this, 215, 327, 15, 35);
-        library.getMenuPanel().getLibraryButton().setIsSelected(true);
+        library.getMenuPanel().librarySelected();
 
         UserDAOImpl userDAO = new UserDAOImpl();
 
@@ -200,7 +200,7 @@ public class MainController {
     // Passing in a null MediaInfo sets up the panel with a blank template for new media.
     public void adminRequest(MediaInfo info) {
         AdminEditPanel admin = new AdminEditPanel(this, info);
-        admin.getMenuPanel().getAdminButton().setIsSelected(true);
+        admin.getMenuPanel().adminSelected();
 
         display.setState(admin);
     }
