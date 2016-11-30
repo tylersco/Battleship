@@ -306,6 +306,12 @@ public class MainController {
                 activeUser = null;
                 activeMedia = null;
                 loginRequest();
+            } else if (confirmationType == Confirmation.ADMINCANCEL) {
+
+            } else if (confirmationType == Confirmation.ADMINNEW) {
+
+            } else if (confirmationType == Confirmation.ADMINSAVE) {
+
             }
         }
     }

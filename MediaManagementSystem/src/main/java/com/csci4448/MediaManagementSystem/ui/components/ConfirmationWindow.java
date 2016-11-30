@@ -40,7 +40,6 @@ public class ConfirmationWindow extends JPanel implements ActionListener {
         cancel = TextComponentFactory.smallButton(this, type.getCancelText(), Style.CONFIRM_CANCEL);
         GridBagConstraints cancConst = new GridBagConstraints(0, 1, 1, 1, .5, 0, GridBagConstraints.LINE_END, GridBagConstraints.NONE, new Insets(10,0,20,10), 0, 0);
         add(cancel, cancConst);
-
     }
 
     public void actionPerformed(ActionEvent event) {

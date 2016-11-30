@@ -34,6 +34,7 @@ public class AdminEditPanel extends MainContentPanel {
     private TextPane genreLabel;
     private TextPane priceLabel;
     private TextPane sellPriceLabel;
+    private TextPane purchaseLabel;
 
     private EnterTextField titleText;
     private EnterTextField descriptionText;
@@ -41,6 +42,7 @@ public class AdminEditPanel extends MainContentPanel {
     private EnterTextField genreText;
     private EnterTextField priceText;
     private EnterTextField sellPriceText;
+    private TextButton rentChoice, buyChoice;
 
     private MediaInfo savedMediaInfo = null;
 
@@ -104,6 +106,11 @@ public class AdminEditPanel extends MainContentPanel {
         sellPriceLabel.setLocation(15, 340);
         content.add(sellPriceLabel);
 
+        purchaseLabel = TextComponentFactory.textPane("Buy/Rent:", Style.ADMIN_LABEL);
+        purchaseLabel.setSize(purchaseLabel.getPreferredSize());
+        purchaseLabel.setLocation(15, 380);
+        content.add(purchaseLabel);
+
         titleText = TextComponentFactory.enterText(this, "", Style.ADMIN_TEXT);
         titleText.setSize(725, 30);
         titleText.setLocation(175, 80);
@@ -151,11 +158,22 @@ public class AdminEditPanel extends MainContentPanel {
         sellPriceText.setLocation(175, 340);
         content.add(sellPriceText);
 
+        rentChoice = TextComponentFactory.smallButton(this, "Rent", Style.ADMIN_BUTTON);
+        buyChoice = TextComponentFactory.smallButton(this, "Buy", Style.ADMIN_BUTTON);
+        rentChoice.setSize(rentChoice.getPreferredSize());
+        rentChoice.setLocation(175, 380);
+        buyChoice.setSize(buyChoice.getPreferredSize());
+        buyChoice.setLocation(250, 380);
+        content.add(rentChoice);
+        content.add(buyChoice);
+        rentChoice.setIsSelected(true);
+
         content.setSize(935, 520);
         updateContentSize();
 
         if (info != null) {
-            setFields(info.getTitle(), info.getDescription(), info.getType(), info.getGenre(), info.getPrice(), info.getSellPrice());
+            setFields(info.getTitle(), info.getDescription(), info.getType(), info.getGenre(), info.getPrice(), info.getSellPrice(),
+                    info.getIsRentable());
         }
     }
 
@@ -171,7 +189,7 @@ public class AdminEditPanel extends MainContentPanel {
             }
             System.out.println("ADMIN: Setting up a new media to create.");
             savedMediaInfo = null;
-            setFields("", "", "Movie", "", 0, 0);
+            setFields("", "", "Movie", "", 0, 0, true);
         } else if (component.equals(saveButton)) {
             if (!hasUnsavedChanges()) {
                 // TODO: Report to the user that there are no changes to save
@@ -195,6 +213,7 @@ public class AdminEditPanel extends MainContentPanel {
                 put("title", titleText.getText()); put("description", descriptionText.getText());
                 put("type", getSelectedMediaType()); put("genre", genreText.getText());
                 put("price", Integer.parseInt(priceText.getText())); put("sellPrice", Integer.parseInt(sellPriceText.getText()));
+                put("isRentable", getRentable());
             }});
         } else if (component.equals(cancelButton)) {
             if (!hasUnsavedChanges()) {
@@ -204,9 +223,8 @@ public class AdminEditPanel extends MainContentPanel {
             }
 
             setFields(savedMediaInfo.getTitle(), savedMediaInfo.getDescription(), savedMediaInfo.getType(), savedMediaInfo.getGenre(),
-                        savedMediaInfo.getPrice(), savedMediaInfo.getSellPrice());
+                        savedMediaInfo.getPrice(), savedMediaInfo.getSellPrice(), savedMediaInfo.getIsRentable());
         }
-
 
         // Section for media type options
         else if (component.equals(movieChoice)) {
@@ -220,24 +238,34 @@ public class AdminEditPanel extends MainContentPanel {
         } else if (component.equals(audioChoice)) {
             setSelectedMediaType("Audio Book");
         }
+
+        // Section for buy/sell options
+        else if (component.equals(rentChoice)) {
+            setRentable(true);
+        } else if (component.equals(buyChoice)) {
+            setRentable(false);
+        }
     }
 
     public boolean hasUnsavedChanges () {
-        return (!titleText.getText().equals(isEditingExistingMedia() ? savedMediaInfo.getTitle() : "")) ||
-                (!descriptionText.getText().equals(isEditingExistingMedia() ? savedMediaInfo.getDescription() : "")) ||
-                (!getSelectedMediaType().equals(isEditingExistingMedia() ? savedMediaInfo.getType() : getSelectedMediaType())) ||
-                (!genreText.getText().equals(isEditingExistingMedia() ? savedMediaInfo.getGenre() : "")) ||
-                (!priceText.getText().equals(isEditingExistingMedia() ? "" + savedMediaInfo.getPrice() : "0")) ||
-                (!sellPriceText.getText().equals(isEditingExistingMedia() ? "" + savedMediaInfo.getSellPrice() : "0"));
+        boolean existing = isEditingExistingMedia();
+        return (!titleText.getText().equals(existing ? savedMediaInfo.getTitle() : "")) ||
+                (!descriptionText.getText().equals(existing ? savedMediaInfo.getDescription() : "")) ||
+                (!getSelectedMediaType().equals(existing ? savedMediaInfo.getType() : getSelectedMediaType())) ||
+                (!genreText.getText().equals(existing ? savedMediaInfo.getGenre() : "")) ||
+                (!priceText.getText().equals(existing ? "" + savedMediaInfo.getPrice() : "0")) ||
+                (!sellPriceText.getText().equals(existing ? "" + savedMediaInfo.getSellPrice() : "0")) ||
+                (getRentable() != (existing ? savedMediaInfo.getIsRentable() : true));
     }
 
-    private void setFields(String title, String desc, String type, String genre, int price, int sellPrice) {
+    private void setFields(String title, String desc, String type, String genre, int price, int sellPrice, boolean rentable) {
         titleText.setText(title);
         descriptionText.setText(desc);
         setSelectedMediaType(type);
         genreText.setText(genre);
         priceText.setText("" + price);
         sellPriceText.setText("" + sellPrice);
+        setRentable(rentable);
     }
 
     public void setSelectedMediaType(String type) {
@@ -270,6 +298,15 @@ public class AdminEditPanel extends MainContentPanel {
             System.out.println("There was no valid selection for media type.");
             return "";
         }
+    }
+
+    public void setRentable(boolean rentable) {
+        rentChoice.setIsSelected(rentable);
+        buyChoice.setIsSelected(!rentable);
+    }
+
+    public boolean getRentable() {
+        return rentChoice.getIsSelected();
     }
 
     public boolean isEditingExistingMedia() {
