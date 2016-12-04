@@ -1,10 +1,8 @@
 package com.csci4448.MediaManagementSystem.ui.states;
 
 import com.csci4448.MediaManagementSystem.controller.MainController;
-import com.csci4448.MediaManagementSystem.ui.components.ErrorWindow;
 
 import javax.swing.*;
-import java.awt.*;
 
 public interface DisplayState {
     // Called when the state is set as the active state

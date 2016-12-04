@@ -1,7 +1,5 @@
 package com.csci4448.MediaManagementSystem.ui.components;
 
-import com.csci4448.MediaManagementSystem.ui.design.UIColor;
-
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;

@@ -4,23 +4,12 @@ import com.csci4448.MediaManagementSystem.model.review.Review;
 import com.csci4448.MediaManagementSystem.model.user.User;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "MEDIA")
 public class Media {
-
-    public static String[] getValidTypes() {
-        return new String[] { "Movie", "Book", "Music", "TV Show", "Audio Book" };
-    }
-
-    public static boolean isValidType(String type) {
-        final String[] types = getValidTypes();
-        return Arrays.asList(types).contains(type);
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

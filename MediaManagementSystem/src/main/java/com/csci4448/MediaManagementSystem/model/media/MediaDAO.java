@@ -1,8 +1,10 @@
 package com.csci4448.MediaManagementSystem.model.media;
 
+import com.csci4448.MediaManagementSystem.model.GenericDAO;
+
 import java.util.List;
 
-public interface MediaDAO {
+public interface MediaDAO extends GenericDAO<Media, Integer> {
 
     Media getMedia(int mediaID);
     int addMedia(String username, String title, String description, String type, String genre, int price, int sellPrice, int inventoryCount, boolean isRentable);

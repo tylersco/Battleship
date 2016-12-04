@@ -8,7 +8,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 public class MenuPanel extends JPanel implements ActionListener {
 
@@ -21,10 +20,6 @@ public class MenuPanel extends JPanel implements ActionListener {
     private SearchBar searchBar;
     private TextButton fundsButton;
     private TextButton accountButton;
-
-    private JPanel dropDownContainer;
-    private ArrayList<BorderedButton> types = new ArrayList<BorderedButton>();
-
 
     public MenuPanel(MainController controller) {
         this.controller = controller;
@@ -86,17 +81,25 @@ public class MenuPanel extends JPanel implements ActionListener {
         return adminButton;
     }
 
-    public void removeSearchBar() {
-        remove(searchBar);
-        //ToDo: account/funds buttons locations
+    public void storeSelected() {
+        storeButton.setIsSelected(true);
+        libraryButton.setIsSelected(false);
+        adminButton.setIsSelected(false);
     }
 
-    public void addSearchBar() {
-        add(searchBar);
-        //ToDo: account/funds buttons locations
+    public void librarySelected() {
+        storeButton.setIsSelected(false);
+        libraryButton.setIsSelected(true);
+        adminButton.setIsSelected(false);
     }
 
-    //ToDo: needs to be reworked for new state format
+    public void adminSelected() {
+        storeButton.setIsSelected(false);
+        libraryButton.setIsSelected(false);
+        adminButton.setIsSelected(true);
+
+    }
+
     public void actionPerformed(ActionEvent event) {
         Object component = event.getSource();
         if (component.equals(storeButton)) {
