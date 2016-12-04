@@ -17,6 +17,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.HashMap;
+import java.util.Scanner;
+import java.util.concurrent.Exchanger;
 
 public class AdminEditPanel extends MainContentPanel {
 
@@ -229,16 +231,53 @@ public class AdminEditPanel extends MainContentPanel {
         setFields("", "", "Movie", "", 0, 0, true);
     }
 
-    public void saveMediaChanges() {
+    public boolean saveMediaChanges() {
+        if (!validateInteger(priceText.getText())) {
+            setPopUpWindow(new ConfirmationWindow(getController(), Confirmation.ADMINBADVALUE));
+            priceText.errorText(priceText.getText());
+            return false;
+        }
+        if (!validateInteger(sellPriceText.getText())) {
+            setPopUpWindow(new ConfirmationWindow(getController(), Confirmation.ADMINBADVALUE));
+            sellPriceText.errorText(sellPriceText.getText());
+            return false;
+        }
 
-        // TODO: Validate that the prices are valid integers
+        String  title = titleText.getText(),
+                desc = descriptionText.getText(),
+                type = getSelectedMediaType(),
+                genre = genreText.getText();
+        int     id = isEditingExistingMedia() ? savedMediaInfo.getMediaID() : -1,
+                price = Integer.parseInt(priceText.getText()),
+                sellPrice = Integer.parseInt(sellPriceText.getText()),
+                invCount = 5; // TODO: Allow for inventory count editing
+        boolean rent = getRentable();
 
-        savedMediaInfo = MediaInfo.createFromModified(savedMediaInfo, new HashMap<String, Object>() {{
-            put("title", titleText.getText()); put("description", descriptionText.getText());
-            put("type", getSelectedMediaType()); put("genre", genreText.getText());
-            put("price", Integer.parseInt(priceText.getText())); put("sellPrice", Integer.parseInt(sellPriceText.getText()));
-            put("isRentable", getRentable());
-        }});
+        int res = -1;
+        if (isEditingExistingMedia()) {
+            res = getController().updateMediaRequest(id, title, desc, type, genre, price, sellPrice, invCount, rent);
+            if (res < 0) {
+                setPopUpWindow(new ConfirmationWindow(getController(), Confirmation.MEDIAEDITFAIL));
+                return false;
+            }
+        } else {
+            res = getController().createNewMediaRequest(title, desc, type, genre, price, sellPrice, invCount, rent);
+            if (res < 0) {
+                setPopUpWindow(new ConfirmationWindow(getController(), Confirmation.MEDIACREATEFAIL));
+                return false;
+            }
+        }
+
+        savedMediaInfo = MediaInfo.createFromMedia(getController().getMediaDAO()
+                .getMedia(isEditingExistingMedia() ? savedMediaInfo.getMediaID() : res));
+        return true;
+    }
+
+    private boolean validateInteger(String val) {
+        Scanner scanner = new Scanner(val);
+        if (!scanner.hasNextInt()) return false;
+        scanner.nextInt();
+        return !scanner.hasNext();
     }
 
     public void revertMediaChanges() {

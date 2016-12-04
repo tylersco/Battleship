@@ -370,8 +370,9 @@ public class MainController {
                 panel.setPopUpWindow(null);
             } else if (confirmationType == Confirmation.ADMINSAVE) {
                 AdminEditPanel panel = (AdminEditPanel) display.getActiveState();
-                panel.saveMediaChanges();
-                panel.setPopUpWindow(null);
+                if (panel.saveMediaChanges()) {
+                    panel.setPopUpWindow(null);
+                }
             }
         }
     }
@@ -422,6 +423,14 @@ public class MainController {
             }
         }
         return false;
+    }
+
+    public int createNewMediaRequest(String title, String description, String type, String genre, int price, int sellPrice, int inventoryCount, boolean isRentable) {
+        return mediaDAO.addMedia(activeUser.getUsername(), title, description, type, genre, price, sellPrice, inventoryCount, isRentable);
+    }
+
+    public int updateMediaRequest(int mediaID, String title, String description, String type, String genre, int price, int sellPrice, int inventoryCount, boolean isRentable) {
+        return mediaDAO.editMedia(activeUser.getUsername(), mediaID, title, description, type, genre, price, sellPrice, inventoryCount, isRentable);
     }
 
     public User getUser() {

@@ -12,6 +12,9 @@ public enum Confirmation {
     ADMINNEW ("Are you sure you want to create new media?", "Yes", "No"),
     ADMINNEWEXISTING ("Are you sure you want to create new media? Changes to the existing media will be lost.", "Yes", "No"),
     ADMINCANCEL ("Are you sure you want to discard changes to the media?", "Yes", "No"),
+    ADMINBADVALUE ("The value provided for the price is not a valid integer.", "Ok", null),
+    MEDIACREATEFAIL ("Could not create the new media.", "Ok", null),
+    MEDIAEDITFAIL ("Could not update the existing media.", "Ok", null)
     ;
 
     private String text;
