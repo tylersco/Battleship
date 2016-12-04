@@ -244,21 +244,10 @@ public class MainController {
 
         boolean owned = isMediaOwned();
 
-        String mediaAction = "";
-        if (activeMedia.getIsRentable() && owned)
-            mediaAction = "Return Media";
-        else if (activeMedia.getIsRentable())
-            mediaAction = "Rent $" + media.getPrice();
-        else if (!activeMedia.getIsRentable() && owned)
-            mediaAction = "Sell $" + activeMedia.getSellPrice();
-        else
-            mediaAction = "Buy $" + activeMedia.getPrice();
-
         IndividualMediaPanel indMedia = new IndividualMediaPanel(this);
 
         MediaInfo mediaInfo = MediaInfo.createFromMedia(activeMedia);
-        mediaInfo.setMediaAction(mediaAction);
-        indMedia.populateMedia(mediaInfo);
+        indMedia.populateMedia(mediaInfo, owned);
 
         List<Review> reviews = new ArrayList<Review>(activeMedia.getReviews());
         ArrayList<ReviewPanel> rs = new ArrayList<ReviewPanel>();
@@ -341,7 +330,7 @@ public class MainController {
     }
 
     public void confirmationRequest(boolean isConfirmed, Confirmation confirmationType) {
-        if (!isConfirmed) {
+        if (confirmationType.isSingleOption() || !isConfirmed) {
             DisplayState state = display.getActiveState();
             state.setPopUpWindow(null);
         } else {
@@ -371,6 +360,19 @@ public class MainController {
                 activeUser = null;
                 activeMedia = null;
                 loginRequest();
+            } else if (confirmationType == Confirmation.ADMINCANCEL) {
+                AdminEditPanel panel = (AdminEditPanel) display.getActiveState();
+                panel.revertMediaChanges();
+                panel.setPopUpWindow(null);
+            } else if (confirmationType == Confirmation.ADMINNEW || confirmationType == Confirmation.ADMINNEWEXISTING) {
+                AdminEditPanel panel = (AdminEditPanel) display.getActiveState();
+                panel.createNewMedia();
+                panel.setPopUpWindow(null);
+            } else if (confirmationType == Confirmation.ADMINSAVE) {
+                AdminEditPanel panel = (AdminEditPanel) display.getActiveState();
+                if (panel.saveMediaChanges()) {
+                    panel.setPopUpWindow(null);
+                }
             }
         }
     }
@@ -421,6 +423,14 @@ public class MainController {
             }
         }
         return false;
+    }
+
+    public int createNewMediaRequest(String title, String description, String type, String genre, int price, int sellPrice, int inventoryCount, boolean isRentable) {
+        return mediaDAO.addMedia(activeUser.getUsername(), title, description, type, genre, price, sellPrice, inventoryCount, isRentable);
+    }
+
+    public int updateMediaRequest(int mediaID, String title, String description, String type, String genre, int price, int sellPrice, int inventoryCount, boolean isRentable) {
+        return mediaDAO.editMedia(activeUser.getUsername(), mediaID, title, description, type, genre, price, sellPrice, inventoryCount, isRentable);
     }
 
     public User getUser() {

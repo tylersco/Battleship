@@ -64,11 +64,11 @@ public class MediaDAOImpl
         if (inventoryCount < 0)
             return mediaID;
 
-        String imgPath = "../../../../../resources/" + type.toLowerCase() + "/" + title.toLowerCase().replaceAll("\\s","") + ".jpg";
+        String imgPath = "src/main/resources/" + type.toLowerCase() + "/" + title.toLowerCase().replaceAll("\\s","") + ".jpg";
 
         File img = new File(imgPath);
         if (!img.exists()) {
-            imgPath = "../../../../../resources/test.png";
+            imgPath = "src/main/resources/test.png";
         }
 
         media.setTitle(title);
@@ -130,11 +130,11 @@ public class MediaDAOImpl
         if (inventoryCount < 0)
             return -1;
 
-        String imgPath = "../../../../../resources/" + type.toLowerCase() + "/" + title.toLowerCase().replaceAll("\\s","") + ".jpg";
+        String imgPath = "src/main/resources/" + type.toLowerCase() + "/" + title.toLowerCase().replaceAll("\\s","") + ".jpg";
 
         File img = new File(imgPath);
         if (!img.exists()) {
-            imgPath = "../../../../../resources/test.png";
+            imgPath = "src/main/resources/test.png";
         }
 
         media.setTitle(title);
