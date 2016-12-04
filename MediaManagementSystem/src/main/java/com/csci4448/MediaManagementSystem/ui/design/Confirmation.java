@@ -10,6 +10,7 @@ public enum Confirmation {
     ADMINNOCHANGES("There are no changes to the media to save.", "Ok", null),
     ADMINSAVE ("Are you sure you want to save changes to the media?", "Yes", "No"),
     ADMINNEW ("Are you sure you want to create new media?", "Yes", "No"),
+    ADMINNEWEXISTING ("Are you sure you want to create new media? Changes to the existing media will be lost.", "Yes", "No"),
     ADMINCANCEL ("Are you sure you want to discard changes to the media?", "Yes", "No"),
     ;
 

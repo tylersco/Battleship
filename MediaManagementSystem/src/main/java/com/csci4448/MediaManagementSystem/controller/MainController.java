@@ -361,11 +361,17 @@ public class MainController {
                 activeMedia = null;
                 loginRequest();
             } else if (confirmationType == Confirmation.ADMINCANCEL) {
-
-            } else if (confirmationType == Confirmation.ADMINNEW) {
-
+                AdminEditPanel panel = (AdminEditPanel) display.getActiveState();
+                panel.revertMediaChanges();
+                panel.setPopUpWindow(null);
+            } else if (confirmationType == Confirmation.ADMINNEW || confirmationType == Confirmation.ADMINNEWEXISTING) {
+                AdminEditPanel panel = (AdminEditPanel) display.getActiveState();
+                panel.createNewMedia();
+                panel.setPopUpWindow(null);
             } else if (confirmationType == Confirmation.ADMINSAVE) {
-
+                AdminEditPanel panel = (AdminEditPanel) display.getActiveState();
+                panel.saveMediaChanges();
+                panel.setPopUpWindow(null);
             }
         }
     }

@@ -62,7 +62,7 @@ public class AdminEditPanel extends MainContentPanel {
         saveButton.setLocation(573, 10);
         content.add(saveButton);
 
-        cancelButton = new BorderedButton(this, "Cancel Changes", UIFont.FONT_20B.getFont(),
+        cancelButton = new BorderedButton(this, "Undo Changes", UIFont.FONT_20B.getFont(),
                 TEXT_COLOR, TEXT_COLOR, TEXT_COLOR,
                 ACTION_BUTTON_DEFAULT_COLOR, ACTION_BUTTON_ENTERED_COLOR, ACTION_BUTTON_DEFAULT_COLOR,
                 BORDER_COLOR, BORDER_COLOR, BORDER_COLOR);
@@ -186,47 +186,21 @@ public class AdminEditPanel extends MainContentPanel {
         // Section for media control buttons
         if (component.equals(newButton)) {
             if (hasUnsavedChanges()) {
-                // TODO: Ask the user if they want to discard changes
-                System.out.println("ADMIN: Discarding changes to media.");
+                setPopUpWindow(new ConfirmationWindow(getController(), Confirmation.ADMINNEWEXISTING));
+            } else {
+                setPopUpWindow(new ConfirmationWindow(getController(), Confirmation.ADMINNEW));
             }
-            System.out.println("ADMIN: Setting up a new media to create.");
-            savedMediaInfo = null;
-            setFields("", "", "Movie", "", 0, 0, true);
         } else if (component.equals(saveButton)) {
             if (!hasUnsavedChanges()) {
-                // TODO: Report to the user that there are no changes to save
                 setPopUpWindow(new ConfirmationWindow(getController(), Confirmation.ADMINNOCHANGES));
-                System.out.println("ADMIN: There are no changes to the media to save.");
                 return;
             }
 
-            if (isEditingExistingMedia()) {
-                System.out.println("ADMIN: Saving changes to existing media.");
-                // TODO: Save the changes to the existing media
-                // TODO: Report the results of the media update
-            } else {
-                System.out.println("ADMIN: Saving new media.");
-                // TODO: Create a new media with the given information
-                // TODO: Report the results of the new media creation
-            }
-
-            // TODO: Validate that the prices are valid integers
-
-            savedMediaInfo = MediaInfo.createFromModified(savedMediaInfo, new HashMap<String, Object>() {{
-                put("title", titleText.getText()); put("description", descriptionText.getText());
-                put("type", getSelectedMediaType()); put("genre", genreText.getText());
-                put("price", Integer.parseInt(priceText.getText())); put("sellPrice", Integer.parseInt(sellPriceText.getText()));
-                put("isRentable", getRentable());
-            }});
+            setPopUpWindow(new ConfirmationWindow(getController(), Confirmation.ADMINSAVE));
         } else if (component.equals(cancelButton)) {
-            if (!hasUnsavedChanges()) {
-                // TODO: Report to the user that there are no changes to cancel
-                System.out.println("ADMIN: There are no changes to the media to cancel.");
-                return;
+            if (hasUnsavedChanges()) {
+                setPopUpWindow(new ConfirmationWindow(getController(), Confirmation.ADMINCANCEL));
             }
-
-            setFields(savedMediaInfo.getTitle(), savedMediaInfo.getDescription(), savedMediaInfo.getType(), savedMediaInfo.getGenre(),
-                        savedMediaInfo.getPrice(), savedMediaInfo.getSellPrice(), savedMediaInfo.getIsRentable());
         }
 
         // Section for media type options
@@ -248,6 +222,28 @@ public class AdminEditPanel extends MainContentPanel {
         } else if (component.equals(buyChoice)) {
             setRentable(false);
         }
+    }
+
+    public void createNewMedia() {
+        savedMediaInfo = null;
+        setFields("", "", "Movie", "", 0, 0, true);
+    }
+
+    public void saveMediaChanges() {
+
+        // TODO: Validate that the prices are valid integers
+
+        savedMediaInfo = MediaInfo.createFromModified(savedMediaInfo, new HashMap<String, Object>() {{
+            put("title", titleText.getText()); put("description", descriptionText.getText());
+            put("type", getSelectedMediaType()); put("genre", genreText.getText());
+            put("price", Integer.parseInt(priceText.getText())); put("sellPrice", Integer.parseInt(sellPriceText.getText()));
+            put("isRentable", getRentable());
+        }});
+    }
+
+    public void revertMediaChanges() {
+        setFields(savedMediaInfo.getTitle(), savedMediaInfo.getDescription(), savedMediaInfo.getType(), savedMediaInfo.getGenre(),
+                savedMediaInfo.getPrice(), savedMediaInfo.getSellPrice(), savedMediaInfo.getIsRentable());
     }
 
     public boolean hasUnsavedChanges () {
