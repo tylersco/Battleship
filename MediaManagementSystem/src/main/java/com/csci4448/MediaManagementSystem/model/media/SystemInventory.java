@@ -27,7 +27,9 @@ public class SystemInventory {
 
         typeGenreMap.put("Movie", movieGenres);
         typeGenreMap.put("Book", bookGenres);
-
+        typeGenreMap.put("Music", new ArrayList<String>());
+        typeGenreMap.put("TV Show", new ArrayList<String>());
+        typeGenreMap.put("Audio Book", new ArrayList<String>());
     }
 
     public static synchronized SystemInventory getSystemInventory() {
@@ -136,8 +138,9 @@ public class SystemInventory {
     }
 
     public boolean isValidGenre(String type, String genre) {
-        ArrayList<String> values = typeGenreMap.get(type);
-        return values != null && values.contains(genre);
+        return true; // TODO: This would actually work, but is currently just getting in the way
+        //ArrayList<String> values = typeGenreMap.get(type);
+        //return values != null && values.contains(genre);
     }
 
 }

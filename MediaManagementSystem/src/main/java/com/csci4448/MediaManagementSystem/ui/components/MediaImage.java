@@ -22,7 +22,6 @@ public class MediaImage extends JLabel {
 
     public void loadMediaImage(int width, int height) {
         
-
         setIcon(new ImageIcon(retrieveMediaImage().getScaledInstance(width, height, Image.SCALE_SMOOTH)));
         setSize(width, height);
     }

@@ -123,6 +123,7 @@ public class EnterTextField extends JLayeredPane {
     public void errorText(String text) {
         underlaidText.setText(text);
         underlaidText.setForeground(new Color(249, 72, 67, 180));
+        userInput.setText("");
     }
 
     public boolean isEditable() { return userInput.isEditable(); }
